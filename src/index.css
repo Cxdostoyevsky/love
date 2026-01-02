@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dosto-dark: #1a1a1a;
+  --color-dosto-sepia: #704214;
+  --color-dosto-paper: #f5f5dc;
+  --color-dosto-accent: #8b0000;
+  --font-serif: Georgia, serif;
+}
+
+:root {
+  background-color: #1a1a1a;
+  color: #f5f5dc;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-serif);
+}
