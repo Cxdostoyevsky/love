@@ -20,8 +20,8 @@ function App() {
         >
           <div className="absolute inset-0 bg-black/60 z-10"></div> {/* 遮罩层，让文字更清晰 */}
           <div 
-            className="w-full h-full bg-[url('/dosto-bg.jpg')] bg-cover bg-center grayscale-[0.3] brightness-[0.7]"
-            style={{ backgroundImage: "url('/dosto-bg.jpg')" }}
+            className="w-full h-full bg-cover bg-center grayscale-[0.3] brightness-[0.7]"
+            style={{ backgroundImage: "url('dosto-bg.jpg')" }}
           ></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0a0a] z-20"></div>
         </motion.div>
