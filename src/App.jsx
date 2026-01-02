@@ -111,7 +111,8 @@ function App() {
         <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
           <Quote className="mx-auto mb-8 text-stone-700" size={60} />
           <blockquote className="text-3xl md:text-4xl italic leading-snug text-stone-200">
-            “最要紧的是，我们首先应该善良，其次要诚实，再其次是以后永远不要相互遗忘。”
+            最重要的是，首先我们要善良，
+            其次要诚实，最后要永不相忘。
           </blockquote>
           <cite className="block mt-8 text-stone-500 font-sans not-italic">— 《卡拉马佐夫兄弟》</cite>
         </div>
@@ -119,7 +120,7 @@ function App() {
 
       {/* Footer */}
       <footer className="py-12 border-t border-stone-900 text-center text-stone-600 text-sm">
-        <p>&copy; {new Date().getFullYear()} 陀思妥耶夫斯基研究社 | 痛苦是人类进化的阶梯</p>
+        <p>&copy; {new Date().getFullYear()} 陀思妥耶夫斯基X_maker | 痛苦是人类进化的阶梯</p>
       </footer>
     </div>
   );
