@@ -1,37 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Book, Quote, Feather, ChevronDown } from 'lucide-react';
-
-const works = [
-  {
-    title: "罪与罚",
-    original: "Преступление и наказание",
-    year: "1866",
-    desc: "关于道德困境与自我救赎的永恒探讨。",
-    color: "bg-red-900/40"
-  },
-  {
-    title: "卡拉马佐夫兄弟",
-    original: "Братья Карамазовы",
-    year: "1880",
-    desc: "陀氏最后的巅峰之作，深入探讨上帝、自由与邪恶。",
-    color: "bg-stone-800/60"
-  },
-  {
-    title: "白痴",
-    original: "Идиот",
-    year: "1869",
-    desc: "一个纯洁灵魂在虚伪社会中的毁灭。",
-    color: "bg-blue-900/30"
-  },
-  {
-    title: "地下室手记",
-    original: "Записки из подполья",
-    year: "1864",
-    desc: "存在主义的先声，对现代文明的深刻反思。",
-    color: "bg-gray-900/80"
-  }
-];
+import works from './data/works.json';
 
 function App() {
   return (
