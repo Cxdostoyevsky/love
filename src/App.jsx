@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare } from 'lucide-react';
+import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare, Lightbulb } from 'lucide-react';
 import works from './data/works.json';
+import notes from './data/notes.json';
 
 function App() {
   const { scrollYProgress } = useScroll();
@@ -159,6 +160,54 @@ function App() {
             className="h-1 bg-red-900 mx-auto mb-8"
           ></motion.div>
           <cite className="block text-stone-500 font-sans not-italic tracking-[0.2em] uppercase text-sm">— 《卡拉马佐夫兄弟》</cite>
+        </div>
+      </section>
+
+      {/* Echoes from the Underground - 读书笔记模块 */}
+      <section className="py-32 bg-[#0d0d0d] border-t border-stone-900">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex items-center gap-4 mb-20">
+            <Lightbulb className="text-red-900" size={28} />
+            <h2 className="text-4xl font-bold tracking-tighter text-stone-100">地下室的回响</h2>
+            <div className="flex-grow h-px bg-stone-800"></div>
+            <span className="text-xs font-sans text-stone-600 uppercase tracking-widest">My Reflections</span>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            {notes[0].quotes.map((note, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: idx * 0.2 }}
+                className="relative p-10 bg-[#111] border border-stone-800/50 hover:border-red-900/30 transition-colors group"
+              >
+                <div className="absolute top-0 left-0 w-1 h-0 group-hover:h-full bg-red-900 transition-all duration-500"></div>
+                <div className="text-xs text-red-800 font-bold mb-4 tracking-widest uppercase">
+                  {note.context}
+                </div>
+                <p className="text-stone-300 text-lg leading-relaxed italic relative z-10">
+                  “{note.text}”
+                </p>
+                <div className="mt-8 flex justify-end">
+                  <span className="text-[10px] text-stone-600 font-sans tracking-[0.3em] uppercase">— X_maker's Insight</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="mt-20 text-center">
+            <p className="text-stone-500 text-sm italic mb-8">“怀疑是智慧的开端，但生活需要勇气去接受不完美。”</p>
+            <motion.a 
+              href="https://weread.qq.com/web/reader/a623278071e0b2e0a622468"
+              target="_blank"
+              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center gap-2 px-6 py-2 border border-stone-700 text-stone-400 hover:text-red-900 hover:border-red-900 transition-all text-sm uppercase tracking-widest"
+            >
+              在微信读书中继续探索 <MessageSquare size={14} />
+            </motion.a>
+          </div>
         </div>
       </section>
 
