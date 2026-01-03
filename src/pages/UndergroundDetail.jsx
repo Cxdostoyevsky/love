@@ -57,7 +57,7 @@ function UndergroundDetail() {
                 <span className="w-8 h-px bg-red-900/30"></span>
                 {note.context}
               </div>
-              <blockquote className="text-2xl md:text-3xl italic leading-relaxed text-stone-300 mb-8">
+              <blockquote className="text-2xl md:text-3xl italic leading-relaxed text-stone-300 mb-8 whitespace-pre-line">
                 “{note.text}”
               </blockquote>
               <div className="flex justify-end">
