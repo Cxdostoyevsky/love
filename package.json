@@ -11,7 +11,9 @@
     "research:collect": "bun scripts/collect_mentions.mjs",
     "research:topics": "bun scripts/analyze_topics.mjs",
     "research:report": "bun scripts/build_report.mjs",
-    "research:run": "npm run research:collect && npm run research:topics && npm run research:report"
+    "research:cn": "bun scripts/localize_and_brief.mjs",
+    "research:run": "bun run research:collect && bun run research:topics && bun run research:report",
+    "research:run:cn": "bun run research:run && bun run research:cn"
   },
   "dependencies": {
     "clsx": "^2.1.1",

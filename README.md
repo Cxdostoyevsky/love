@@ -58,6 +58,18 @@ npm run research:report
 - `data/research/dostoevsky_topics.json`
 - `reports/dostoevsky_world_data.json`
 - `reports/dostoevsky_world_report.html`
+- `reports/dostoevsky_cn_data.json`
+- `reports/dostoevsky_world_report_cn.html`
+- `reports/dostoevsky_ppt_brief.md`
+
+### 4.1) 中文化与一页简报
+```bash
+# 在已有英文报告基础上，生成中文报告和PPT摘要
+bun run research:cn
+
+# 一键全流程（采集 + 话题 + 英文报告 + 中文化）
+bun run research:run:cn
+```
 
 ### 5) 可调参数
 ```bash
