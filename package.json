@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "research:collect": "bun scripts/collect_mentions.mjs",
+    "research:topics": "bun scripts/analyze_topics.mjs",
+    "research:report": "bun scripts/build_report.mjs",
+    "research:run": "npm run research:collect && npm run research:topics && npm run research:report"
   },
   "dependencies": {
     "clsx": "^2.1.1",
