@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare } from 'lucide-react';
+import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare, Globe2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import works from '../data/works.json';
 
@@ -59,6 +59,14 @@ function Home() {
                 探索灵魂深处 <BookOpen size={18} className="group-hover:translate-x-1 transition-transform" />
               </span>
             </motion.button>
+            <a
+              href={`${import.meta.env.BASE_URL}research/dostoevsky_world_report_cn.html`}
+              className="px-10 py-4 border border-stone-600 text-stone-200 rounded-sm transition-all duration-300 hover:border-red-900 hover:text-white"
+            >
+              <span className="flex items-center gap-2 uppercase tracking-widest text-sm">
+                全球讨论图谱 <Globe2 size={18} />
+              </span>
+            </a>
           </div>
         </motion.div>
 
@@ -190,4 +198,3 @@ function Home() {
 }
 
 export default Home;
-
