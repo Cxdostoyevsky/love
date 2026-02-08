@@ -38,8 +38,17 @@ function normalizeCountry(rawCountryCode) {
     return null;
   }
 
-  const code = rawCountryCode.trim().toUpperCase();
+  const raw = rawCountryCode.trim();
+  const code = raw.toUpperCase();
   if (!/^[A-Z]{2}$/.test(code)) {
+    // GDELT may return country names directly (e.g., "Turkey").
+    // Accept readable names and normalize spacing/casing minimally.
+    if (/^[\p{L}\s.'-]{2,60}$/u.test(raw)) {
+      return raw
+        .split(/\s+/)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+    }
     return null;
   }
 
