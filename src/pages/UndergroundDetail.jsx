@@ -11,9 +11,9 @@ function UndergroundDetail() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#f5f5dc] font-serif overflow-x-hidden">
-      {/* Header / Nav */}
-      <nav className="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center backdrop-blur-md bg-black/20">
+    <div className="min-h-screen bg-[#0a0e14] text-[#f5f5dc] font-serif overflow-x-hidden">
+      {/* Header / Nav - 俄国冬夜色调统一 */}
+      <nav className="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center backdrop-blur-md bg-[#0d1117]/80">
         <Link to="/" className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors group">
           <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
           <span className="text-xs uppercase tracking-widest">返回首页</span>
@@ -71,7 +71,7 @@ function UndergroundDetail() {
         </div>
 
         {/* Call to Action */}
-        <section className="mt-32 p-12 bg-[#0d0d0d] border border-stone-900 text-center">
+        <section className="mt-32 p-12 bg-[#0d1117] border border-stone-800 text-center">
           <Quote className="mx-auto mb-8 text-stone-800" size={40} />
           <p className="text-xl text-stone-400 italic mb-10 leading-relaxed">
             “正如陀氏所言，他在深渊中依然歌颂生命。地下室不是终点，而是认清现实后重新出发的起点。”
@@ -95,7 +95,7 @@ function UndergroundDetail() {
       </main>
 
       {/* Footer */}
-      <footer className="py-20 border-t border-stone-900 bg-[#080808] text-center">
+      <footer className="py-20 border-t border-stone-900 bg-[#080a0d] text-center">
         <p className="text-stone-600 text-sm tracking-widest">© {new Date().getFullYear()} Dostoevsky X_maker | 痛苦是人类进化的阶梯</p>
       </footer>
     </div>

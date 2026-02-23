@@ -4,6 +4,38 @@ import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare, Glob
 import { Link } from 'react-router-dom';
 import works from '../data/works.json';
 
+/* 俄国冬夜雪景 - 参考 theme-factory Arctic Frost(冷色调) + Midnight Galaxy(深邃夜) */
+const SNOWFLAKES = Array.from({ length: 55 }, (_, i) => ({
+  id: i,
+  left: (i * 17.3) % 100,
+  size: 2 + (i % 4),
+  duration: 10 + (i % 8),
+  delay: (i * 0.4) % 6,
+  fast: i % 3 === 0,
+}));
+
+function Snowfall() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-[5]" aria-hidden="true">
+      {SNOWFLAKES.map((s) => (
+        <div
+          key={s.id}
+          className="snowflake"
+          style={{
+            left: `${s.left}%`,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
+            borderRadius: '50%',
+            background: 'rgba(212, 228, 247, 0.85)',
+            boxShadow: '0 0 6px rgba(255,255,255,0.4)',
+            animation: `snowfall${s.fast ? '-slow' : ''} ${s.duration}s linear ${s.delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function Home() {
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
@@ -63,21 +95,28 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-[#f5f5dc] selection:bg-red-900 selection:text-white font-serif overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a0e14] text-[#f5f5dc] selection:bg-red-900 selection:text-white font-serif overflow-x-hidden">
       
-      {/* Hero Section - 沉浸式背景 */}
+      {/* Hero Section - 俄国冬夜雪景意境 */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
-        {/* 背景图片层 */}
+        <Snowfall />
+        {/* 背景：深邃冬夜蓝 + 暖灯剪影 - 参考 Arctic Frost / Midnight Galaxy */}
         <motion.div 
           style={{ scale }}
           className="absolute inset-0 z-0"
         >
-          <div className="absolute inset-0 bg-black/40 z-10"></div>
           <div 
-            className="w-full h-full bg-cover bg-center grayscale-[0.3] brightness-[0.9]"
+            className="absolute inset-0 z-[1]"
+            style={{
+              background: 'linear-gradient(180deg, #0d1117 0%, #0f1419 25%, #1a1f2e 50%, #0d1117 100%)',
+            }}
+          />
+          <div className="absolute inset-0 bg-[#2b1e3e]/20 z-[2] mix-blend-overlay" />
+          <div 
+            className="w-full h-full bg-cover bg-center grayscale-[0.5] brightness-[0.7] opacity-40 z-[3]"
             style={{ backgroundImage: `url('${import.meta.env.BASE_URL}dostoevsky-writing.svg')` }}
-          ></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0a0a] z-20"></div>
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0e14] z-[4]" />
         </motion.div>
         
         <motion.div 
@@ -195,7 +234,7 @@ function Home() {
       </section>
 
       {/* Major Works Section */}
-      <section id="works" className="py-32 bg-[#0d0d0d] relative">
+      <section id="works" className="py-32 bg-[#0d1117] relative">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row items-baseline gap-4 mb-20">
             <h2 className="text-5xl font-bold tracking-tighter">经典杰作</h2>
@@ -242,8 +281,8 @@ function Home() {
       </section>
 
       {/* Interactive Quote Section */}
-      <section className="py-40 bg-[#0a0a0a] relative flex items-center justify-center">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+      <section className="py-40 bg-[#0a0e14] relative flex items-center justify-center">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.06]"></div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
@@ -266,7 +305,7 @@ function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-20 border-t border-stone-900 bg-[#080808] relative overflow-hidden">
+      <footer className="py-20 border-t border-stone-900 bg-[#080a0d] relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="text-left">
             <h4 className="text-2xl font-bold mb-2 tracking-tighter">陀思妥耶夫斯基 X_maker</h4>
