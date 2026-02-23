@@ -1,6 +1,6 @@
-import React from 'react';
+import { useMemo, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare, Globe2 } from 'lucide-react';
+import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare, Globe2, CalendarDays, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import works from '../data/works.json';
 
@@ -8,6 +8,59 @@ function Home() {
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [1, 1.1]);
+  const quotePool = [
+    {
+      text: '我只担心一件事，我怕我配不上我所受的苦难。',
+      source: '《卡拉马佐夫兄弟》',
+    },
+    {
+      text: '人需要的只不过是一种独立的意愿。',
+      source: '《地下室手记》',
+    },
+    {
+      text: '要爱生活，不要爱生活的意义。',
+      source: '读书札记',
+    },
+    {
+      text: '二二得四已经并非生活，而是死亡的开始。',
+      source: '《地下室手记》',
+    },
+  ];
+  const timeline = [
+    {
+      year: '1821',
+      title: '诞生于莫斯科',
+      detail: '在医院庭院中成长，早年即接触苦难与信仰。',
+    },
+    {
+      year: '1849',
+      title: '彼得堡“死刑”与流放',
+      detail: '临刑赦免，随后西伯利亚服苦役，精神世界剧变。',
+    },
+    {
+      year: '1864 - 1869',
+      title: '创作转折期',
+      detail: '以《地下室手记》为节点，写出更锋利的人性审问。',
+    },
+    {
+      year: '1880 - 1881',
+      title: '巅峰与终章',
+      detail: '《卡拉马佐夫兄弟》发表后声望达到顶峰，翌年离世。',
+    },
+  ];
+  const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Math.random() * quotePool.length));
+  const featuredQuote = useMemo(() => quotePool[quoteIndex], [quoteIndex]);
+
+  const pickAnotherQuote = () => {
+    if (quotePool.length <= 1) {
+      return;
+    }
+    let next = quoteIndex;
+    while (next === quoteIndex) {
+      next = Math.floor(Math.random() * quotePool.length);
+    }
+    setQuoteIndex(next);
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-[#f5f5dc] selection:bg-red-900 selection:text-white font-serif overflow-x-hidden">
@@ -22,7 +75,7 @@ function Home() {
           <div className="absolute inset-0 bg-black/40 z-10"></div>
           <div 
             className="w-full h-full bg-cover bg-center grayscale-[0.3] brightness-[0.9]"
-            style={{ backgroundImage: "url('dosto-bg.jpg')" }}
+            style={{ backgroundImage: `url('${import.meta.env.BASE_URL}dostoevsky-writing.svg')` }}
           ></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0a0a] z-20"></div>
         </motion.div>
@@ -46,8 +99,9 @@ function Home() {
             DOSTOEVSKY
           </h1>
           <p className="text-xl md:text-2xl text-stone-400 italic mb-12 max-w-2xl mx-auto leading-relaxed">
-            “我只担心一件事，我怕我配不上我所受的苦难。”
+            “{featuredQuote.text}”
           </p>
+          <p className="text-xs tracking-[0.35em] uppercase text-stone-500 mb-10">{featuredQuote.source}</p>
           <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
             <motion.button 
               onClick={() => document.getElementById('works').scrollIntoView({ behavior: 'smooth' })}
@@ -67,6 +121,14 @@ function Home() {
                 全球讨论图谱 <Globe2 size={18} />
               </span>
             </a>
+            <motion.button
+              onClick={pickAnotherQuote}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-3 text-xs tracking-[0.25em] uppercase border border-stone-700 text-stone-300 hover:text-white hover:border-red-900 transition-all flex items-center gap-2"
+            >
+              换一句 <RefreshCw size={14} />
+            </motion.button>
           </div>
         </motion.div>
 
@@ -104,6 +166,32 @@ function Home() {
             </p>
           </div>
         </motion.div>
+      </section>
+
+      {/* Timeline Section */}
+      <section className="py-24 px-4 max-w-6xl mx-auto">
+        <div className="flex items-center gap-4 mb-14">
+          <CalendarDays className="text-red-900" size={24} />
+          <h2 className="text-4xl font-bold tracking-tight">生平时间轴</h2>
+          <div className="flex-grow h-px bg-gradient-to-r from-stone-800 to-transparent"></div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {timeline.map((item, idx) => (
+            <motion.article
+              key={item.year}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1, duration: 0.7 }}
+              className="p-6 border border-stone-800 bg-white/[0.01] hover:border-red-900/60 transition-colors"
+            >
+              <p className="text-xs font-sans tracking-[0.35em] text-red-800 uppercase mb-3">{item.year}</p>
+              <h3 className="text-2xl mb-3 text-stone-100">{item.title}</h3>
+              <p className="text-stone-400 leading-relaxed">{item.detail}</p>
+            </motion.article>
+          ))}
+        </div>
       </section>
 
       {/* Major Works Section */}

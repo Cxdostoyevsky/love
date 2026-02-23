@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Dostoevsky Writing</title>
+  <desc id="desc">An original stylized illustration of Dostoevsky writing at a desk.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#11131a"/>
+      <stop offset="60%" stop-color="#171821"/>
+      <stop offset="100%" stop-color="#1e1812"/>
+    </linearGradient>
+    <radialGradient id="lamp" cx="62%" cy="26%" r="28%">
+      <stop offset="0%" stop-color="#ffdca2" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#c58a43" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="desk" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b2718"/>
+      <stop offset="100%" stop-color="#5a3920"/>
+    </linearGradient>
+    <linearGradient id="coat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2d3038"/>
+      <stop offset="100%" stop-color="#1b1d23"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e2c5a3"/>
+      <stop offset="100%" stop-color="#c79e79"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="900" fill="url(#bg)"/>
+  <ellipse cx="860" cy="260" rx="430" ry="250" fill="url(#lamp)"/>
+
+  <g opacity="0.18" stroke="#8c6c45" stroke-width="2" fill="none">
+    <path d="M140 140h280"/>
+    <path d="M980 120h260"/>
+    <path d="M1160 190h160"/>
+  </g>
+
+  <rect x="0" y="620" width="1400" height="280" fill="url(#desk)"/>
+  <rect x="0" y="610" width="1400" height="18" fill="#6a4324"/>
+
+  <g transform="translate(210 505)">
+    <rect x="0" y="80" width="130" height="26" rx="3" fill="#7c5431"/>
+    <rect x="16" y="42" width="98" height="38" fill="#4e3321"/>
+    <rect x="28" y="10" width="76" height="32" fill="#3f2a1c"/>
+  </g>
+
+  <g transform="translate(960 500)">
+    <rect x="0" y="0" width="200" height="120" rx="10" fill="#2c2e35"/>
+    <rect x="12" y="12" width="176" height="96" rx="8" fill="#101218"/>
+    <circle cx="100" cy="60" r="26" fill="#1f222b" stroke="#6f747e" stroke-width="3"/>
+    <line x1="100" y1="60" x2="100" y2="44" stroke="#d9dce3" stroke-width="3"/>
+    <line x1="100" y1="60" x2="114" y2="66" stroke="#d9dce3" stroke-width="3"/>
+  </g>
+
+  <g transform="translate(560 210)">
+    <ellipse cx="300" cy="30" rx="34" ry="20" fill="#8b5c2f"/>
+    <rect x="294" y="48" width="12" height="120" fill="#6a4527"/>
+    <path d="M230 170 Q300 110 370 170 L340 190 Q300 150 260 190 Z" fill="#3d2f28"/>
+    <ellipse cx="300" cy="186" rx="120" ry="24" fill="#1c1a1a"/>
+    <ellipse cx="300" cy="186" rx="105" ry="16" fill="#f3c27d" opacity="0.28" filter="url(#soft)"/>
+  </g>
+
+  <g transform="translate(430 210)">
+    <path d="M220 420 Q270 325 385 314 Q498 308 548 418 L548 560 L220 560 Z" fill="url(#coat)"/>
+    <path d="M306 350 Q386 376 462 350 Q452 416 387 420 Q320 418 306 350 Z" fill="#f4f0e9"/>
+
+    <ellipse cx="389" cy="244" rx="86" ry="96" fill="url(#skin)"/>
+    <path d="M302 245 Q388 152 474 245 Q474 182 438 154 Q398 126 350 140 Q313 154 302 194 Z" fill="#42352d"/>
+    <path d="M322 268 Q388 322 456 268 Q448 352 390 374 Q330 352 322 268 Z" fill="#5a4638"/>
+    <path d="M346 206 Q388 168 430 206" stroke="#2c211c" stroke-width="8" stroke-linecap="round" fill="none"/>
+
+    <circle cx="362" cy="250" r="5" fill="#2d241f"/>
+    <circle cx="417" cy="250" r="5" fill="#2d241f"/>
+    <path d="M362 294 Q388 312 416 294" stroke="#6f4a34" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+    <path d="M322 424 Q372 454 434 440 Q482 430 508 398 Q526 458 520 532 L246 532 Q246 470 268 428 Q292 412 322 424 Z" fill="#23262d"/>
+
+    <g>
+      <path d="M492 470 Q538 474 568 500 Q548 526 512 532 Q476 526 458 498 Q472 478 492 470 Z" fill="url(#skin)"/>
+      <path d="M454 498 Q506 500 548 508" stroke="#c38f67" stroke-width="8" stroke-linecap="round"/>
+    </g>
+
+    <g>
+      <path d="M274 474 Q236 484 214 512 Q236 536 268 540 Q304 532 322 506 Q304 484 274 474 Z" fill="url(#skin)"/>
+      <path d="M320 506 Q280 514 238 522" stroke="#c38f67" stroke-width="8" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <g transform="translate(705 550)">
+    <path d="M0 0 L255 0 L230 98 L-20 98 Z" fill="#d4bc8f"/>
+    <path d="M12 20 L242 20" stroke="#7f6c48" stroke-width="2" opacity="0.5"/>
+    <path d="M8 40 L234 40" stroke="#7f6c48" stroke-width="2" opacity="0.5"/>
+    <path d="M2 60 L226 60" stroke="#7f6c48" stroke-width="2" opacity="0.5"/>
+    <path d="M-8 80 L218 80" stroke="#7f6c48" stroke-width="2" opacity="0.5"/>
+  </g>
+
+  <g transform="translate(640 545) rotate(-12)">
+    <path d="M0 0 L150 0 L164 8 L14 8 Z" fill="#d9dde5"/>
+    <path d="M150 0 L178 4 L164 8 Z" fill="#f5f8ff"/>
+    <path d="M0 0 L14 8 L-8 12 Z" fill="#9a7b4a"/>
+  </g>
+
+  <ellipse cx="720" cy="640" rx="210" ry="36" fill="#000" opacity="0.2" filter="url(#soft)"/>
+</svg>

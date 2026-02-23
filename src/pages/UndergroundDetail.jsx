@@ -23,7 +23,10 @@ function UndergroundDetail() {
 
       {/* Hero Header */}
       <header className="pt-40 pb-20 px-4 text-center relative border-b border-stone-900">
-        <div className="absolute inset-0 bg-[url('dosto-bg.jpg')] bg-cover bg-center opacity-10 grayscale pointer-events-none"></div>
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-10 grayscale pointer-events-none"
+          style={{ backgroundImage: `url('${import.meta.env.BASE_URL}dostoevsky-writing.svg')` }}
+        ></div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
