@@ -166,10 +166,16 @@ body {
   overflow: hidden;
 }
 
+.frost-card > * {
+  position: relative;
+  z-index: 1;
+}
+
 .frost-card::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
   background: linear-gradient(
     125deg,
@@ -185,6 +191,7 @@ body {
   content: "";
   position: absolute;
   inset: -35% -25%;
+  z-index: 0;
   pointer-events: none;
   opacity: 0;
   transform: translate3d(-40%, 18%, 0) rotate(-8deg);

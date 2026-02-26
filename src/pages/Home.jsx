@@ -241,12 +241,12 @@ function Home() {
                   <p className="text-stone-400 leading-relaxed mb-10 flex-grow">{work.desc}</p>
                   
                   {work.title === "地下室手记" ? (
-                    <Link 
-                      to="/underground"
+                    <a
+                      href="#/underground"
                       className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#d4e4f7] font-bold border-b border-[#4a6fa5]/40 pb-2 self-start hover:border-[#4a6fa5] transition-all"
                     >
                       查看读书笔记 <BookOpen size={14} />
-                    </Link>
+                    </a>
                   ) : (
                     <button className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-400 font-bold border-b border-stone-700 pb-2 self-start cursor-not-allowed opacity-50">
                       翻开此书 <Book size={14} />
