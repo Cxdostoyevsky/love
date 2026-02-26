@@ -3,26 +3,31 @@ import { motion } from 'framer-motion';
 import { Quote, Lightbulb, MessageSquare, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import notes from '../data/notes.json';
+import Snowfall from '../components/Snowfall';
 
 function UndergroundDetail() {
-  // 页面跳转后滚动到顶部
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0e14] text-[#f5f5dc] font-serif overflow-x-hidden">
-      {/* Header / Nav - 俄国冬夜色调统一 */}
-      <nav className="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center backdrop-blur-md bg-[#0d1117]/80">
-        <Link to="/" className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors group">
+    <div className="min-h-screen russian-night-bg text-[#f5f5dc] font-serif overflow-x-hidden relative">
+      <div className="fixed inset-0 z-[100] pointer-events-none snow-noise" aria-hidden="true" />
+      <Snowfall />
+      <div className="aurora-layer z-[1]" />
+      <div className="blizzard-vignette z-[2]" />
+      {/* Header / Nav - 俄国大雪冬夜 */}
+      <nav className="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center backdrop-blur-md bg-[#0d1117]/90 border-b border-[#4a6fa5]/20 glass-panel">
+        <Link to="/" className="flex items-center gap-2 text-[#d4e4f7]/80 hover:text-[#d4e4f7] transition-colors group">
           <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
           <span className="text-xs uppercase tracking-widest">返回首页</span>
         </Link>
-        <div className="text-xs font-sans text-stone-600 uppercase tracking-widest">Dostoevsky Research Society</div>
+        <div className="text-xs font-sans text-[#4a6fa5]/70 uppercase tracking-widest">Dostoevsky Research Society</div>
       </nav>
 
       {/* Hero Header */}
-      <header className="pt-40 pb-20 px-4 text-center relative border-b border-stone-900">
+      <header className="pt-40 pb-20 px-4 text-center relative border-b border-[#4a6fa5]/20 frost-overlay">
+        <div className="candle-glow top-[24%] left-[18%]" />
         <div
           className="absolute inset-0 bg-cover bg-center opacity-10 grayscale pointer-events-none"
           style={{ backgroundImage: `url('${import.meta.env.BASE_URL}dostoevsky-writing.svg')` }}
@@ -32,7 +37,7 @@ function UndergroundDetail() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4 text-stone-100">地下室的回响</h1>
+          <h1 className="title-shimmer text-5xl md:text-7xl font-bold tracking-tighter mb-4 text-stone-100">地下室的回响</h1>
           <p className="text-red-900 uppercase tracking-[0.4em] text-sm font-bold mb-8">Echoes from the Underground</p>
           <div className="max-w-2xl mx-auto h-px bg-gradient-to-r from-transparent via-stone-800 to-transparent"></div>
         </motion.div>
@@ -53,7 +58,7 @@ function UndergroundDetail() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative pl-12 border-l border-stone-800 group"
+              className="relative pl-12 border-l border-stone-800 group frost-card"
             >
               <div className="absolute -left-[1px] top-0 w-[2px] h-0 group-hover:h-full bg-red-900 transition-all duration-700"></div>
               <div className="text-xs text-red-800 font-bold mb-4 tracking-widest uppercase flex items-center gap-2">
@@ -71,7 +76,7 @@ function UndergroundDetail() {
         </div>
 
         {/* Call to Action */}
-        <section className="mt-32 p-12 bg-[#0d1117] border border-stone-800 text-center">
+        <section className="mt-32 p-12 bg-[#0d1117]/80 border border-stone-800 text-center frost-card glass-panel">
           <Quote className="mx-auto mb-8 text-stone-800" size={40} />
           <p className="text-xl text-stone-400 italic mb-10 leading-relaxed">
             “正如陀氏所言，他在深渊中依然歌颂生命。地下室不是终点，而是认清现实后重新出发的起点。”
@@ -95,7 +100,7 @@ function UndergroundDetail() {
       </main>
 
       {/* Footer */}
-      <footer className="py-20 border-t border-stone-900 bg-[#080a0d] text-center">
+      <footer className="py-20 border-t border-stone-900 bg-[#080a0d]/95 text-center frost-overlay">
         <p className="text-stone-600 text-sm tracking-widest">© {new Date().getFullYear()} Dostoevsky X_maker | 痛苦是人类进化的阶梯</p>
       </footer>
     </div>
