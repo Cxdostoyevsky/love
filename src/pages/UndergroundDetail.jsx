@@ -11,7 +11,7 @@ function UndergroundDetail() {
   }, []);
 
   return (
-    <div className="min-h-screen russian-night-bg text-[#f5f5dc] font-serif overflow-x-hidden relative">
+    <div className="min-h-screen russian-night-bg single-scroll-page text-[#f5f5dc] font-serif overflow-x-hidden relative">
       <div className="fixed inset-0 z-[100] pointer-events-none snow-noise" aria-hidden="true" />
       <Snowfall />
       <div className="aurora-layer z-[1]" />

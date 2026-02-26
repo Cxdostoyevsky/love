@@ -12,19 +12,53 @@ const SNOWFLAKES = Array.from({ length: 120 }, (_, i) => ({
 export default function Snowfall() {
   useEffect(() => {
     const root = document.documentElement;
+    let rafId = null;
+    let pendingDrift = false;
+    let pendingParallax = false;
+    let latestMouseX = 0;
+    let latestMouseY = 0;
 
-    const updateSnowDrift = () => {
+    const applySnowDrift = () => {
       const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
       const progress = window.scrollY / scrollable;
       const driftX = Math.round(progress * 110 - 55);
       root.style.setProperty('--snow-drift-x', `${driftX}px`);
+      pendingDrift = false;
+    };
+
+    const applyParallax = () => {
+      const offsetX = (latestMouseX / window.innerWidth - 0.5) * 18;
+      const offsetY = (latestMouseY / window.innerHeight - 0.5) * 14;
+      root.style.setProperty('--parallax-x', `${offsetX.toFixed(2)}px`);
+      root.style.setProperty('--parallax-y', `${offsetY.toFixed(2)}px`);
+      pendingParallax = false;
+    };
+
+    const scheduleFrame = () => {
+      if (rafId !== null) {
+        return;
+      }
+      rafId = window.requestAnimationFrame(() => {
+        if (pendingDrift) {
+          applySnowDrift();
+        }
+        if (pendingParallax) {
+          applyParallax();
+        }
+        rafId = null;
+      });
+    };
+
+    const updateSnowDrift = () => {
+      pendingDrift = true;
+      scheduleFrame();
     };
 
     const updateParallax = (event) => {
-      const offsetX = (event.clientX / window.innerWidth - 0.5) * 18;
-      const offsetY = (event.clientY / window.innerHeight - 0.5) * 14;
-      root.style.setProperty('--parallax-x', `${offsetX.toFixed(2)}px`);
-      root.style.setProperty('--parallax-y', `${offsetY.toFixed(2)}px`);
+      latestMouseX = event.clientX;
+      latestMouseY = event.clientY;
+      pendingParallax = true;
+      scheduleFrame();
     };
 
     const resetParallax = () => {
@@ -32,12 +66,15 @@ export default function Snowfall() {
       root.style.setProperty('--parallax-y', '0px');
     };
 
-    updateSnowDrift();
+    applySnowDrift();
     window.addEventListener('scroll', updateSnowDrift, { passive: true });
     window.addEventListener('mousemove', updateParallax, { passive: true });
     window.addEventListener('mouseleave', resetParallax);
 
     return () => {
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
       window.removeEventListener('scroll', updateSnowDrift);
       window.removeEventListener('mousemove', updateParallax);
       window.removeEventListener('mouseleave', resetParallax);

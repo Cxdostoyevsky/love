@@ -21,6 +21,23 @@ body {
   font-family: var(--font-serif);
 }
 
+html, body, #root {
+  overflow-x: hidden;
+}
+
+.single-scroll-page {
+  overflow-y: visible;
+}
+
+.single-scroll-page::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.single-scroll-page {
+  scrollbar-width: none;
+}
+
 /* 深冬俄夜底色 */
 .russian-night-bg {
   background:
@@ -107,6 +124,7 @@ body {
   top: -20px;
   color: rgba(212, 228, 247, 0.9);
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  will-change: transform, opacity;
   pointer-events: none;
   user-select: none;
 }
@@ -140,7 +158,7 @@ body {
 
 .aurora-layer {
   position: absolute;
-  inset: -6%;
+  inset: 0;
   pointer-events: none;
   mix-blend-mode: screen;
   background:
@@ -148,6 +166,7 @@ body {
     radial-gradient(36% 30% at 74% 10%, rgba(82, 128, 191, 0.24), transparent 70%),
     radial-gradient(25% 30% at 52% 68%, rgba(212, 228, 247, 0.14), transparent 78%);
   filter: blur(18px);
+  will-change: transform, opacity;
   transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
   animation: aurora-drift 12s ease-in-out infinite;
 }
