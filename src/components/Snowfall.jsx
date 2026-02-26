@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 /* 俄国大雪 - 共享雪景组件 */
 const SNOWFLAKES = Array.from({ length: 120 }, (_, i) => ({
   id: i,
@@ -8,6 +10,43 @@ const SNOWFLAKES = Array.from({ length: 120 }, (_, i) => ({
 }));
 
 export default function Snowfall() {
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const updateSnowDrift = () => {
+      const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const progress = window.scrollY / scrollable;
+      const driftX = Math.round(progress * 110 - 55);
+      root.style.setProperty('--snow-drift-x', `${driftX}px`);
+    };
+
+    const updateParallax = (event) => {
+      const offsetX = (event.clientX / window.innerWidth - 0.5) * 18;
+      const offsetY = (event.clientY / window.innerHeight - 0.5) * 14;
+      root.style.setProperty('--parallax-x', `${offsetX.toFixed(2)}px`);
+      root.style.setProperty('--parallax-y', `${offsetY.toFixed(2)}px`);
+    };
+
+    const resetParallax = () => {
+      root.style.setProperty('--parallax-x', '0px');
+      root.style.setProperty('--parallax-y', '0px');
+    };
+
+    updateSnowDrift();
+    window.addEventListener('scroll', updateSnowDrift, { passive: true });
+    window.addEventListener('mousemove', updateParallax, { passive: true });
+    window.addEventListener('mouseleave', resetParallax);
+
+    return () => {
+      window.removeEventListener('scroll', updateSnowDrift);
+      window.removeEventListener('mousemove', updateParallax);
+      window.removeEventListener('mouseleave', resetParallax);
+      root.style.setProperty('--snow-drift-x', '30px');
+      root.style.setProperty('--parallax-x', '0px');
+      root.style.setProperty('--parallax-y', '0px');
+    };
+  }, []);
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-[5]" aria-hidden="true">
       {SNOWFLAKES.slice(0, 40).map((s) => (

@@ -37,7 +37,7 @@ body {
     opacity: 0.9;
   }
   100% {
-    transform: translateY(115vh) translateX(30px) rotate(360deg);
+    transform: translateY(115vh) translateX(var(--snow-drift-x, 30px)) rotate(360deg);
     opacity: 0.2;
   }
 }
@@ -48,7 +48,7 @@ body {
     opacity: 0.7;
   }
   100% {
-    transform: translateY(108vh) translateX(-25px);
+    transform: translateY(108vh) translateX(calc(var(--snow-drift-x, 30px) * -0.8));
     opacity: 0.15;
   }
 }
@@ -59,7 +59,7 @@ body {
     opacity: 0.8;
   }
   100% {
-    transform: translateY(120vh) translateX(50px) scale(1.2);
+    transform: translateY(120vh) translateX(calc(var(--snow-drift-x, 30px) * 1.7)) scale(1.2);
     opacity: 0.1;
   }
 }
@@ -113,13 +113,20 @@ body {
 
 /* 霜冻纹理 */
 .frost-overlay {
+  position: relative;
+}
+
+.frost-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
   background: linear-gradient(
     135deg,
     rgba(212, 228, 247, 0.03) 0%,
     transparent 50%,
     rgba(255, 255, 255, 0.02) 100%
   );
-  pointer-events: none;
 }
 
 .blizzard-vignette {
@@ -141,6 +148,7 @@ body {
     radial-gradient(36% 30% at 74% 10%, rgba(82, 128, 191, 0.24), transparent 70%),
     radial-gradient(25% 30% at 52% 68%, rgba(212, 228, 247, 0.14), transparent 78%);
   filter: blur(18px);
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
   animation: aurora-drift 12s ease-in-out infinite;
 }
 
@@ -171,6 +179,28 @@ body {
     rgba(176, 210, 255, 0.08) 100%
   );
   opacity: 0.45;
+}
+
+.frost-card::before {
+  content: "";
+  position: absolute;
+  inset: -35% -25%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-40%, 18%, 0) rotate(-8deg);
+  transition: opacity 0.45s ease, transform 0.65s ease;
+  background:
+    radial-gradient(circle at 18% 42%, rgba(232, 244, 255, 0.42) 0 2px, transparent 3px),
+    radial-gradient(circle at 34% 64%, rgba(218, 235, 255, 0.35) 0 2px, transparent 3px),
+    radial-gradient(circle at 52% 40%, rgba(244, 250, 255, 0.38) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 56%, rgba(209, 230, 255, 0.3) 0 2px, transparent 3px),
+    linear-gradient(115deg, transparent 0%, rgba(198, 224, 255, 0.16) 40%, rgba(236, 247, 255, 0.22) 52%, transparent 66%);
+  filter: blur(0.2px);
+}
+
+.frost-card:hover::before {
+  opacity: 0.95;
+  transform: translate3d(22%, -12%, 0) rotate(6deg);
 }
 
 .title-shimmer {
