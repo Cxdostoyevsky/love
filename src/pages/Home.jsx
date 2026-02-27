@@ -4,6 +4,7 @@ import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare, Glob
 import { Link } from 'react-router-dom';
 import works from '../data/works.json';
 import Snowfall from '../components/Snowfall';
+import DostoevskyMascot from '../components/DostoevskyMascot';
 
 function Home() {
   const { scrollYProgress } = useScroll();
@@ -157,6 +158,10 @@ function Home() {
         >
           <ChevronDown size={32} />
         </motion.div>
+
+        <div className="absolute right-4 bottom-6 md:right-10 md:bottom-10 z-30 opacity-95">
+          <DostoevskyMascot />
+        </div>
       </section>
 
       {/* Intro Section - 带动效的文本 */}
