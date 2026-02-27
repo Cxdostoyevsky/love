@@ -53,12 +53,12 @@ function Home() {
   const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Math.random() * quotePool.length));
   const featuredQuote = useMemo(() => quotePool[quoteIndex], [quoteIndex]);
   const visualWall = [
-    { src: `${import.meta.env.BASE_URL}gallery/dosto-1.jpg`, title: '纪念雕像夜景' },
-    { src: `${import.meta.env.BASE_URL}gallery/dosto-2.jpg`, title: '手绘海报风格' },
-    { src: `${import.meta.env.BASE_URL}gallery/dosto-3.jpg`, title: '经典肖像' },
-    { src: `${import.meta.env.BASE_URL}gallery/dosto-4.jpg`, title: '影视片段' },
-    { src: `${import.meta.env.BASE_URL}gallery/dosto-5.jpg`, title: '改编角色群像' },
-    { src: `${import.meta.env.BASE_URL}gallery/dosto-6.jpg`, title: '中文书封设计' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-1.png`, title: '纪念雕像夜景' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-2.png`, title: '手绘海报风格' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-3.png`, title: '经典肖像' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-4.png`, title: '影视片段' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-5.png`, title: '改编角色群像' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-6.png`, title: '中文书封设计' },
   ];
 
   const pickAnotherQuote = () => {
