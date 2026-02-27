@@ -52,6 +52,14 @@ function Home() {
   ];
   const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Math.random() * quotePool.length));
   const featuredQuote = useMemo(() => quotePool[quoteIndex], [quoteIndex]);
+  const visualWall = [
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-1.jpg`, title: '纪念雕像夜景' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-2.jpg`, title: '手绘海报风格' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-3.jpg`, title: '经典肖像' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-4.jpg`, title: '影视片段' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-5.jpg`, title: '改编角色群像' },
+    { src: `${import.meta.env.BASE_URL}gallery/dosto-6.jpg`, title: '中文书封设计' },
+  ];
 
   const pickAnotherQuote = () => {
     if (quotePool.length <= 1) {
@@ -259,6 +267,32 @@ function Home() {
                   )}
                 </div>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Visual Wall */}
+      <section className="py-28 bg-[#0a0e14]">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center gap-4 mb-14">
+            <h2 className="text-4xl font-bold tracking-tight">陀氏影像参考墙</h2>
+            <p className="text-[#4a6fa5]/70 font-sans tracking-widest uppercase text-xs">Visual References</p>
+            <div className="flex-grow h-px bg-gradient-to-r from-[#4a6fa5]/40 to-transparent"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {visualWall.map((item) => (
+              <figure key={item.src} className="group border border-[#4a6fa5]/20 bg-[#0d1117] overflow-hidden">
+                <img
+                  src={item.src}
+                  alt={item.title}
+                  loading="lazy"
+                  className="w-full h-[260px] md:h-[320px] object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                />
+                <figcaption className="px-4 py-3 text-xs tracking-[0.2em] uppercase text-stone-400 font-sans border-t border-[#4a6fa5]/20">
+                  {item.title}
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
