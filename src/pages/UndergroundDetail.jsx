@@ -1,46 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useMemo } from 'react';
 import { Quote, Lightbulb, MessageSquare, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import notes from '../data/notes.json';
-import Snowfall from '../components/Snowfall';
 
 function UndergroundDetail() {
-  const [performanceMode, setPerformanceMode] = useState(false);
-
   const bookNotes = useMemo(() => notes[0]?.quotes ?? [], []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const hasLowCpu = typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4;
-    const hasLowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4;
-
-    const syncPerformanceMode = () => {
-      setPerformanceMode(mediaQuery.matches || hasLowCpu || hasLowMemory);
-    };
-
-    syncPerformanceMode();
-    mediaQuery.addEventListener('change', syncPerformanceMode);
-
-    return () => {
-      mediaQuery.removeEventListener('change', syncPerformanceMode);
-    };
   }, []);
 
   return (
-    <div
-      className={`min-h-screen russian-night-bg single-scroll-page text-[#f5f5dc] font-serif overflow-x-hidden relative ${
-        performanceMode ? 'performance-mode' : ''
-      }`}
-    >
-      {!performanceMode && <div className="fixed inset-0 z-[100] pointer-events-none snow-noise" aria-hidden="true" />}
-      <Snowfall reducedMotion={performanceMode} />
-      {!performanceMode && <div className="aurora-layer z-[1]" />}
-      <div className="blizzard-vignette z-[2]" />
-      {/* Header / Nav - 俄国大雪冬夜 */}
-      <nav className="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center bg-[#0d1117]/90 border-b border-[#4a6fa5]/20 glass-panel">
+    <div className="min-h-screen text-[#f5f5dc] font-serif overflow-x-hidden relative bg-[#0a0e14]">
+      <nav className="sticky top-0 left-0 w-full z-50 p-6 flex justify-between items-center bg-[#0d1117] border-b border-[#4a6fa5]/20">
         <Link to="/" className="flex items-center gap-2 text-[#d4e4f7]/80 hover:text-[#d4e4f7] transition-colors group">
           <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
           <span className="text-xs uppercase tracking-widest">返回首页</span>
@@ -49,21 +21,12 @@ function UndergroundDetail() {
       </nav>
 
       {/* Hero Header */}
-      <header className="pt-40 pb-20 px-4 text-center relative border-b border-[#4a6fa5]/20 frost-overlay">
-        <div className="candle-glow top-[24%] left-[18%]" />
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-10 grayscale pointer-events-none"
-          style={{ backgroundImage: `url('${import.meta.env.BASE_URL}dostoevsky-writing.svg')` }}
-        ></div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <h1 className="title-shimmer text-5xl md:text-7xl font-bold tracking-tighter mb-4 text-stone-100">地下室的回响</h1>
+      <header className="pt-24 pb-16 px-4 text-center border-b border-[#4a6fa5]/20">
+        <div>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4 text-stone-100">地下室的回响</h1>
           <p className="text-red-900 uppercase tracking-[0.4em] text-sm font-bold mb-8">Echoes from the Underground</p>
           <div className="max-w-2xl mx-auto h-px bg-gradient-to-r from-transparent via-stone-800 to-transparent"></div>
-        </motion.div>
+        </div>
       </header>
 
       {/* Content */}
@@ -75,13 +38,9 @@ function UndergroundDetail() {
 
         <div className="space-y-24">
           {bookNotes.map((note, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={performanceMode ? false : { opacity: 0, y: 30 }}
-              whileInView={performanceMode ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-8% 0px' }}
-              transition={{ duration: 0.6 }}
-              className="relative pl-12 border-l border-stone-800 group frost-card"
+              className="relative pl-12 border-l border-stone-800 group"
             >
               <div className="absolute -left-[1px] top-0 w-[2px] h-0 group-hover:h-full bg-red-900 transition-all duration-700"></div>
               <div className="text-xs text-red-800 font-bold mb-4 tracking-widest uppercase flex items-center gap-2">
@@ -94,12 +53,12 @@ function UndergroundDetail() {
               <div className="flex justify-end">
                 <span className="text-[10px] text-stone-600 font-sans tracking-[0.3em] uppercase">— X_maker's Insight</span>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Call to Action */}
-        <section className="mt-32 p-12 bg-[#0d1117]/80 border border-stone-800 text-center frost-card glass-panel">
+        <section className="mt-32 p-12 bg-[#0d1117] border border-stone-800 text-center">
           <Quote className="mx-auto mb-8 text-stone-800" size={40} />
           <p className="text-xl text-stone-400 italic mb-10 leading-relaxed">
             “正如陀氏所言，他在深渊中依然歌颂生命。地下室不是终点，而是认清现实后重新出发的起点。”
@@ -123,7 +82,7 @@ function UndergroundDetail() {
       </main>
 
       {/* Footer */}
-      <footer className="py-20 border-t border-stone-900 bg-[#080a0d]/95 text-center frost-overlay">
+      <footer className="py-20 border-t border-stone-900 bg-[#080a0d] text-center">
         <p className="text-stone-600 text-sm tracking-widest">© {new Date().getFullYear()} Dostoevsky X_maker | 痛苦是人类进化的阶梯</p>
       </footer>
     </div>
