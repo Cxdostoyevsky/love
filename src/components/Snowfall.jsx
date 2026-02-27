@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 /* 俄国大雪 - 共享雪景组件 */
 const SNOWFLAKES = Array.from({ length: 120 }, (_, i) => ({
@@ -9,7 +9,19 @@ const SNOWFLAKES = Array.from({ length: 120 }, (_, i) => ({
   delay: (i * 0.3) % 8,
 }));
 
-export default function Snowfall() {
+export default function Snowfall({ reducedMotion = false }) {
+  const layers = useMemo(() => {
+    const farCount = reducedMotion ? 14 : 28;
+    const midCount = reducedMotion ? 18 : 28;
+    const blizzardCount = reducedMotion ? 10 : 20;
+
+    return {
+      far: SNOWFLAKES.slice(0, farCount),
+      mid: SNOWFLAKES.slice(farCount, farCount + midCount),
+      blizzard: SNOWFLAKES.slice(farCount + midCount, farCount + midCount + blizzardCount),
+    };
+  }, [reducedMotion]);
+
   useEffect(() => {
     const root = document.documentElement;
     let rafId = null;
@@ -21,14 +33,14 @@ export default function Snowfall() {
     const applySnowDrift = () => {
       const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
       const progress = window.scrollY / scrollable;
-      const driftX = Math.round(progress * 110 - 55);
+      const driftX = Math.round(progress * 80 - 40);
       root.style.setProperty('--snow-drift-x', `${driftX}px`);
       pendingDrift = false;
     };
 
     const applyParallax = () => {
-      const offsetX = (latestMouseX / window.innerWidth - 0.5) * 18;
-      const offsetY = (latestMouseY / window.innerHeight - 0.5) * 14;
+      const offsetX = (latestMouseX / window.innerWidth - 0.5) * 12;
+      const offsetY = (latestMouseY / window.innerHeight - 0.5) * 8;
       root.style.setProperty('--parallax-x', `${offsetX.toFixed(2)}px`);
       root.style.setProperty('--parallax-y', `${offsetY.toFixed(2)}px`);
       pendingParallax = false;
@@ -68,8 +80,11 @@ export default function Snowfall() {
 
     applySnowDrift();
     window.addEventListener('scroll', updateSnowDrift, { passive: true });
-    window.addEventListener('mousemove', updateParallax, { passive: true });
-    window.addEventListener('mouseleave', resetParallax);
+
+    if (!reducedMotion) {
+      window.addEventListener('mousemove', updateParallax, { passive: true });
+      window.addEventListener('mouseleave', resetParallax);
+    }
 
     return () => {
       if (rafId !== null) {
@@ -78,15 +93,15 @@ export default function Snowfall() {
       window.removeEventListener('scroll', updateSnowDrift);
       window.removeEventListener('mousemove', updateParallax);
       window.removeEventListener('mouseleave', resetParallax);
-      root.style.setProperty('--snow-drift-x', '30px');
+      root.style.setProperty('--snow-drift-x', '24px');
       root.style.setProperty('--parallax-x', '0px');
       root.style.setProperty('--parallax-y', '0px');
     };
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-[5]" aria-hidden="true">
-      {SNOWFLAKES.slice(0, 40).map((s) => (
+      {layers.far.map((s) => (
         <div
           key={`far-${s.id}`}
           className="snowflake"
@@ -101,7 +116,7 @@ export default function Snowfall() {
           }}
         />
       ))}
-      {SNOWFLAKES.slice(40, 85).map((s) => (
+      {layers.mid.map((s) => (
         <div
           key={s.id}
           className="snowflake"
@@ -116,7 +131,7 @@ export default function Snowfall() {
           }}
         />
       ))}
-      {SNOWFLAKES.slice(85).map((s) => (
+      {layers.blizzard.map((s) => (
         <div
           key={`bliz-${s.id}`}
           className="snowflake"
@@ -125,9 +140,9 @@ export default function Snowfall() {
             width: `${s.size + 2}px`,
             height: `${s.size + 2}px`,
             borderRadius: '50%',
-            background: 'rgba(255, 255, 255, 0.95)',
-            boxShadow: '0 0 10px rgba(255,255,255,0.6)',
-            animation: `snowfall-blizzard ${s.duration - 2}s linear ${s.delay}s infinite`,
+            background: 'rgba(255, 255, 255, 0.9)',
+            boxShadow: '0 0 8px rgba(255,255,255,0.5)',
+            animation: `snowfall-blizzard ${Math.max(s.duration - 2, 6)}s linear ${s.delay}s infinite`,
           }}
         />
       ))}

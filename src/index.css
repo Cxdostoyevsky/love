@@ -160,12 +160,12 @@ html, body, #root {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  mix-blend-mode: screen;
   background:
     radial-gradient(45% 38% at 18% 20%, rgba(121, 170, 238, 0.25), transparent 70%),
     radial-gradient(36% 30% at 74% 10%, rgba(82, 128, 191, 0.24), transparent 70%),
     radial-gradient(25% 30% at 52% 68%, rgba(212, 228, 247, 0.14), transparent 78%);
-  filter: blur(18px);
+  opacity: 0.72;
+  filter: blur(10px);
   will-change: transform, opacity;
   transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
   animation: aurora-drift 12s ease-in-out infinite;
@@ -174,6 +174,7 @@ html, body, #root {
 .glass-panel {
   background: linear-gradient(135deg, rgba(19, 29, 43, 0.78), rgba(10, 16, 24, 0.52));
   border: 1px solid rgba(122, 157, 208, 0.26);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(10px);
   box-shadow:
     inset 0 1px 0 rgba(221, 234, 255, 0.12),
@@ -239,6 +240,34 @@ html, body, #root {
 
 /* 雪景噪点 */
 .snow-noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.04;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px),
+    radial-gradient(circle at 65% 55%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 15%, rgba(212, 228, 247, 0.05) 0 1px, transparent 1px);
+  background-size: 7px 7px, 9px 9px, 11px 11px;
+  opacity: 0.03;
+}
+
+.performance-mode .glass-panel {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.performance-mode .frost-card::before,
+.performance-mode .title-shimmer,
+.performance-mode .candle-glow {
+  animation: none;
+}
+
+.performance-mode .frost-card::before {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-layer,
+  .candle-glow,
+  .title-shimmer,
+  .snowflake {
+    animation: none !important;
+  }
 }
