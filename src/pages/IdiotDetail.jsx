@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Quote, Feather, ArrowLeft, Sparkles, BookOpen } from 'lucide-react';
+import { Quote, Feather, ArrowLeft, BookOpen } from 'lucide-react';
+
+const IDIOT_COVER_SRC = `${import.meta.env.BASE_URL}idiot-cover.png`;
 import { Link } from 'react-router-dom';
 import notes from '../data/notes.json';
 
@@ -27,35 +29,57 @@ function IdiotDetail() {
         <div className="text-xs font-sans text-blue-400/60 uppercase tracking-widest">Dostoevsky Research Society</div>
       </nav>
 
-      {/* Hero Header */}
-      <header className="relative pt-48 pb-32 px-4 text-center border-b border-blue-900/20 overflow-hidden">
-        <motion.div 
+      {/* Hero Header — 封面肖像 + 标题 */}
+      <header className="relative pt-36 pb-24 md:pt-44 md:pb-32 px-4 text-center border-b border-blue-900/20 overflow-hidden">
+        <motion.div
           style={{ y, opacity }}
-          className="absolute inset-0 z-0"
+          className="pointer-events-none absolute inset-0 z-0"
+          aria-hidden
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-900/10 via-[#050814]/50 to-[#050814] z-10"></div>
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-screen z-20"></div>
+          <div
+            className="absolute inset-0 scale-110 bg-cover bg-center opacity-[0.18] blur-2xl"
+            style={{ backgroundImage: `url(${IDIOT_COVER_SRC})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050814]/80 via-[#050814]/90 to-[#050814] z-10" />
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-screen z-20" />
         </motion.div>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="relative z-30"
+          transition={{ duration: 1.5, ease: 'easeOut' }}
+          className="relative z-30 mx-auto max-w-4xl"
         >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
+          <motion.figure
+            initial={{ scale: 0.92, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-900/20 border border-blue-500/30 mb-8"
+            transition={{ delay: 0.35, duration: 0.9 }}
+            className="mx-auto mb-10 w-[min(100%,18rem)] md:w-[min(100%,22rem)]"
           >
-            <Sparkles className="text-blue-400" size={24} />
-          </motion.div>
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-100 via-white to-blue-300 drop-shadow-lg">
+            <div className="relative rounded-2xl border border-blue-400/25 bg-gradient-to-b from-blue-950/40 to-[#050814] p-2 shadow-[0_0_60px_-12px_rgba(96,165,250,0.45)]">
+              <div className="overflow-hidden rounded-xl ring-1 ring-white/10">
+                <img
+                  src={IDIOT_COVER_SRC}
+                  alt="费奥多尔·米哈伊洛维奇·陀思妥耶夫斯基肖像"
+                  width={128}
+                  height={128}
+                  className="aspect-square w-full object-cover [image-rendering:auto]"
+                  decoding="async"
+                />
+              </div>
+            </div>
+            <figcaption className="mt-4 font-sans text-[11px] uppercase tracking-[0.35em] text-blue-400/70">
+              Fyodor Dostoevsky · 《白痴》
+            </figcaption>
+          </motion.figure>
+
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-5 text-transparent bg-clip-text bg-gradient-to-r from-blue-100 via-white to-blue-300 drop-shadow-lg">
             白痴的纯洁
           </h1>
-          <p className="text-blue-400 uppercase tracking-[0.5em] text-sm font-sans mb-12">The Idiot's Purity</p>
-          <div className="max-w-xs mx-auto h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
+          <p className="text-blue-400 uppercase tracking-[0.5em] text-sm font-sans mb-10">
+            The Idiot&apos;s Purity
+          </p>
+          <div className="mx-auto max-w-xs h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
         </motion.div>
       </header>
 
