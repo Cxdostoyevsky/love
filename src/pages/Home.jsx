@@ -260,6 +260,13 @@ function Home() {
                     >
                       查看读书笔记 <BookOpen size={14} />
                     </Link>
+                  ) : work.title === "白痴" ? (
+                    <Link 
+                      to="/idiot"
+                      className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-200 font-bold border-b border-stone-800 pb-2 self-start hover:border-blue-900 transition-all"
+                    >
+                      查看读书笔记 <BookOpen size={14} />
+                    </Link>
                   ) : (
                     <button className="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-400 font-bold border-b border-stone-700 pb-2 self-start cursor-not-allowed opacity-50">
                       翻开此书 <Book size={14} />
