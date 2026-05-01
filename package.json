@@ -13,15 +13,19 @@
     "research:report": "bun scripts/build_report.mjs",
     "research:cn": "bun scripts/localize_and_brief.mjs",
     "research:run": "bun run research:collect && bun run research:topics && bun run research:report",
-    "research:run:cn": "bun run research:run && bun run research:cn"
+    "research:run:cn": "bun run research:run && bun run research:cn",
+    "book:agent": "node scripts/book_agent.mjs"
   },
   "dependencies": {
+    "@cursor/sdk": "^1.0.11",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.11.0",
+    "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

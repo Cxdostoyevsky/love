@@ -1,0 +1,573 @@
+{
+  "version": 1,
+  "generatedBy": "cursor-sdk-book-agent",
+  "books": [
+    {
+      "file": "白痴（陀思妥耶夫斯基文集2015）.md",
+      "slug": "idiot-fywg-2015",
+      "headings": [
+        {
+          "level": 1,
+          "title": "元数据",
+          "anchor": "元数据"
+        },
+        {
+          "level": 1,
+          "title": "高亮划线",
+          "anchor": "高亮划线"
+        },
+        {
+          "level": 2,
+          "title": "“描绘人内心的全部深度”",
+          "anchor": "“描绘人内心的全部深度”"
+        },
+        {
+          "level": 3,
+          "title": "一",
+          "anchor": "一"
+        },
+        {
+          "level": 3,
+          "title": "二",
+          "anchor": "二"
+        },
+        {
+          "level": 3,
+          "title": "三",
+          "anchor": "三"
+        },
+        {
+          "level": 3,
+          "title": "四",
+          "anchor": "四"
+        },
+        {
+          "level": 3,
+          "title": "五",
+          "anchor": "五"
+        },
+        {
+          "level": 3,
+          "title": "六",
+          "anchor": "六"
+        },
+        {
+          "level": 3,
+          "title": "七",
+          "anchor": "七"
+        },
+        {
+          "level": 3,
+          "title": "八",
+          "anchor": "八"
+        },
+        {
+          "level": 3,
+          "title": "十二",
+          "anchor": "十二"
+        },
+        {
+          "level": 3,
+          "title": "十四",
+          "anchor": "十四"
+        },
+        {
+          "level": 3,
+          "title": "十六",
+          "anchor": "十六"
+        },
+        {
+          "level": 3,
+          "title": "三",
+          "anchor": "三-2"
+        },
+        {
+          "level": 3,
+          "title": "五",
+          "anchor": "五-2"
+        },
+        {
+          "level": 3,
+          "title": "十二",
+          "anchor": "十二-2"
+        },
+        {
+          "level": 3,
+          "title": "二",
+          "anchor": "二-2"
+        },
+        {
+          "level": 3,
+          "title": "三",
+          "anchor": "三-3"
+        },
+        {
+          "level": 3,
+          "title": "四",
+          "anchor": "四-2"
+        },
+        {
+          "level": 3,
+          "title": "五",
+          "anchor": "五-3"
+        }
+      ]
+    },
+    {
+      "file": "地下室手记（果麦经典）.md",
+      "slug": "notes-from-underground-guomai",
+      "headings": [
+        {
+          "level": 1,
+          "title": "元数据",
+          "anchor": "元数据"
+        },
+        {
+          "level": 1,
+          "title": "高亮划线",
+          "anchor": "高亮划线"
+        },
+        {
+          "level": 2,
+          "title": "第一章 地下室",
+          "anchor": "第一章-地下室"
+        },
+        {
+          "level": 3,
+          "title": "一",
+          "anchor": "一"
+        },
+        {
+          "level": 3,
+          "title": "二",
+          "anchor": "二"
+        },
+        {
+          "level": 3,
+          "title": "三",
+          "anchor": "三"
+        },
+        {
+          "level": 3,
+          "title": "四",
+          "anchor": "四"
+        },
+        {
+          "level": 3,
+          "title": "五",
+          "anchor": "五"
+        },
+        {
+          "level": 3,
+          "title": "六",
+          "anchor": "六"
+        },
+        {
+          "level": 3,
+          "title": "七",
+          "anchor": "七"
+        },
+        {
+          "level": 3,
+          "title": "八",
+          "anchor": "八"
+        },
+        {
+          "level": 3,
+          "title": "九",
+          "anchor": "九"
+        },
+        {
+          "level": 3,
+          "title": "十",
+          "anchor": "十"
+        },
+        {
+          "level": 3,
+          "title": "十一",
+          "anchor": "十一"
+        },
+        {
+          "level": 3,
+          "title": "一",
+          "anchor": "一-2"
+        },
+        {
+          "level": 3,
+          "title": "二",
+          "anchor": "二-2"
+        },
+        {
+          "level": 3,
+          "title": "三",
+          "anchor": "三-2"
+        },
+        {
+          "level": 3,
+          "title": "四",
+          "anchor": "四-2"
+        },
+        {
+          "level": 3,
+          "title": "五",
+          "anchor": "五-2"
+        },
+        {
+          "level": 3,
+          "title": "六",
+          "anchor": "六-2"
+        },
+        {
+          "level": 3,
+          "title": "七",
+          "anchor": "七-2"
+        },
+        {
+          "level": 3,
+          "title": "八",
+          "anchor": "八-2"
+        },
+        {
+          "level": 3,
+          "title": "九",
+          "anchor": "九-2"
+        },
+        {
+          "level": 3,
+          "title": "十",
+          "anchor": "十-2"
+        },
+        {
+          "level": 3,
+          "title": "＊ ＊ ＊",
+          "anchor": "＊-＊-＊"
+        },
+        {
+          "level": 2,
+          "title": "译后记 身份焦虑与身份认同——关于《地下室手记》",
+          "anchor": "译后记-身份焦虑与身份认同——关于《地下室手记》"
+        },
+        {
+          "level": 2,
+          "title": "作者介绍",
+          "anchor": "作者介绍"
+        },
+        {
+          "level": 1,
+          "title": "读书笔记",
+          "anchor": "读书笔记"
+        },
+        {
+          "level": 2,
+          "title": "一",
+          "anchor": "一-3"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论"
+        },
+        {
+          "level": 2,
+          "title": "二",
+          "anchor": "二-3"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-2"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-3"
+        },
+        {
+          "level": 2,
+          "title": "三",
+          "anchor": "三-3"
+        },
+        {
+          "level": 3,
+          "title": "章节评论 No.1",
+          "anchor": "章节评论-No.1"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-4"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-5"
+        },
+        {
+          "level": 2,
+          "title": "五",
+          "anchor": "五-3"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-6"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-7"
+        },
+        {
+          "level": 2,
+          "title": "八",
+          "anchor": "八-3"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-8"
+        },
+        {
+          "level": 2,
+          "title": "九",
+          "anchor": "九-3"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-9"
+        },
+        {
+          "level": 2,
+          "title": "一",
+          "anchor": "一-4"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-10"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-11"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-12"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-13"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-14"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-15"
+        },
+        {
+          "level": 2,
+          "title": "二",
+          "anchor": "二-4"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-16"
+        },
+        {
+          "level": 2,
+          "title": "三",
+          "anchor": "三-4"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-17"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-18"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-19"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-20"
+        },
+        {
+          "level": 2,
+          "title": "四",
+          "anchor": "四-3"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-21"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-22"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-23"
+        },
+        {
+          "level": 2,
+          "title": "五",
+          "anchor": "五-4"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-24"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-25"
+        },
+        {
+          "level": 2,
+          "title": "六",
+          "anchor": "六-3"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-26"
+        },
+        {
+          "level": 2,
+          "title": "七",
+          "anchor": "七-3"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-27"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-28"
+        },
+        {
+          "level": 2,
+          "title": "八",
+          "anchor": "八-4"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-29"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-30"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-31"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-32"
+        },
+        {
+          "level": 2,
+          "title": "九",
+          "anchor": "九-4"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-33"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-34"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-35"
+        },
+        {
+          "level": 2,
+          "title": "十",
+          "anchor": "十-3"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-36"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-37"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-38"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-39"
+        },
+        {
+          "level": 2,
+          "title": "译后记 身份焦虑与身份认同——关于《地下室手记》",
+          "anchor": "译后记-身份焦虑与身份认同——关于《地下室手记》-2"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-40"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-41"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-42"
+        },
+        {
+          "level": 3,
+          "title": "划线评论",
+          "anchor": "划线评论-43"
+        },
+        {
+          "level": 1,
+          "title": "本书评论",
+          "anchor": "本书评论"
+        }
+      ]
+    }
+  ]
+}

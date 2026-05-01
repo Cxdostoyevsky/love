@@ -1,10 +1,21 @@
 import React, { useEffect, useMemo } from 'react';
-import { Quote, Lightbulb, MessageSquare, ArrowLeft } from 'lucide-react';
+import { Quote, Lightbulb, MessageSquare, ArrowLeft, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import notes from '../data/notes.json';
+import bookManifest from '../../book/manifest.json';
+import undergroundMarkdown from '../../book/地下室手记（果麦经典）.md?raw';
+import ManifestTOC from '../components/ManifestTOC';
+import BookMarkdown from '../components/BookMarkdown';
 
 function UndergroundDetail() {
-  const bookNotes = useMemo(() => notes[0]?.quotes ?? [], []);
+  const bookNotes = useMemo(
+    () => notes.find((n) => n.book === '地下室手记')?.quotes ?? [],
+    []
+  );
+
+  const undergroundManifestBook = bookManifest.books.find(
+    (b) => b.slug === 'notes-from-underground-guomai'
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -56,6 +67,46 @@ function UndergroundDetail() {
             </div>
           ))}
         </div>
+
+        {/* book/manifest.json + 导出正文 */}
+        {undergroundManifestBook && (
+          <section className="mt-24 border-t border-stone-800 pt-16 -mx-4 px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="flex items-center gap-3 mb-10 text-stone-400">
+                <BookOpen size={22} />
+                <h2 className="font-sans text-[11px] md:text-xs uppercase tracking-[0.35em]">
+                  微信读书导出 · 正文目录（book/manifest.json）
+                </h2>
+              </div>
+              <div className="lg:grid lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:gap-12">
+                <aside className="hidden lg:block sticky top-24 self-start">
+                  <ManifestTOC
+                    headings={undergroundManifestBook.headings}
+                    tone="stone"
+                  />
+                </aside>
+                <div className="min-w-0">
+                  <details className="lg:hidden mb-8 border border-stone-800 rounded-lg bg-[#0d1117] p-4">
+                    <summary className="cursor-pointer text-sm text-stone-300">
+                      展开目录
+                    </summary>
+                    <div className="mt-4">
+                      <ManifestTOC
+                        headings={undergroundManifestBook.headings}
+                        tone="stone"
+                      />
+                    </div>
+                  </details>
+                  <BookMarkdown
+                    markdownText={undergroundMarkdown}
+                    manifestHeadings={undergroundManifestBook.headings}
+                    tone="stone"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Call to Action */}
         <section className="mt-32 p-12 bg-[#0d1117] border border-stone-800 text-center">

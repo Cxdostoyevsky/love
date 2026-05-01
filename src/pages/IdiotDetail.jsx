@@ -5,6 +5,10 @@ import { Quote, Feather, ArrowLeft, BookOpen } from 'lucide-react';
 const IDIOT_COVER_SRC = `${import.meta.env.BASE_URL}idiot-cover.png`;
 import { Link } from 'react-router-dom';
 import notes from '../data/notes.json';
+import bookManifest from '../../book/manifest.json';
+import idiotMarkdown from '../../book/白痴（陀思妥耶夫斯基文集2015）.md?raw';
+import ManifestTOC from '../components/ManifestTOC';
+import BookMarkdown from '../components/BookMarkdown';
 
 function IdiotDetail() {
   // 页面跳转后滚动到顶部
@@ -13,6 +17,9 @@ function IdiotDetail() {
   }, []);
 
   const idiotNotes = notes.find(n => n.book === "白痴")?.quotes || [];
+  const idiotManifestBook = bookManifest.books.find(
+    (b) => b.slug === 'idiot-fywg-2015'
+  );
   
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
@@ -124,6 +131,40 @@ function IdiotDetail() {
             </motion.div>
           ))}
         </div>
+
+        {/* book/manifest.json + 导出正文 */}
+        {idiotManifestBook && (
+          <section className="mt-32 border-t border-blue-900/20 pt-20 -mx-4 px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="flex items-center gap-3 mb-12 text-blue-300/80">
+                <BookOpen size={22} />
+                <h2 className="font-sans text-[11px] md:text-xs uppercase tracking-[0.35em]">
+                  微信读书导出 · 正文目录（book/manifest.json）
+                </h2>
+              </div>
+              <div className="lg:grid lg:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] lg:gap-12">
+                <aside className="hidden lg:block sticky top-28 self-start">
+                  <ManifestTOC headings={idiotManifestBook.headings} tone="blue" />
+                </aside>
+                <div className="min-w-0">
+                  <details className="lg:hidden mb-8 border border-blue-900/30 rounded-lg bg-blue-950/20 p-4">
+                    <summary className="cursor-pointer text-sm text-blue-200">
+                      展开目录
+                    </summary>
+                    <div className="mt-4">
+                      <ManifestTOC headings={idiotManifestBook.headings} tone="blue" />
+                    </div>
+                  </details>
+                  <BookMarkdown
+                    markdownText={idiotMarkdown}
+                    manifestHeadings={idiotManifestBook.headings}
+                    tone="blue"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Call to Action */}
         <section className="mt-40 p-16 relative overflow-hidden group">
