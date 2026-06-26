@@ -59,6 +59,7 @@ function Home() {
     { src: `${import.meta.env.BASE_URL}gallery/dosto-4.png`, title: '影视片段' },
     { src: `${import.meta.env.BASE_URL}gallery/dosto-5.png`, title: '改编角色群像' },
     { src: `${import.meta.env.BASE_URL}gallery/dosto-6.png`, title: '中文书封设计' },
+    { src: `${import.meta.env.BASE_URL}gallery/karamazov-brothers.png`, title: '卡拉马佐夫三兄弟' },
   ];
 
   const pickAnotherQuote = () => {

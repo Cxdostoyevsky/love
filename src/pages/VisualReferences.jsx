@@ -9,6 +9,7 @@ const visualWall = [
   { src: `${import.meta.env.BASE_URL}gallery/dosto-4.png`, title: '影视片段', type: 'Cinema' },
   { src: `${import.meta.env.BASE_URL}gallery/dosto-5.png`, title: '改编角色群像', type: 'Adaptation' },
   { src: `${import.meta.env.BASE_URL}gallery/dosto-6.png`, title: '中文书封设计', type: 'Cover' },
+  { src: `${import.meta.env.BASE_URL}gallery/karamazov-brothers.png`, title: '卡拉马佐夫三兄弟', type: 'Adaptation' },
 ];
 
 function VisualReferences() {
