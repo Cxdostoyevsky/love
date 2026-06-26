@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare, Globe2, CalendarDays, RefreshCw } from 'lucide-react';
+import { Book, Quote, Feather, ChevronDown, BookOpen, Heart, MessageSquare, Globe2, CalendarDays, RefreshCw, Images } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import works from '../data/works.json';
 import Snowfall from '../components/Snowfall';
@@ -287,21 +287,37 @@ function Home() {
             <p className="text-[#4a6fa5]/70 font-sans tracking-widest uppercase text-xs">Visual References</p>
             <div className="flex-grow h-px bg-gradient-to-r from-[#4a6fa5]/40 to-transparent"></div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {visualWall.map((item) => (
-              <figure key={item.src} className="group border border-[#4a6fa5]/20 bg-[#0d1117] overflow-hidden">
-                <img
-                  src={item.src}
-                  alt={item.title}
-                  loading="lazy"
-                  className="w-full h-[260px] md:h-[320px] object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                />
-                <figcaption className="px-4 py-3 text-xs tracking-[0.2em] uppercase text-stone-400 font-sans border-t border-[#4a6fa5]/20">
-                  {item.title}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <Link
+            to="/visuals"
+            className="group block relative overflow-hidden border border-[#4a6fa5]/25 bg-[#0d1117] frost-overlay frost-card"
+          >
+            <div className="grid grid-cols-2 md:grid-cols-3 h-[420px] md:h-[520px]">
+              {visualWall.map((item) => (
+                <div key={item.src} className="relative overflow-hidden">
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-[1.04] transition-all duration-700"
+                  />
+                  <div className="absolute inset-0 bg-[#0a0e14]/20 group-hover:bg-transparent transition-colors" />
+                </div>
+              ))}
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e14] via-[#0a0e14]/45 to-transparent" />
+            <div className="absolute left-6 right-6 bottom-6 md:left-10 md:bottom-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+              <div>
+                <p className="text-xs font-sans tracking-[0.35em] uppercase text-[#4a6fa5] mb-3">Enter The Archive</p>
+                <h3 className="text-3xl md:text-5xl font-bold tracking-tight text-stone-100 mb-3">进入影像参考墙</h3>
+                <p className="max-w-2xl text-[#d4e4f7]/70 leading-relaxed">
+                  浏览肖像、雕像、影视片段与书封设计，像进入“经典杰作”一样进入独立页面。
+                </p>
+              </div>
+              <span className="self-start md:self-auto inline-flex items-center gap-2 px-5 py-3 border border-[#4a6fa5]/45 text-[#d4e4f7] text-xs uppercase tracking-widest font-sans group-hover:border-[#d4e4f7] transition-colors">
+                查看影像 <Images size={16} />
+              </span>
+            </div>
+          </Link>
         </div>
       </section>
 
