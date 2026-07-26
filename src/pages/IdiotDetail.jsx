@@ -1,20 +1,107 @@
-import React, { useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Quote, Feather, ArrowLeft, BookOpen } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { Quote, Feather, ArrowLeft, BookOpen, Volume2, VolumeX } from 'lucide-react';
 
 const IDIOT_COVER_SRC = `${import.meta.env.BASE_URL}idiot-cover.png`;
+const IDIOT_NIGHT_SRC = `${import.meta.env.BASE_URL}gallery/petersburg-snow-night.png`;
 import { Link } from 'react-router-dom';
 import notes from '../data/notes.json';
 import bookManifest from '../../book/manifest.json';
 import idiotMarkdown from '../../book/白痴（陀思妥耶夫斯基文集2015）.md?raw';
 import ManifestTOC from '../components/ManifestTOC';
 import BookMarkdown from '../components/BookMarkdown';
+import Snowfall from '../components/Snowfall';
+
+function createWind(audioContext) {
+  const duration = 3;
+  const buffer = audioContext.createBuffer(
+    1,
+    audioContext.sampleRate * duration,
+    audioContext.sampleRate
+  );
+  const samples = buffer.getChannelData(0);
+  let last = 0;
+
+  for (let i = 0; i < samples.length; i += 1) {
+    const white = Math.random() * 2 - 1;
+    last = last * 0.985 + white * 0.015;
+    samples[i] = last * 3.2;
+  }
+
+  const source = audioContext.createBufferSource();
+  const lowPass = audioContext.createBiquadFilter();
+  const highPass = audioContext.createBiquadFilter();
+  const gain = audioContext.createGain();
+  const gust = audioContext.createOscillator();
+  const gustDepth = audioContext.createGain();
+
+  source.buffer = buffer;
+  source.loop = true;
+  lowPass.type = 'lowpass';
+  lowPass.frequency.value = 1250;
+  highPass.type = 'highpass';
+  highPass.frequency.value = 85;
+  gain.gain.value = 0.0001;
+  gust.type = 'sine';
+  gust.frequency.value = 0.085;
+  gustDepth.gain.value = 0.035;
+
+  source.connect(lowPass);
+  lowPass.connect(highPass);
+  highPass.connect(gain);
+  gain.connect(audioContext.destination);
+  gust.connect(gustDepth);
+  gustDepth.connect(gain.gain);
+  source.start();
+  gust.start();
+  gain.gain.exponentialRampToValueAtTime(0.055, audioContext.currentTime + 1.8);
+
+  return {
+    context: audioContext,
+    stop() {
+      const now = audioContext.currentTime;
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.setValueAtTime(Math.max(gain.gain.value, 0.0001), now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.7);
+      window.setTimeout(() => {
+        source.stop();
+        gust.stop();
+        audioContext.close();
+      }, 800);
+    },
+  };
+}
 
 function IdiotDetail() {
+  const [introOpen, setIntroOpen] = useState(true);
+  const [soundOn, setSoundOn] = useState(false);
+  const windRef = useRef(null);
+  const reducedMotion = useReducedMotion();
+
   // 页面跳转后滚动到顶部
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => () => {
+    windRef.current?.stop();
+  }, []);
+
+  const toggleWind = async () => {
+    if (windRef.current) {
+      windRef.current.stop();
+      windRef.current = null;
+      setSoundOn(false);
+      return;
+    }
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const context = new AudioContext();
+    await context.resume();
+    windRef.current = createWind(context);
+    setSoundOn(true);
+  };
 
   const idiotNotes = notes.find(n => n.book === "白痴")?.quotes || [];
   const idiotManifestBook = bookManifest.books.find(
@@ -27,6 +114,96 @@ function IdiotDetail() {
 
   return (
     <div className="min-h-screen bg-[#050814] text-[#e2e8f0] font-serif overflow-x-hidden selection:bg-blue-900/50 selection:text-white">
+      <AnimatePresence>
+        {introOpen && (
+          <motion.section
+            className="idiot-threshold"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reducedMotion ? 0.2 : 1.35, ease: [0.76, 0, 0.24, 1] }}
+            aria-label="进入《白痴》的雪夜"
+          >
+            <div
+              className="idiot-threshold-sky"
+              style={{
+                backgroundImage: `linear-gradient(90deg, rgba(4, 6, 8, .96) 0%, rgba(7, 10, 14, .88) 52%, rgba(6, 8, 11, .55) 100%), radial-gradient(ellipse at 78% 42%, rgba(88, 112, 137, .22), transparent 42%), url(${IDIOT_NIGHT_SRC})`,
+              }}
+              aria-hidden="true"
+            />
+            <Snowfall reducedMotion={reducedMotion} />
+            <motion.div
+              className="idiot-door-light"
+              initial={{ scaleX: 0.12, opacity: 0.35 }}
+              animate={{ scaleX: [0.12, 0.18, 0.12], opacity: [0.35, 0.62, 0.35] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              aria-hidden="true"
+            />
+            <div className="idiot-threshold-grain" aria-hidden="true" />
+
+            <div className="idiot-threshold-copy">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25, duration: 1.2 }}
+              >
+                圣彼得堡 · 一八六九
+              </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.65, duration: 1.25 }}
+              >
+                你在风雪中，
+                <span>看见一颗没有防备的心。</span>
+              </motion.h1>
+              <motion.blockquote
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.3, duration: 1.4 }}
+              >
+                “难道一个人，仅仅因为善良，就注定被世界称作白痴？”
+              </motion.blockquote>
+
+              <motion.div
+                className="idiot-threshold-actions"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.8, duration: 1 }}
+              >
+                <button type="button" onClick={() => setIntroOpen(false)}>
+                  <span>走进灯下</span>
+                  <i aria-hidden="true">→</i>
+                </button>
+                <button
+                  type="button"
+                  className="idiot-sound-button"
+                  onClick={toggleWind}
+                  aria-pressed={soundOn}
+                >
+                  {soundOn ? <Volume2 size={15} /> : <VolumeX size={15} />}
+                  {soundOn ? '风雪正在窗外' : '聆听风雪'}
+                </button>
+              </motion.div>
+            </div>
+
+            <p className="idiot-threshold-foot">向前一步，不保证你仍相信天真是一种美德</p>
+          </motion.section>
+        )}
+      </AnimatePresence>
+
+      {!introOpen && (
+        <button
+          type="button"
+          className="idiot-reading-sound"
+          onClick={toggleWind}
+          aria-label={soundOn ? '关闭风雪声' : '播放风雪声'}
+          aria-pressed={soundOn}
+        >
+          {soundOn ? <Volume2 size={16} /> : <VolumeX size={16} />}
+          <span>{soundOn ? '风雪中' : '聆听风雪'}</span>
+        </button>
+      )}
+
       {/* Header / Nav */}
       <nav className="fixed top-0 left-0 w-full z-50 p-6 flex justify-between items-center backdrop-blur-xl bg-[#050814]/40 border-b border-blue-900/20">
         <Link to="/" className="flex items-center gap-2 text-blue-200 hover:text-white transition-colors group">

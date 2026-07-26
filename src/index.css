@@ -1219,3 +1219,257 @@ a.work-window:focus-visible {
     animation: none;
   }
 }
+
+/* 《白痴》入口：风雪中的门缝与一颗没有防备的心 */
+.idiot-threshold {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  overflow: hidden;
+  color: #e8edf2;
+  background: #05070a;
+  isolation: isolate;
+}
+
+.idiot-threshold-sky {
+  position: absolute;
+  inset: 0;
+  background-position: center, center, center 42%;
+  background-size: auto, auto, cover;
+  background-repeat: no-repeat;
+  filter: saturate(.42) contrast(1.12);
+  transform: scale(1.025);
+}
+
+.idiot-threshold-sky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, .68), transparent 48%),
+    radial-gradient(circle at 50% 45%, transparent 12%, rgba(0, 0, 0, .55) 82%);
+}
+
+.idiot-door-light {
+  position: absolute;
+  z-index: 4;
+  top: 13%;
+  right: 15%;
+  width: clamp(4px, .7vw, 12px);
+  height: 66%;
+  transform-origin: center;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(231, 202, 143, .42) 18%,
+    rgba(246, 225, 180, .9) 48%,
+    rgba(231, 202, 143, .28) 82%,
+    transparent
+  );
+  box-shadow:
+    0 0 18px rgba(236, 205, 145, .55),
+    0 0 90px 22px rgba(184, 139, 75, .16);
+}
+
+.idiot-threshold-grain {
+  position: absolute;
+  z-index: 7;
+  inset: -50%;
+  pointer-events: none;
+  opacity: .08;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+  animation: idiot-grain .22s steps(2) infinite;
+}
+
+.idiot-threshold-copy {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: min(720px, calc(100% - 64px));
+  min-height: 100%;
+  margin-left: clamp(32px, 9vw, 150px);
+}
+
+.idiot-threshold-copy > p {
+  margin: 0 0 36px;
+  color: rgba(196, 164, 104, .72);
+  font: 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+}
+
+.idiot-threshold-copy h1 {
+  max-width: 720px;
+  margin: 0;
+  color: rgba(240, 238, 229, .92);
+  font-size: clamp(42px, 5.7vw, 88px);
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -.045em;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, .8);
+}
+
+.idiot-threshold-copy h1 span {
+  display: block;
+  color: rgba(203, 216, 228, .58);
+}
+
+.idiot-threshold-copy blockquote {
+  max-width: 520px;
+  margin: 44px 0 0;
+  padding-left: 18px;
+  color: rgba(214, 218, 217, .56);
+  font-size: clamp(14px, 1.35vw, 19px);
+  line-height: 1.9;
+  border-left: 1px solid rgba(196, 164, 104, .42);
+}
+
+.idiot-threshold-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 52px;
+}
+
+.idiot-threshold-actions button,
+.idiot-reading-sound {
+  color: inherit;
+  font: inherit;
+  border: 0;
+  cursor: pointer;
+}
+
+.idiot-threshold-actions > button:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 34px;
+  padding: 14px 20px;
+  color: #e7d4a6;
+  background: rgba(7, 9, 11, .66);
+  border: 1px solid rgba(205, 174, 111, .4);
+  box-shadow: inset 0 0 22px rgba(220, 182, 109, .04);
+  letter-spacing: .16em;
+  transition: color .3s ease, border-color .3s ease, background .3s ease;
+}
+
+.idiot-threshold-actions > button:first-child:hover,
+.idiot-threshold-actions > button:first-child:focus-visible {
+  color: #fff4d7;
+  background: rgba(46, 39, 27, .72);
+  border-color: rgba(232, 205, 148, .75);
+}
+
+.idiot-threshold-actions i {
+  font-style: normal;
+  transition: transform .3s ease;
+}
+
+.idiot-threshold-actions > button:first-child:hover i {
+  transform: translateX(5px);
+}
+
+.idiot-sound-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 0;
+  color: rgba(198, 211, 222, .62) !important;
+  background: transparent;
+  font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  letter-spacing: .15em;
+}
+
+.idiot-sound-button:hover,
+.idiot-sound-button:focus-visible {
+  color: rgba(231, 237, 242, .92) !important;
+}
+
+.idiot-threshold-actions button:focus-visible,
+.idiot-reading-sound:focus-visible {
+  outline: 1px solid rgba(236, 205, 145, .9);
+  outline-offset: 5px;
+}
+
+.idiot-threshold-foot {
+  position: absolute;
+  z-index: 10;
+  right: 38px;
+  bottom: 30px;
+  margin: 0;
+  color: rgba(210, 218, 223, .28);
+  font: 9px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .16em;
+  writing-mode: vertical-rl;
+}
+
+.idiot-reading-sound {
+  position: fixed;
+  z-index: 60;
+  right: 24px;
+  bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 14px;
+  color: rgba(207, 221, 233, .72);
+  background: rgba(4, 7, 12, .76);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(96, 165, 250, .22);
+  border-radius: 999px;
+  font: 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em;
+}
+
+@keyframes idiot-grain {
+  0% { transform: translate3d(-2%, 1%, 0); }
+  25% { transform: translate3d(2%, -1%, 0); }
+  50% { transform: translate3d(1%, 2%, 0); }
+  75% { transform: translate3d(-1%, -2%, 0); }
+  100% { transform: translate3d(2%, 1%, 0); }
+}
+
+@media (max-width: 640px) {
+  .idiot-threshold-copy {
+    justify-content: flex-end;
+    width: calc(100% - 48px);
+    min-height: calc(100% - 72px);
+    margin: 0 24px 72px;
+  }
+
+  .idiot-threshold-copy > p {
+    margin-bottom: 24px;
+  }
+
+  .idiot-threshold-copy h1 {
+    font-size: clamp(38px, 12vw, 58px);
+  }
+
+  .idiot-threshold-copy blockquote {
+    margin-top: 28px;
+    font-size: 13px;
+  }
+
+  .idiot-threshold-actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .idiot-threshold-foot {
+    display: none;
+  }
+
+  .idiot-door-light {
+    right: 12%;
+    height: 54%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .idiot-threshold-grain {
+    animation: none;
+  }
+}
