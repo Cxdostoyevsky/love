@@ -830,6 +830,10 @@ a.work-window:focus-visible {
   right: 22px;
 }
 
+.character-ivan .character-label {
+  top: -48px;
+}
+
 .character-nelly .character-label {
   top: 62px;
   left: auto;
