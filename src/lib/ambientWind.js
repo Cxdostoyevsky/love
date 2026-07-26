@@ -56,3 +56,37 @@ export function createAmbientWind(audioContext, { volume = 0.055, cutoff = 1250 
     },
   };
 }
+
+export function createTribunalAmbience(audioContext) {
+  const wind = createAmbientWind(audioContext, { volume: 0.028, cutoff: 560 });
+  const hum = audioContext.createOscillator();
+  const humGain = audioContext.createGain();
+  const pulse = audioContext.createOscillator();
+  const pulseDepth = audioContext.createGain();
+
+  hum.type = 'sine';
+  hum.frequency.value = 52;
+  humGain.gain.value = 0.0001;
+  pulse.type = 'sine';
+  pulse.frequency.value = 0.12;
+  pulseDepth.gain.value = 0.006;
+  hum.connect(humGain).connect(audioContext.destination);
+  pulse.connect(pulseDepth).connect(humGain.gain);
+  hum.start();
+  pulse.start();
+  humGain.gain.exponentialRampToValueAtTime(0.014, audioContext.currentTime + 2.4);
+
+  return {
+    stop() {
+      const now = audioContext.currentTime;
+      humGain.gain.cancelScheduledValues(now);
+      humGain.gain.setValueAtTime(Math.max(humGain.gain.value, 0.0001), now);
+      humGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.7);
+      window.setTimeout(() => {
+        hum.stop();
+        pulse.stop();
+      }, 800);
+      wind.stop();
+    },
+  };
+}

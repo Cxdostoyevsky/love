@@ -265,7 +265,9 @@ function Home() {
               ? '/underground'
               : work.title === '白痴'
                 ? '/idiot'
-                : null;
+                : work.title === '卡拉马佐夫兄弟'
+                  ? '/grand-inquisitor'
+                  : null;
 
             const content = (
               <>
@@ -274,7 +276,7 @@ function Home() {
                 <p className="work-original">{work.original}</p>
                 <p>{work.desc}</p>
                 <span className="work-action">
-                  {route ? '走进这个房间' : '书页仍在整理'}
+                  {work.title === '卡拉马佐夫兄弟' ? '旁听这场审判' : route ? '走进这个房间' : '书页仍在整理'}
                   {route && <ArrowUpRight size={15} />}
                 </span>
               </>
