@@ -26,6 +26,39 @@ const visualWall = [
   { src: `${import.meta.env.BASE_URL}gallery/karamazov-brothers.png`, title: '兄弟' },
 ];
 
+const encounters = [
+  {
+    name: '地下人',
+    work: '《地下室手记》',
+    voice: '“我既渴望被看见，又憎恨每一道落在我身上的目光。”',
+    position: 'underground',
+  },
+  {
+    name: '拉斯柯尔尼科夫',
+    work: '《罪与罚》',
+    voice: '“你以为自己越过的是一条界线，其实是把自己留在了界线那边。”',
+    position: 'raskolnikov',
+  },
+  {
+    name: '伊万·卡拉马佐夫',
+    work: '《卡拉马佐夫兄弟》',
+    voice: '“若世界的和谐以一个孩子的眼泪为代价，我拒绝接受这张入场券。”',
+    position: 'ivan',
+  },
+  {
+    name: '涅莉',
+    work: '《被侮辱与被损害的人》',
+    voice: '“不要因为我可怜，就以为我会低下头。”',
+    position: 'nelly',
+  },
+  {
+    name: '梅诗金公爵',
+    work: '《白痴》',
+    voice: '“有时，一个人需要的不是答案，只是有人不躲开他的痛苦。”',
+    position: 'myshkin',
+  },
+];
+
 function Home() {
   const { scrollYProgress } = useScroll();
   const streetScale = useTransform(scrollYProgress, [0, 0.28], [1, 1.16]);
@@ -142,6 +175,48 @@ function Home() {
           <h2>你告诉自己，<br />没有人在看。</h2>
           <p>可为什么每一扇窗，都像知道你做过什么？雪落下来，抹去脚印，却没有替你抹去念头。</p>
         </motion.div>
+      </section>
+
+      <section className="encounter-chapter" aria-labelledby="encounter-title">
+        <header className="encounter-heading">
+          <p className="passage-marker">十字路口 · 五个灵魂</p>
+          <h2 id="encounter-title">这一夜，<br />他们彼此经过。</h2>
+          <p>
+            他们来自不同的书，却共享同一座城市。靠近一个名字，
+            听见那个人没有说出口的话。
+          </p>
+        </header>
+
+        <div className="encounter-scene">
+          <img
+            src={`${import.meta.env.BASE_URL}gallery/petersburg-character-encounter.png`}
+            alt="圣彼得堡雪夜中，地下人、拉斯柯尔尼科夫、伊万·卡拉马佐夫、涅莉与梅诗金公爵在街道上偶然相遇。"
+          />
+          <div className="encounter-vignette" aria-hidden="true" />
+          {encounters.map((character) => (
+            <motion.article
+              key={character.name}
+              className={`character-voice character-${character.position}`}
+              tabIndex={0}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10%' }}
+              transition={{ duration: 0.65 }}
+            >
+              <span className="character-dot" aria-hidden="true" />
+              <div className="character-label">
+                <strong>{character.name}</strong>
+                <span>{character.work}</span>
+              </div>
+              <blockquote>{character.voice}</blockquote>
+            </motion.article>
+          ))}
+        </div>
+
+        <p className="encounter-afterword">
+          他们没有真正见过彼此。可在陀思妥耶夫斯基的世界里，
+          每一种孤独都认得另一种孤独。
+        </p>
       </section>
 
       <section id="life" className="street-chapter">
