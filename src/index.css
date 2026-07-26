@@ -802,8 +802,6 @@ a.work-window:focus-visible {
   left: 22px;
   top: -11px;
   display: flex;
-  align-items: baseline;
-  gap: 9px;
   width: max-content;
   padding: 7px 9px;
   color: rgba(216, 214, 206, .8);
@@ -818,12 +816,6 @@ a.work-window:focus-visible {
   letter-spacing: .06em;
 }
 
-.character-label span {
-  color: rgba(185, 154, 98, .7);
-  font: 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
-  letter-spacing: .1em;
-}
-
 .character-ivan .character-label,
 .character-myshkin .character-label {
   left: auto;
@@ -831,7 +823,14 @@ a.work-window:focus-visible {
 }
 
 .character-ivan .character-label {
-  top: -48px;
+  top: -92px;
+  right: auto;
+  left: 22px;
+}
+
+.character-raskolnikov .character-label {
+  top: -92px;
+  left: -76px;
 }
 
 .character-nelly .character-label {
@@ -1080,10 +1079,6 @@ a.work-window:focus-visible {
     height: 420px;
   }
 
-  .character-label span {
-    display: none;
-  }
-
   .character-label strong {
     font-size: 11px;
   }
@@ -1204,10 +1199,6 @@ a.work-window:focus-visible {
     padding: 0 0 8px;
     border: 0;
     background: transparent;
-  }
-
-  .character-label span {
-    display: inline;
   }
 
   .character-voice blockquote {

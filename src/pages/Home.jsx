@@ -206,6 +206,7 @@ function Home() {
               key={character.name}
               className={`character-voice character-${character.position}`}
               tabIndex={0}
+              aria-label={`${character.name}，来自${character.work}`}
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
@@ -214,7 +215,6 @@ function Home() {
               <span className="character-dot" aria-hidden="true" />
               <div className="character-label">
                 <strong>{character.name}</strong>
-                <span>{character.work}</span>
               </div>
               <blockquote>{character.voice}</blockquote>
             </motion.article>
