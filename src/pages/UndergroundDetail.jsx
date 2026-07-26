@@ -1,13 +1,23 @@
-import React, { useEffect, useMemo } from 'react';
-import { Quote, Lightbulb, MessageSquare, ArrowLeft, BookOpen } from 'lucide-react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { Quote, Lightbulb, MessageSquare, ArrowLeft, BookOpen, Volume2, VolumeX } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import notes from '../data/notes.json';
 import bookManifest from '../../book/manifest.json';
 import undergroundMarkdown from '../../book/地下室手记（果麦经典）.md?raw';
 import ManifestTOC from '../components/ManifestTOC';
 import BookMarkdown from '../components/BookMarkdown';
+import Snowfall from '../components/Snowfall';
+import { createAmbientWind } from '../lib/ambientWind';
+
+const UNDERGROUND_NIGHT_SRC = `${import.meta.env.BASE_URL}gallery/petersburg-snow-night.png`;
 
 function UndergroundDetail() {
+  const [introOpen, setIntroOpen] = useState(true);
+  const [soundOn, setSoundOn] = useState(false);
+  const windRef = useRef(null);
+  const reducedMotion = useReducedMotion();
+
   const bookNotes = useMemo(
     () => notes.find((n) => n.book === '地下室手记')?.quotes ?? [],
     []
@@ -21,8 +31,118 @@ function UndergroundDetail() {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => () => {
+    windRef.current?.stop();
+  }, []);
+
+  const toggleWind = async () => {
+    if (windRef.current) {
+      windRef.current.stop();
+      windRef.current = null;
+      setSoundOn(false);
+      return;
+    }
+
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    const context = new AudioContext();
+    await context.resume();
+    windRef.current = createAmbientWind(context, { volume: 0.045, cutoff: 820 });
+    setSoundOn(true);
+  };
+
   return (
     <div className="min-h-screen text-[#f5f5dc] font-serif overflow-x-hidden relative bg-[#0a0e14]">
+      <AnimatePresence>
+        {introOpen && (
+          <motion.section
+            className="underground-threshold"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, y: reducedMotion ? 0 : -32 }}
+            transition={{ duration: reducedMotion ? 0.2 : 1.2, ease: [0.76, 0, 0.24, 1] }}
+            aria-label="进入《地下室手记》的地下室"
+          >
+            <div
+              className="underground-threshold-street"
+              style={{ backgroundImage: `url(${UNDERGROUND_NIGHT_SRC})` }}
+              aria-hidden="true"
+            />
+            <Snowfall reducedMotion={reducedMotion} />
+            <div className="underground-stairs" aria-hidden="true">
+              {Array.from({ length: 7 }, (_, index) => (
+                <motion.i
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.25 + index * 0.13, duration: 0.7 }}
+                />
+              ))}
+            </div>
+            <div className="underground-threshold-grain" aria-hidden="true" />
+
+            <div className="underground-threshold-copy">
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3, duration: 1 }}
+              >
+                地面以下 · 四十年
+              </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, x: -18 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.65, duration: 1.1 }}
+              >
+                你以为自己
+                <span>只是来躲一场雪。</span>
+              </motion.h1>
+              <motion.blockquote
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.25, duration: 1.2 }}
+              >
+                “我是一个有病的人……我是一个心怀恶意的人。”
+              </motion.blockquote>
+              <motion.div
+                className="underground-threshold-actions"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.7, duration: 1 }}
+              >
+                <button type="button" onClick={() => setIntroOpen(false)}>
+                  <span>向下走</span>
+                  <i aria-hidden="true">↓</i>
+                </button>
+                <button
+                  type="button"
+                  className="underground-sound-button"
+                  onClick={toggleWind}
+                  aria-pressed={soundOn}
+                >
+                  {soundOn ? <Volume2 size={15} /> : <VolumeX size={15} />}
+                  {soundOn ? '风雪留在门外' : '听见门外风雪'}
+                </button>
+              </motion.div>
+            </div>
+
+            <p className="underground-threshold-foot">地下室没有门锁，因为真正的出口从不在门外</p>
+          </motion.section>
+        )}
+      </AnimatePresence>
+
+      {!introOpen && (
+        <button
+          type="button"
+          className="underground-reading-sound"
+          onClick={toggleWind}
+          aria-label={soundOn ? '关闭门外风雪声' : '播放门外风雪声'}
+          aria-pressed={soundOn}
+        >
+          {soundOn ? <Volume2 size={16} /> : <VolumeX size={16} />}
+          <span>{soundOn ? '门外有雪' : '听见风雪'}</span>
+        </button>
+      )}
+
       <nav className="sticky top-0 left-0 w-full z-50 p-6 flex justify-between items-center bg-[#0d1117] border-b border-[#4a6fa5]/20">
         <Link to="/" className="flex items-center gap-2 text-[#d4e4f7]/80 hover:text-[#d4e4f7] transition-colors group">
           <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />

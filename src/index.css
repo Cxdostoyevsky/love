@@ -1473,3 +1473,261 @@ a.work-window:focus-visible {
     animation: none;
   }
 }
+
+/* 《地下室手记》入口：风雪在上，意识向下 */
+.underground-threshold {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  overflow: hidden;
+  color: #d8d4ca;
+  background: #050505;
+  isolation: isolate;
+}
+
+.underground-threshold-street {
+  position: absolute;
+  inset: 0;
+  background-position: center 48%;
+  background-size: cover;
+  filter: grayscale(.82) sepia(.12) contrast(1.35) brightness(.45);
+  transform: scale(1.035);
+}
+
+.underground-threshold-street::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 3, 3, .97) 0%, rgba(4, 4, 4, .82) 52%, rgba(5, 5, 5, .28) 100%),
+    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, .18) 45%, #030303 100%),
+    radial-gradient(circle at 74% 22%, rgba(151, 133, 103, .16), transparent 22%);
+}
+
+.underground-stairs {
+  position: absolute;
+  z-index: 4;
+  right: -3vw;
+  bottom: -5vh;
+  width: min(52vw, 720px);
+  height: 68vh;
+  transform: perspective(700px) rotateY(-16deg);
+  transform-origin: bottom right;
+}
+
+.underground-stairs i {
+  position: absolute;
+  right: 0;
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(170, 154, 124, .38));
+  box-shadow: 0 16px 28px rgba(0, 0, 0, .88);
+}
+
+.underground-stairs i:nth-child(1) { bottom: 5%; width: 100%; }
+.underground-stairs i:nth-child(2) { bottom: 16%; width: 89%; }
+.underground-stairs i:nth-child(3) { bottom: 27%; width: 78%; }
+.underground-stairs i:nth-child(4) { bottom: 38%; width: 67%; }
+.underground-stairs i:nth-child(5) { bottom: 49%; width: 56%; }
+.underground-stairs i:nth-child(6) { bottom: 60%; width: 45%; }
+.underground-stairs i:nth-child(7) { bottom: 71%; width: 34%; }
+
+.underground-threshold-grain {
+  position: absolute;
+  z-index: 7;
+  inset: -40%;
+  pointer-events: none;
+  opacity: .11;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.76' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.72'/%3E%3C/svg%3E");
+  animation: underground-grain .28s steps(2) infinite;
+}
+
+.underground-threshold-copy {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: min(700px, calc(100% - 64px));
+  min-height: 100%;
+  margin-left: clamp(32px, 8vw, 132px);
+}
+
+.underground-threshold-copy > p {
+  margin: 0 0 34px;
+  color: rgba(139, 89, 76, .78);
+  font: 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .34em;
+}
+
+.underground-threshold-copy h1 {
+  margin: 0;
+  color: rgba(226, 222, 211, .9);
+  font-size: clamp(44px, 5.8vw, 90px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -.05em;
+  text-shadow: 0 3px 34px rgba(0, 0, 0, .94);
+}
+
+.underground-threshold-copy h1 span {
+  display: block;
+  color: rgba(157, 158, 153, .58);
+}
+
+.underground-threshold-copy blockquote {
+  max-width: 480px;
+  margin: 44px 0 0;
+  padding: 0 0 0 18px;
+  color: rgba(186, 178, 163, .58);
+  font-size: clamp(14px, 1.3vw, 18px);
+  line-height: 1.9;
+  border-left: 1px solid rgba(126, 75, 64, .65);
+}
+
+.underground-threshold-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 50px;
+}
+
+.underground-threshold-actions button,
+.underground-reading-sound {
+  color: inherit;
+  font: inherit;
+  border: 0;
+  cursor: pointer;
+}
+
+.underground-threshold-actions > button:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 38px;
+  padding: 14px 20px;
+  color: rgba(214, 204, 183, .88);
+  background: rgba(7, 6, 6, .72);
+  border: 1px solid rgba(122, 84, 72, .55);
+  letter-spacing: .18em;
+  transition: background .3s ease, border-color .3s ease, color .3s ease;
+}
+
+.underground-threshold-actions > button:first-child:hover,
+.underground-threshold-actions > button:first-child:focus-visible {
+  color: #eee8da;
+  background: rgba(43, 28, 25, .72);
+  border-color: rgba(157, 103, 87, .8);
+}
+
+.underground-threshold-actions i {
+  font-style: normal;
+  transition: transform .3s ease;
+}
+
+.underground-threshold-actions > button:first-child:hover i {
+  transform: translateY(4px);
+}
+
+.underground-sound-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 0;
+  color: rgba(174, 175, 169, .58) !important;
+  background: transparent;
+  font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  letter-spacing: .14em;
+}
+
+.underground-sound-button:hover,
+.underground-sound-button:focus-visible {
+  color: rgba(224, 220, 208, .9) !important;
+}
+
+.underground-threshold-actions button:focus-visible,
+.underground-reading-sound:focus-visible {
+  outline: 1px solid rgba(155, 100, 84, .92);
+  outline-offset: 5px;
+}
+
+.underground-threshold-foot {
+  position: absolute;
+  z-index: 10;
+  right: 34px;
+  bottom: 28px;
+  margin: 0;
+  color: rgba(183, 176, 160, .26);
+  font: 9px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .14em;
+  writing-mode: vertical-rl;
+}
+
+.underground-reading-sound {
+  position: fixed;
+  z-index: 60;
+  right: 24px;
+  bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 14px;
+  color: rgba(190, 185, 174, .7);
+  background: rgba(7, 7, 7, .82);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(120, 75, 64, .34);
+  border-radius: 999px;
+  font: 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em;
+}
+
+@keyframes underground-grain {
+  0% { transform: translate3d(1%, -1%, 0); }
+  33% { transform: translate3d(-2%, 2%, 0); }
+  66% { transform: translate3d(2%, 1%, 0); }
+  100% { transform: translate3d(-1%, -2%, 0); }
+}
+
+@media (max-width: 640px) {
+  .underground-threshold-copy {
+    justify-content: flex-end;
+    width: calc(100% - 48px);
+    min-height: calc(100% - 70px);
+    margin: 0 24px 70px;
+  }
+
+  .underground-threshold-copy > p {
+    margin-bottom: 24px;
+  }
+
+  .underground-threshold-copy h1 {
+    font-size: clamp(39px, 12vw, 58px);
+  }
+
+  .underground-threshold-copy blockquote {
+    margin-top: 28px;
+    font-size: 13px;
+  }
+
+  .underground-threshold-actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .underground-stairs {
+    right: -20vw;
+    width: 105vw;
+    opacity: .7;
+  }
+
+  .underground-threshold-foot {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .underground-threshold-grain {
+    animation: none;
+  }
+}
