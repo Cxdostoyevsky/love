@@ -189,7 +189,7 @@ function Home() {
 
         <div className="encounter-scene">
           <img
-            src={`${import.meta.env.BASE_URL}gallery/petersburg-character-encounter.png`}
+            src={`${import.meta.env.BASE_URL}gallery/petersburg-character-encounter-v2.png`}
             alt="圣彼得堡雪夜中，地下人、拉斯柯尔尼科夫、伊万·卡拉马佐夫、涅莉与梅诗金公爵在街道上偶然相遇。"
           />
           <div className="encounter-vignette" aria-hidden="true" />
