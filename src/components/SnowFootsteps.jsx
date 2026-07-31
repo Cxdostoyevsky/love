@@ -10,8 +10,8 @@ const SCROLL_KEYS = new Set([
   ' ',
 ]);
 
-function createSnowCrunchBuffer(audioContext) {
-  const duration = 0.24;
+function createSoftSnowBuffer(audioContext) {
+  const duration = 0.52;
   const buffer = audioContext.createBuffer(
     1,
     Math.floor(audioContext.sampleRate * duration),
@@ -21,10 +21,12 @@ function createSnowCrunchBuffer(audioContext) {
 
   for (let index = 0; index < samples.length; index += 1) {
     const progress = index / samples.length;
-    const envelope = Math.pow(1 - progress, 3.2);
-    const grit = Math.random() * 2 - 1;
-    const crust = Math.random() > 0.93 ? (Math.random() * 2 - 1) * 1.8 : 0;
-    samples[index] = (grit * 0.72 + crust) * envelope;
+    const attack = Math.min(progress / 0.16, 1);
+    const release = Math.pow(1 - progress, 1.8);
+    const breath = Math.sin(progress * Math.PI);
+    const white = Math.random() * 2 - 1;
+    const fineGrain = Math.random() * 2 - 1;
+    samples[index] = (white * 0.7 + fineGrain * 0.3) * attack * release * breath;
   }
 
   return buffer;
@@ -33,44 +35,46 @@ function createSnowCrunchBuffer(audioContext) {
 function playSnowStep(audioContext, buffer, side, intensity) {
   const now = audioContext.currentTime;
   const source = audioContext.createBufferSource();
-  const highPass = audioContext.createBiquadFilter();
-  const bandPass = audioContext.createBiquadFilter();
-  const crunchGain = audioContext.createGain();
+  const softHighPass = audioContext.createBiquadFilter();
+  const snowBody = audioContext.createBiquadFilter();
+  const snowAir = audioContext.createBiquadFilter();
+  const stepGain = audioContext.createGain();
   const panner = audioContext.createStereoPanner?.();
-  const thump = audioContext.createOscillator();
-  const thumpGain = audioContext.createGain();
 
   source.buffer = buffer;
-  source.playbackRate.value = 0.88 + Math.random() * 0.22;
-  highPass.type = 'highpass';
-  highPass.frequency.value = 150 + Math.random() * 70;
-  bandPass.type = 'bandpass';
-  bandPass.frequency.value = 760 + Math.random() * 420;
-  bandPass.Q.value = 0.55;
-  crunchGain.gain.setValueAtTime(0.0001, now);
-  crunchGain.gain.exponentialRampToValueAtTime(0.026 + intensity * 0.015, now + 0.008);
-  crunchGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+  source.playbackRate.value = 0.82 + Math.random() * 0.16;
+  softHighPass.type = 'highpass';
+  softHighPass.frequency.value = 105 + Math.random() * 35;
+  snowBody.type = 'lowpass';
+  snowBody.frequency.setValueAtTime(1450 + Math.random() * 260, now);
+  snowBody.frequency.exponentialRampToValueAtTime(720, now + 0.44);
+  snowBody.Q.value = 0.35;
+  snowAir.type = 'peaking';
+  snowAir.frequency.value = 920 + Math.random() * 180;
+  snowAir.Q.value = 0.5;
+  snowAir.gain.value = 2.2;
+  stepGain.gain.setValueAtTime(0.0001, now);
+  stepGain.gain.exponentialRampToValueAtTime(
+    0.017 + intensity * 0.007,
+    now + 0.075
+  );
+  stepGain.gain.exponentialRampToValueAtTime(0.011, now + 0.19);
+  stepGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.48);
 
-  source.connect(highPass).connect(bandPass).connect(crunchGain);
+  source
+    .connect(softHighPass)
+    .connect(snowBody)
+    .connect(snowAir)
+    .connect(stepGain);
   if (panner) {
-    panner.pan.value = side * (0.16 + Math.random() * 0.08);
-    crunchGain.connect(panner).connect(audioContext.destination);
+    panner.pan.value = side * (0.1 + Math.random() * 0.06);
+    stepGain.connect(panner).connect(audioContext.destination);
   } else {
-    crunchGain.connect(audioContext.destination);
+    stepGain.connect(audioContext.destination);
   }
 
-  thump.type = 'sine';
-  thump.frequency.setValueAtTime(92 + Math.random() * 14, now);
-  thump.frequency.exponentialRampToValueAtTime(54, now + 0.11);
-  thumpGain.gain.setValueAtTime(0.0001, now);
-  thumpGain.gain.exponentialRampToValueAtTime(0.012 + intensity * 0.006, now + 0.012);
-  thumpGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.14);
-  thump.connect(thumpGain).connect(audioContext.destination);
-
   source.start(now);
-  source.stop(now + 0.25);
-  thump.start(now);
-  thump.stop(now + 0.15);
+  source.stop(now + 0.54);
 }
 
 export default function SnowFootsteps() {
@@ -90,7 +94,7 @@ export default function SnowFootsteps() {
         if (!AudioContext) return;
         const context = new AudioContext();
         audioRef.current = context;
-        bufferRef.current = createSnowCrunchBuffer(context);
+        bufferRef.current = createSoftSnowBuffer(context);
       }
 
       if (audioRef.current.state === 'suspended') {
@@ -113,8 +117,8 @@ export default function SnowFootsteps() {
       if (!context || !buffer || context.state !== 'running') return;
 
       const now = performance.now();
-      const distancePerStep = delta > 90 ? 62 : 46;
-      const minimumInterval = delta > 90 ? 105 : 145;
+      const distancePerStep = delta > 90 ? 76 : 58;
+      const minimumInterval = delta > 90 ? 170 : 225;
       if (
         distanceRef.current >= distancePerStep &&
         now - lastStepRef.current >= minimumInterval
