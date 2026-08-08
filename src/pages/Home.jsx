@@ -5,7 +5,10 @@ import {
   ArrowUpRight,
   BookOpen,
   CalendarDays,
+  Film,
+  Headphones,
   Images,
+  Landmark,
   Volume2,
   VolumeX,
 } from 'lucide-react';
@@ -59,12 +62,40 @@ const encounters = [
   },
 ];
 
+const nightWindowItems = [
+  {
+    type: '播客',
+    eyebrow: '一封听觉来信',
+    title: '为什么我们仍在“地下室”里？',
+    detail: '从自尊、羞耻与过度清醒出发，重听那个不肯停止独白的人。',
+    meta: '声音 · 42 分钟',
+    icon: Headphones,
+  },
+  {
+    type: '影视',
+    eyebrow: '今夜放映',
+    title: '黑泽明《白痴》',
+    detail: '当彼得堡的潮湿变成北海道的风雪，梅诗金的善良仍在人群中无处安放。',
+    meta: '银幕 · 1951',
+    icon: Film,
+  },
+  {
+    type: '艺术展',
+    eyebrow: '展览线索',
+    title: '从彼得堡街景到作者手稿',
+    detail: '把城市、面孔与涂改过的句子放在一起，看一部小说如何在纸上变成命运。',
+    meta: '视觉 · 展览手记',
+    icon: Landmark,
+  },
+];
+
 function Home() {
   const { scrollYProgress } = useScroll();
   const streetScale = useTransform(scrollYProgress, [0, 0.28], [1, 1.16]);
   const streetY = useTransform(scrollYProgress, [0, 0.28], ['0%', '5%']);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.13, 0.22], [1, 0.9, 0]);
   const [soundOn, setSoundOn] = useState(false);
+  const [activeWindowItem, setActiveWindowItem] = useState(0);
   const audioRef = useRef(null);
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -292,6 +323,54 @@ function Home() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section id="night-window" className="culture-window-chapter" aria-labelledby="culture-window-title">
+        <header className="culture-window-heading">
+          <p className="passage-marker">第四盏灯 · 今夜的橱窗</p>
+          <h2 id="culture-window-title">有些声音，<br />隔着玻璃也能听见。</h2>
+          <p>播客、银幕与展厅，让那些旧问题在今夜继续发生。</p>
+        </header>
+
+        <div className="culture-window-frame">
+          <div className="culture-window-glass" aria-live="polite">
+            <span className="culture-window-reflection" aria-hidden="true" />
+            <div className="culture-window-feature">
+              {(() => {
+                const item = nightWindowItems[activeWindowItem];
+                const Icon = item.icon;
+                return (
+                  <>
+                    <div className="culture-window-type"><Icon size={17} /> {item.type}</div>
+                    <p className="culture-window-eyebrow">{item.eyebrow}</p>
+                    <h3>{item.title}</h3>
+                    <p className="culture-window-detail">{item.detail}</p>
+                    <span className="culture-window-meta"><CalendarDays size={14} /> {item.meta}</span>
+                  </>
+                );
+              })()}
+            </div>
+          </div>
+
+          <div className="culture-window-notices" aria-label="选择橱窗内容">
+            {nightWindowItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.type}
+                  type="button"
+                  className={activeWindowItem === index ? 'is-active' : ''}
+                  onClick={() => setActiveWindowItem(index)}
+                  aria-pressed={activeWindowItem === index}
+                >
+                  <Icon size={15} />
+                  <span>{item.type}</span>
+                  <small>{item.title}</small>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 

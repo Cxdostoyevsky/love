@@ -661,6 +661,213 @@ a.work-window:focus-visible {
   color: rgba(216, 214, 206, .28);
 }
 
+.culture-window-chapter {
+  position: relative;
+  z-index: 11;
+  padding: 17vh clamp(24px, 8vw, 140px);
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(4, 6, 8, .96), rgba(8, 11, 13, .86) 54%, rgba(4, 6, 8, .97)),
+    rgba(5, 7, 9, .94);
+}
+
+.culture-window-chapter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .24;
+  background: repeating-linear-gradient(104deg, transparent 0 64px, rgba(216, 214, 206, .035) 65px 66px);
+}
+
+.culture-window-heading {
+  position: relative;
+  width: min(760px, 100%);
+  margin-bottom: 74px;
+}
+
+.culture-window-heading h2 {
+  margin: 0 0 28px;
+  color: #dedcd4;
+  font: 500 clamp(44px, 5.8vw, 86px)/1.05 "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
+  letter-spacing: -.04em;
+}
+
+.culture-window-heading > p:last-child {
+  color: rgba(216, 214, 206, .58);
+  font-size: 15px;
+  line-height: 2;
+}
+
+.culture-window-frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(270px, .65fr);
+  width: min(1180px, 100%);
+  min-height: 570px;
+  margin-left: auto;
+  padding: 14px;
+  border: 1px solid rgba(185, 154, 98, .34);
+  background: #080a0b;
+  box-shadow: 0 45px 120px rgba(0, 0, 0, .52), 0 0 100px rgba(185, 154, 98, .065);
+}
+
+.culture-window-frame::before,
+.culture-window-frame::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  background: #181716;
+  box-shadow: 0 0 18px rgba(0, 0, 0, .8);
+}
+
+.culture-window-frame::before {
+  top: 0;
+  bottom: 0;
+  left: calc(70% - 5px);
+  width: 10px;
+}
+
+.culture-window-frame::after {
+  left: 0;
+  right: 30%;
+  top: 52%;
+  height: 8px;
+}
+
+.culture-window-glass {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(36px, 6vw, 78px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 58% 46%, rgba(226, 201, 144, .2), transparent 28%),
+    linear-gradient(145deg, rgba(28, 31, 31, .72), rgba(10, 13, 15, .95));
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, .76);
+}
+
+.culture-window-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .42;
+  background:
+    radial-gradient(ellipse at 14% 16%, transparent 0 7%, rgba(210, 220, 222, .08) 7.5% 8%, transparent 9%),
+    repeating-radial-gradient(ellipse at 70% 5%, transparent 0 19px, rgba(225, 231, 230, .06) 20px 21px);
+  filter: blur(.5px);
+}
+
+.culture-window-reflection {
+  position: absolute;
+  inset: -20% auto -20% 22%;
+  width: 18%;
+  background: linear-gradient(90deg, transparent, rgba(226, 231, 229, .08), transparent);
+  transform: rotate(17deg);
+}
+
+.culture-window-feature {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
+  animation: culture-window-arrive .55s ease both;
+}
+
+.culture-window-type,
+.culture-window-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--gaslight-bright);
+  font: 10px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .18em;
+}
+
+.culture-window-eyebrow {
+  margin: 38px 0 14px;
+  color: rgba(216, 214, 206, .45);
+  font-size: 12px;
+  letter-spacing: .24em;
+}
+
+.culture-window-feature h3 {
+  margin: 0;
+  color: #ebe8df;
+  font: 500 clamp(34px, 4.6vw, 68px)/1.12 "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
+  letter-spacing: -.035em;
+  text-shadow: 0 8px 34px #000;
+}
+
+.culture-window-detail {
+  max-width: 570px;
+  margin: 28px 0 38px;
+  color: rgba(216, 214, 206, .66);
+  font-size: 15px;
+  line-height: 2;
+}
+
+.culture-window-notices {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1px;
+  padding-left: 10px;
+  background: rgba(185, 154, 98, .1);
+}
+
+.culture-window-notices button {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-content: center;
+  gap: 8px 10px;
+  padding: 24px 27px;
+  border: 0;
+  color: rgba(216, 214, 206, .48);
+  text-align: left;
+  background: #0b0d0f;
+  cursor: pointer;
+  transition: color .3s ease, background .35s ease;
+}
+
+.culture-window-notices button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 1px;
+  background: transparent;
+}
+
+.culture-window-notices button span {
+  font: 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .18em;
+}
+
+.culture-window-notices button small {
+  grid-column: 2;
+  color: inherit;
+  font: 400 13px/1.65 "Noto Serif SC", Georgia, serif;
+}
+
+.culture-window-notices button:hover,
+.culture-window-notices button:focus-visible,
+.culture-window-notices button.is-active {
+  color: #dedcd4;
+  background: radial-gradient(circle at 0 50%, rgba(185, 154, 98, .16), transparent 64%), #0d0f11;
+}
+
+.culture-window-notices button.is-active::before {
+  background: var(--gaslight-bright);
+  box-shadow: 0 0 14px rgba(226, 201, 144, .5);
+}
+
+@keyframes culture-window-arrive {
+  from { opacity: .25; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .street-passage-center {
   justify-content: center;
   min-height: 110vh;
@@ -1082,6 +1289,21 @@ a.work-window:focus-visible {
   .character-label strong {
     font-size: 11px;
   }
+
+  .culture-window-frame {
+    grid-template-columns: 1fr;
+  }
+
+  .culture-window-frame::before,
+  .culture-window-frame::after {
+    display: none;
+  }
+
+  .culture-window-notices {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    padding: 1px 0 0;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1126,6 +1348,30 @@ a.work-window:focus-visible {
 
   .work-window {
     min-height: 340px;
+  }
+
+  .culture-window-chapter {
+    padding-top: 13vh;
+    padding-bottom: 13vh;
+  }
+
+  .culture-window-frame {
+    min-height: 0;
+    padding: 8px;
+  }
+
+  .culture-window-glass {
+    min-height: 520px;
+    padding: 34px 28px;
+  }
+
+  .culture-window-notices {
+    grid-template-columns: 1fr;
+  }
+
+  .culture-window-notices button {
+    min-height: 112px;
+    padding: 20px 22px;
   }
 
   .chapter-heading-right {
@@ -1216,6 +1462,10 @@ a.work-window:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .street-watchful-windows {
+    animation: none;
+  }
+
+  .culture-window-feature {
     animation: none;
   }
 }
