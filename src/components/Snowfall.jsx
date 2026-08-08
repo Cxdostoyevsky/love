@@ -1,24 +1,27 @@
 import { useEffect, useMemo } from 'react';
 
-/* 俄国大雪 - 共享雪景组件 */
 const SNOWFLAKES = Array.from({ length: 120 }, (_, i) => ({
   id: i,
   left: (i * 13.7 + i * 0.3) % 100,
-  size: 2.5 + (i % 6),
-  duration: 8 + (i % 12),
-  delay: (i * 0.3) % 8,
+  restY: (i * 37.7 + 11) % 100,
+  size: 1.2 + ((i * 17) % 42) / 10,
+  duration: 9 + ((i * 19) % 110) / 10,
+  delay: -((i * 29) % 130) / 10,
+  sway: 22 + ((i * 31) % 82),
+  rotation: (i * 47) % 360,
+  opacity: 0.38 + ((i * 23) % 50) / 100,
 }));
 
 export default function Snowfall({ reducedMotion = false }) {
   const layers = useMemo(() => {
-    const farCount = reducedMotion ? 14 : 28;
-    const midCount = reducedMotion ? 18 : 28;
-    const blizzardCount = reducedMotion ? 10 : 20;
+    const farCount = reducedMotion ? 18 : 42;
+    const midCount = reducedMotion ? 14 : 32;
+    const nearCount = reducedMotion ? 0 : 14;
 
     return {
       far: SNOWFLAKES.slice(0, farCount),
       mid: SNOWFLAKES.slice(farCount, farCount + midCount),
-      blizzard: SNOWFLAKES.slice(farCount + midCount, farCount + midCount + blizzardCount),
+      near: SNOWFLAKES.slice(farCount + midCount, farCount + midCount + nearCount),
     };
   }, [reducedMotion]);
 
@@ -100,51 +103,58 @@ export default function Snowfall({ reducedMotion = false }) {
   }, [reducedMotion]);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-[5]" aria-hidden="true">
+    <div
+      className="snowfield absolute inset-0 overflow-hidden pointer-events-none z-[5]"
+      data-reduced-motion={reducedMotion}
+      aria-hidden="true"
+    >
       {layers.far.map((s) => (
         <div
           key={`far-${s.id}`}
-          className="snowflake"
+          className="snowflake snowflake-far"
           style={{
             left: `${s.left}%`,
-            width: `${s.size}px`,
-            height: `${s.size}px`,
-            borderRadius: '50%',
-            background: 'rgba(212, 228, 247, 0.5)',
-            boxShadow: '0 0 4px rgba(255,255,255,0.3)',
-            animation: `snowfall-slow ${s.duration + 4}s linear ${s.delay}s infinite`,
+            '--flake-size': `${Math.max(s.size * 0.48, 0.7)}px`,
+            '--flake-duration': `${s.duration + 5}s`,
+            '--flake-delay': `${s.delay}s`,
+            '--flake-sway': `${s.sway * 0.55}px`,
+            '--flake-rotation': `${s.rotation}deg`,
+            '--flake-opacity': s.opacity * 0.58,
+            '--rest-y': `${s.restY}vh`,
           }}
-        />
+        ><span /></div>
       ))}
       {layers.mid.map((s) => (
         <div
           key={s.id}
-          className="snowflake"
+          className="snowflake snowflake-mid"
           style={{
             left: `${s.left}%`,
-            width: `${s.size}px`,
-            height: `${s.size}px`,
-            borderRadius: '50%',
-            background: 'rgba(212, 228, 247, 0.88)',
-            boxShadow: '0 0 8px rgba(255,255,255,0.5)',
-            animation: `snowfall ${s.duration}s linear ${s.delay}s infinite`,
+            '--flake-size': `${s.size}px`,
+            '--flake-duration': `${s.duration}s`,
+            '--flake-delay': `${s.delay}s`,
+            '--flake-sway': `${s.sway}px`,
+            '--flake-rotation': `${s.rotation}deg`,
+            '--flake-opacity': s.opacity,
+            '--rest-y': `${s.restY}vh`,
           }}
-        />
+        ><span /></div>
       ))}
-      {layers.blizzard.map((s) => (
+      {layers.near.map((s) => (
         <div
-          key={`bliz-${s.id}`}
-          className="snowflake"
+          key={`near-${s.id}`}
+          className="snowflake snowflake-near"
           style={{
             left: `${(s.left + 10) % 100}%`,
-            width: `${s.size + 2}px`,
-            height: `${s.size + 2}px`,
-            borderRadius: '50%',
-            background: 'rgba(255, 255, 255, 0.9)',
-            boxShadow: '0 0 8px rgba(255,255,255,0.5)',
-            animation: `snowfall-blizzard ${Math.max(s.duration - 2, 6)}s linear ${s.delay}s infinite`,
+            '--flake-size': `${s.size + 1.8}px`,
+            '--flake-duration': `${Math.max(s.duration - 3.2, 5.2)}s`,
+            '--flake-delay': `${s.delay}s`,
+            '--flake-sway': `${s.sway * 1.45}px`,
+            '--flake-rotation': `${s.rotation}deg`,
+            '--flake-opacity': Math.min(s.opacity + 0.08, 0.92),
+            '--rest-y': `${s.restY}vh`,
           }}
-        />
+        ><span /></div>
       ))}
     </div>
   );

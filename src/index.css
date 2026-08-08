@@ -47,37 +47,43 @@ html, body, #root {
     linear-gradient(180deg, #05080f 0%, #0b1018 40%, #0a0e14 100%);
 }
 
-/* 俄国大雪 - 多层雪景动画 */
-@keyframes snowfall {
+/* 彼得堡细雪：雪尘、碎雪与近镜头风痕 */
+@keyframes snowfall-far {
   0% {
-    transform: translateY(-15vh) translateX(0) rotate(0deg);
-    opacity: 0.9;
+    transform: translate3d(0, calc(-18vh - var(--rest-y)), 0);
+    opacity: 0;
   }
+  12% { opacity: var(--flake-opacity); }
+  78% { opacity: calc(var(--flake-opacity) * .72); }
   100% {
-    transform: translateY(115vh) translateX(var(--snow-drift-x, 30px)) rotate(360deg);
-    opacity: 0.2;
+    transform: translate3d(calc(var(--flake-sway) * -.55), calc(116vh - var(--rest-y)), 0);
+    opacity: 0;
   }
 }
 
-@keyframes snowfall-slow {
+@keyframes snowfall-mid {
   0% {
-    transform: translateY(-10vh) translateX(0);
-    opacity: 0.7;
+    transform: translate3d(0, calc(-18vh - var(--rest-y)), 0) rotate(var(--flake-rotation));
+    opacity: 0;
   }
+  8% { opacity: var(--flake-opacity); }
+  48% { transform: translate3d(calc(var(--flake-sway) * .38), calc(48vh - var(--rest-y)), 0) rotate(calc(var(--flake-rotation) + 118deg)); }
+  76% { transform: translate3d(calc(var(--flake-sway) * -.16), calc(84vh - var(--rest-y)), 0) rotate(calc(var(--flake-rotation) + 208deg)); }
   100% {
-    transform: translateY(108vh) translateX(calc(var(--snow-drift-x, 30px) * -0.8));
-    opacity: 0.15;
+    transform: translate3d(calc(var(--flake-sway) + var(--snow-drift-x, 30px)), calc(118vh - var(--rest-y)), 0) rotate(calc(var(--flake-rotation) + 320deg));
+    opacity: 0;
   }
 }
 
-@keyframes snowfall-blizzard {
+@keyframes snowfall-near {
   0% {
-    transform: translateY(-20vh) translateX(0) scale(1);
-    opacity: 0.8;
+    transform: translate3d(0, calc(-24vh - var(--rest-y)), 0) rotate(calc(var(--flake-rotation) - 16deg));
+    opacity: 0;
   }
+  9% { opacity: var(--flake-opacity); }
   100% {
-    transform: translateY(120vh) translateX(calc(var(--snow-drift-x, 30px) * 1.7)) scale(1.2);
-    opacity: 0.1;
+    transform: translate3d(calc(var(--flake-sway) + var(--snow-drift-x, 30px) * 1.6), calc(124vh - var(--rest-y)), 0) rotate(calc(var(--flake-rotation) + 28deg));
+    opacity: 0;
   }
 }
 
@@ -121,12 +127,50 @@ html, body, #root {
 
 .snowflake {
   position: absolute;
-  top: -20px;
-  color: rgba(212, 228, 247, 0.9);
-  text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  top: var(--rest-y);
+  width: var(--flake-size);
+  height: var(--flake-size);
+  opacity: var(--flake-opacity);
   will-change: transform, opacity;
   pointer-events: none;
   user-select: none;
+}
+
+.snowflake span {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.snowflake-far {
+  animation: snowfall-far var(--flake-duration) linear var(--flake-delay) infinite;
+}
+
+.snowflake-far span {
+  border-radius: 45% 55% 62% 38%;
+  background: rgba(221, 229, 231, .56);
+  filter: blur(.65px);
+}
+
+.snowflake-mid {
+  animation: snowfall-mid var(--flake-duration) cubic-bezier(.42, 0, .58, 1) var(--flake-delay) infinite;
+}
+
+.snowflake-mid span {
+  background: linear-gradient(145deg, rgba(241, 244, 241, .94), rgba(192, 207, 214, .5));
+  clip-path: polygon(50% 0, 64% 32%, 100% 46%, 69% 61%, 55% 100%, 39% 67%, 0 53%, 34% 37%);
+  filter: drop-shadow(0 0 2px rgba(238, 244, 244, .36));
+}
+
+.snowflake-near {
+  height: calc(var(--flake-size) * 3.4);
+  animation: snowfall-near var(--flake-duration) ease-in var(--flake-delay) infinite;
+}
+
+.snowflake-near span {
+  border-radius: 70% 30% 58% 42%;
+  background: linear-gradient(180deg, rgba(244, 247, 244, .08), rgba(239, 244, 243, .8) 46%, rgba(218, 230, 232, .16));
+  filter: blur(.45px) drop-shadow(0 0 3px rgba(238, 244, 244, .3));
 }
 
 /* 霜冻纹理 */
@@ -269,6 +313,10 @@ html, body, #root {
   .title-shimmer,
   .snowflake {
     animation: none !important;
+  }
+
+  .snowflake-near {
+    display: none;
   }
 }
 
