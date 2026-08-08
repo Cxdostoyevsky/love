@@ -712,8 +712,7 @@ a.work-window:focus-visible {
   box-shadow: 0 45px 120px rgba(0, 0, 0, .52), 0 0 100px rgba(185, 154, 98, .065);
 }
 
-.culture-window-frame::before,
-.culture-window-frame::after {
+.culture-window-frame::before {
   content: "";
   position: absolute;
   z-index: 3;
@@ -727,13 +726,6 @@ a.work-window:focus-visible {
   bottom: 0;
   left: calc(70% - 5px);
   width: 10px;
-}
-
-.culture-window-frame::after {
-  left: 0;
-  right: 30%;
-  top: 52%;
-  height: 8px;
 }
 
 .culture-window-glass {
@@ -770,7 +762,7 @@ a.work-window:focus-visible {
 .culture-window-feature {
   position: relative;
   z-index: 2;
-  max-width: 650px;
+  max-width: 610px;
   animation: culture-window-arrive .55s ease both;
 }
 
@@ -794,8 +786,9 @@ a.work-window:focus-visible {
 .culture-window-feature h3 {
   margin: 0;
   color: #ebe8df;
-  font: 500 clamp(34px, 4.6vw, 68px)/1.12 "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
+  font: 500 clamp(34px, 4.2vw, 60px)/1.18 "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
   letter-spacing: -.035em;
+  text-wrap: balance;
   text-shadow: 0 8px 34px #000;
 }
 
