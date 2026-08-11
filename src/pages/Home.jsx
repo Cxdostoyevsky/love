@@ -320,7 +320,7 @@ function Home() {
 
         <div className="encounter-scene">
           <img
-            src={`${import.meta.env.BASE_URL}gallery/petersburg-character-encounter-v6.png`}
+            src={`${import.meta.env.BASE_URL}gallery/petersburg-character-encounter-v9.png`}
             alt="圣彼得堡雪夜中，地下人、拉斯柯尔尼科夫、伊万·卡拉马佐夫、涅莉与梅诗金公爵在街道上偶然相遇；一只活泼的小狗跑在一群快乐的孩子前面，陀思妥耶夫斯基从二楼窗内望着他们。"
           />
           <div className="encounter-vignette" aria-hidden="true" />
