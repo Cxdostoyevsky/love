@@ -99,9 +99,6 @@ function Home() {
   const [podcastPlaying, setPodcastPlaying] = useState(false);
   const nightAudioRef = useRef(null);
   const podcastAudioRef = useRef(null);
-  const cultureWindowRef = useRef(null);
-  const podcastVisibleRef = useRef(false);
-  const audioUnlockedRef = useRef(false);
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -110,99 +107,35 @@ function Home() {
     nightAudioRef.current?.close();
   }, []);
 
-  useEffect(() => {
-    const section = cultureWindowRef.current;
-    const audio = podcastAudioRef.current;
-    if (!section || !audio) return undefined;
-
-    const pausePodcast = () => {
-      audio.pause();
-      setPodcastPlaying(false);
-    };
-
-    const playPodcast = () => {
-      if (activeWindowItem !== 0) return;
-      audio.muted = false;
-      audio.volume = 0.72;
-      const playback = audio.play();
-      playback?.then(() => setPodcastPlaying(true)).catch(() => {});
-    };
-
-    const unlockPodcast = () => {
-      if (audioUnlockedRef.current) {
-        if (podcastVisibleRef.current) playPodcast();
-        return;
-      }
-
-      audioUnlockedRef.current = true;
-      if (podcastVisibleRef.current && activeWindowItem === 0) {
-        playPodcast();
-        return;
-      }
-
-      audio.muted = true;
-      audio.play()
-        .then(() => {
-          audio.pause();
-          audio.currentTime = 0;
-          audio.muted = false;
-          if (podcastVisibleRef.current && activeWindowItem === 0) {
-            playPodcast();
-          }
-        })
-        .catch(() => {
-          audio.muted = false;
-        });
-    };
-
-    const observer = new IntersectionObserver(([entry]) => {
-      podcastVisibleRef.current = entry.isIntersecting && entry.intersectionRatio >= 0.32;
-      if (podcastVisibleRef.current && audioUnlockedRef.current && activeWindowItem === 0) {
-        playPodcast();
-      } else {
-        pausePodcast();
-      }
-    }, { threshold: [0, 0.32, 0.55] });
-
-    observer.observe(section);
-    window.addEventListener('wheel', unlockPodcast, { passive: true });
-    window.addEventListener('pointerdown', unlockPodcast, { passive: true });
-    window.addEventListener('touchstart', unlockPodcast, { passive: true });
-    window.addEventListener('keydown', unlockPodcast);
-
-    if (activeWindowItem !== 0) pausePodcast();
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('wheel', unlockPodcast);
-      window.removeEventListener('pointerdown', unlockPodcast);
-      window.removeEventListener('touchstart', unlockPodcast);
-      window.removeEventListener('keydown', unlockPodcast);
-    };
-  }, [activeWindowItem]);
-
   useEffect(() => () => {
     podcastAudioRef.current?.pause();
   }, []);
 
-  const playPodcastPreview = () => {
-    if (!podcastAudioRef.current) return;
+  const togglePodcastPreview = () => {
+    const audio = podcastAudioRef.current;
+    if (!audio) return;
     setActiveWindowItem(0);
-    audioUnlockedRef.current = true;
-    podcastAudioRef.current.muted = false;
-    podcastAudioRef.current.volume = 0.72;
-    podcastAudioRef.current.play()
+
+    if (!audio.paused) {
+      audio.pause();
+      return;
+    }
+
+    audio.muted = false;
+    audio.volume = 0.72;
+    audio.play()
       .then(() => setPodcastPlaying(true))
       .catch(() => {});
   };
 
   const selectWindowItem = (index) => {
-    setActiveWindowItem(index);
     if (index === 0) {
-      playPodcastPreview();
-    } else {
-      podcastAudioRef.current?.pause();
+      togglePodcastPreview();
+      return;
     }
+
+    setActiveWindowItem(index);
+    podcastAudioRef.current?.pause();
   };
 
   const toggleNightSound = async () => {
@@ -428,7 +361,6 @@ function Home() {
 
       <section
         id="night-window"
-        ref={cultureWindowRef}
         className="culture-window-chapter"
         aria-labelledby="culture-window-title"
       >
@@ -465,7 +397,7 @@ function Home() {
                         <span className="culture-audio-bars" aria-hidden="true">
                           <i /><i /><i /><i />
                         </span>
-                        {podcastPlaying ? '正在播放' : '走近即听'}
+                        {podcastPlaying ? '点击暂停' : '点击播放'}
                       </span>
                     )}
                   </>
@@ -483,7 +415,6 @@ function Home() {
                   type="button"
                   className={activeWindowItem === index ? 'is-active' : ''}
                   onClick={() => selectWindowItem(index)}
-                  onPointerEnter={index === 0 ? playPodcastPreview : undefined}
                   aria-pressed={activeWindowItem === index}
                 >
                   <Icon size={15} />
