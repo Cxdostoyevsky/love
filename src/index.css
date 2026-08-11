@@ -848,6 +848,42 @@ a.work-window:focus-visible {
   line-height: 2;
 }
 
+.culture-audio-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  color: rgba(216, 214, 206, .4);
+  font: 9px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .18em;
+}
+
+.culture-audio-state.is-playing {
+  color: var(--gaslight-bright);
+}
+
+.culture-audio-bars {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 12px;
+}
+
+.culture-audio-bars i {
+  width: 1px;
+  height: 3px;
+  background: currentColor;
+  transform-origin: center;
+}
+
+.culture-audio-state.is-playing .culture-audio-bars i {
+  animation: culture-audio-pulse .8s ease-in-out infinite alternate;
+}
+
+.culture-audio-state.is-playing .culture-audio-bars i:nth-child(2) { animation-delay: -.55s; }
+.culture-audio-state.is-playing .culture-audio-bars i:nth-child(3) { animation-delay: -.28s; }
+.culture-audio-state.is-playing .culture-audio-bars i:nth-child(4) { animation-delay: -.68s; }
+
 .culture-window-notices {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
@@ -892,6 +928,13 @@ a.work-window:focus-visible {
   font: 400 13px/1.65 "Noto Serif SC", Georgia, serif;
 }
 
+.culture-notice-playing {
+  grid-column: 2;
+  color: var(--gaslight-bright);
+  font: 8px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  letter-spacing: .13em !important;
+}
+
 .culture-window-notices button:hover,
 .culture-window-notices button:focus-visible,
 .culture-window-notices button.is-active {
@@ -907,6 +950,11 @@ a.work-window:focus-visible {
 @keyframes culture-window-arrive {
   from { opacity: .25; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes culture-audio-pulse {
+  from { height: 3px; opacity: .45; }
+  to { height: 11px; opacity: 1; }
 }
 
 .street-passage-center {
@@ -1508,6 +1556,11 @@ a.work-window:focus-visible {
 
   .culture-window-feature {
     animation: none;
+  }
+
+  .culture-audio-state.is-playing .culture-audio-bars i {
+    animation: none;
+    height: 7px;
   }
 }
 

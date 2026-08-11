@@ -68,7 +68,7 @@ const nightWindowItems = [
     eyebrow: '一封听觉来信',
     title: '为什么我们仍在“地下室”里？',
     detail: '从自尊、羞耻与过度清醒出发，重听那个不肯停止独白的人。',
-    meta: '声音 · 42 分钟',
+    meta: '试听 · 约 30 秒',
     icon: Headphones,
   },
   {
@@ -96,19 +96,119 @@ function Home() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.13, 0.22], [1, 0.9, 0]);
   const [soundOn, setSoundOn] = useState(false);
   const [activeWindowItem, setActiveWindowItem] = useState(0);
-  const audioRef = useRef(null);
+  const [podcastPlaying, setPodcastPlaying] = useState(false);
+  const nightAudioRef = useRef(null);
+  const podcastAudioRef = useRef(null);
+  const cultureWindowRef = useRef(null);
+  const podcastVisibleRef = useRef(false);
+  const audioUnlockedRef = useRef(false);
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => () => {
-    audioRef.current?.close();
+    nightAudioRef.current?.close();
   }, []);
+
+  useEffect(() => {
+    const section = cultureWindowRef.current;
+    const audio = podcastAudioRef.current;
+    if (!section || !audio) return undefined;
+
+    const pausePodcast = () => {
+      audio.pause();
+      setPodcastPlaying(false);
+    };
+
+    const playPodcast = () => {
+      if (activeWindowItem !== 0) return;
+      audio.muted = false;
+      audio.volume = 0.72;
+      const playback = audio.play();
+      playback?.then(() => setPodcastPlaying(true)).catch(() => {});
+    };
+
+    const unlockPodcast = () => {
+      if (audioUnlockedRef.current) {
+        if (podcastVisibleRef.current) playPodcast();
+        return;
+      }
+
+      audioUnlockedRef.current = true;
+      if (podcastVisibleRef.current && activeWindowItem === 0) {
+        playPodcast();
+        return;
+      }
+
+      audio.muted = true;
+      audio.play()
+        .then(() => {
+          audio.pause();
+          audio.currentTime = 0;
+          audio.muted = false;
+          if (podcastVisibleRef.current && activeWindowItem === 0) {
+            playPodcast();
+          }
+        })
+        .catch(() => {
+          audio.muted = false;
+        });
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      podcastVisibleRef.current = entry.isIntersecting && entry.intersectionRatio >= 0.32;
+      if (podcastVisibleRef.current && audioUnlockedRef.current && activeWindowItem === 0) {
+        playPodcast();
+      } else {
+        pausePodcast();
+      }
+    }, { threshold: [0, 0.32, 0.55] });
+
+    observer.observe(section);
+    window.addEventListener('wheel', unlockPodcast, { passive: true });
+    window.addEventListener('pointerdown', unlockPodcast, { passive: true });
+    window.addEventListener('touchstart', unlockPodcast, { passive: true });
+    window.addEventListener('keydown', unlockPodcast);
+
+    if (activeWindowItem !== 0) pausePodcast();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('wheel', unlockPodcast);
+      window.removeEventListener('pointerdown', unlockPodcast);
+      window.removeEventListener('touchstart', unlockPodcast);
+      window.removeEventListener('keydown', unlockPodcast);
+    };
+  }, [activeWindowItem]);
+
+  useEffect(() => () => {
+    podcastAudioRef.current?.pause();
+  }, []);
+
+  const playPodcastPreview = () => {
+    if (!podcastAudioRef.current) return;
+    setActiveWindowItem(0);
+    audioUnlockedRef.current = true;
+    podcastAudioRef.current.muted = false;
+    podcastAudioRef.current.volume = 0.72;
+    podcastAudioRef.current.play()
+      .then(() => setPodcastPlaying(true))
+      .catch(() => {});
+  };
+
+  const selectWindowItem = (index) => {
+    setActiveWindowItem(index);
+    if (index === 0) {
+      playPodcastPreview();
+    } else {
+      podcastAudioRef.current?.pause();
+    }
+  };
 
   const toggleNightSound = async () => {
     if (soundOn) {
-      await audioRef.current?.close();
-      audioRef.current = null;
+      await nightAudioRef.current?.close();
+      nightAudioRef.current = null;
       setSoundOn(false);
       return;
     }
@@ -137,7 +237,7 @@ function Home() {
     gain.gain.value = 0.026;
     wind.connect(filter).connect(gain).connect(context.destination);
     wind.start();
-    audioRef.current = context;
+    nightAudioRef.current = context;
     setSoundOn(true);
   };
 
@@ -326,7 +426,20 @@ function Home() {
         </div>
       </section>
 
-      <section id="night-window" className="culture-window-chapter" aria-labelledby="culture-window-title">
+      <section
+        id="night-window"
+        ref={cultureWindowRef}
+        className="culture-window-chapter"
+        aria-labelledby="culture-window-title"
+      >
+        <audio
+          ref={podcastAudioRef}
+          src={`${import.meta.env.BASE_URL}audio/dostoevsky-night-intro.m4a`}
+          preload="metadata"
+          onPlay={() => setPodcastPlaying(true)}
+          onPause={() => setPodcastPlaying(false)}
+          onEnded={() => setPodcastPlaying(false)}
+        />
         <header className="culture-window-heading">
           <p className="passage-marker">第四盏灯 · 今夜的橱窗</p>
           <h2 id="culture-window-title">有些声音，<br />隔着玻璃也能听见。</h2>
@@ -347,6 +460,14 @@ function Home() {
                     <h3>{item.title}</h3>
                     <p className="culture-window-detail">{item.detail}</p>
                     <span className="culture-window-meta"><CalendarDays size={14} /> {item.meta}</span>
+                    {activeWindowItem === 0 && (
+                      <span className={`culture-audio-state ${podcastPlaying ? 'is-playing' : ''}`}>
+                        <span className="culture-audio-bars" aria-hidden="true">
+                          <i /><i /><i /><i />
+                        </span>
+                        {podcastPlaying ? '正在播放' : '走近即听'}
+                      </span>
+                    )}
                   </>
                 );
               })()}
@@ -361,12 +482,16 @@ function Home() {
                   key={item.type}
                   type="button"
                   className={activeWindowItem === index ? 'is-active' : ''}
-                  onClick={() => setActiveWindowItem(index)}
+                  onClick={() => selectWindowItem(index)}
+                  onPointerEnter={index === 0 ? playPodcastPreview : undefined}
                   aria-pressed={activeWindowItem === index}
                 >
                   <Icon size={15} />
                   <span>{item.type}</span>
                   <small>{item.title}</small>
+                  {index === 0 && podcastPlaying && (
+                    <span className="culture-notice-playing">声音正在窗内响起</span>
+                  )}
                 </button>
               );
             })}
