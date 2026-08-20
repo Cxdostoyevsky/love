@@ -981,6 +981,81 @@ a.work-window:focus-visible {
   letter-spacing: .3em;
 }
 
+.karamazov-memory-chapter {
+  position: relative;
+  z-index: 12;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #080a0c;
+  isolation: isolate;
+}
+
+.karamazov-memory-chapter > img {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(.82) saturate(.78);
+}
+
+.karamazov-memory-shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(4, 6, 8, .96) 0%, rgba(4, 6, 8, .82) 27%, rgba(4, 6, 8, .22) 58%, rgba(4, 6, 8, .08) 100%),
+    linear-gradient(180deg, rgba(4, 6, 8, .34), transparent 42%, rgba(4, 6, 8, .62));
+}
+
+.karamazov-memory-chapter blockquote {
+  width: min(610px, 45vw);
+  margin: 0 0 0 clamp(28px, 7vw, 120px);
+  text-shadow: 0 4px 30px #000;
+}
+
+.karamazov-memory-chapter blockquote p {
+  margin: 0 0 32px;
+  color: #e4e0d6;
+  font: 500 clamp(31px, 3.8vw, 62px)/1.62 "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
+  letter-spacing: -.025em;
+}
+
+.karamazov-memory-chapter cite {
+  color: rgba(218, 190, 132, .82);
+  font: normal 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .24em;
+}
+
+@media (max-width: 720px) {
+  .karamazov-memory-chapter {
+    min-height: 92vh;
+    align-items: flex-end;
+    padding: 0 0 11vh;
+  }
+
+  .karamazov-memory-chapter > img {
+    object-position: 68% center;
+  }
+
+  .karamazov-memory-shade {
+    background: linear-gradient(180deg, rgba(4, 6, 8, .12), rgba(4, 6, 8, .42) 42%, rgba(4, 6, 8, .96) 78%);
+  }
+
+  .karamazov-memory-chapter blockquote {
+    width: auto;
+    margin: 0 24px;
+  }
+
+  .karamazov-memory-chapter blockquote p {
+    font-size: clamp(28px, 8.4vw, 42px);
+  }
+}
+
 .encounter-chapter {
   position: relative;
   z-index: 12;

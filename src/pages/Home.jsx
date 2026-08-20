@@ -449,7 +449,13 @@ function Home() {
         </div>
       </section>
 
-      <section className="street-passage street-passage-center">
+      <section className="karamazov-memory-chapter" aria-label="阿廖沙与孩子们在伊柳沙葬礼后相约永不相忘">
+        <img
+          src={`${import.meta.env.BASE_URL}gallery/karamazov-children-memory.png`}
+          alt="冬日葬礼后，阿廖沙与一群孩子围在纪念石旁，彼此安慰并约定永不相忘。"
+          loading="lazy"
+        />
+        <div className="karamazov-memory-shade" aria-hidden="true" />
         <motion.blockquote
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -457,7 +463,7 @@ function Home() {
           transition={{ duration: 1 }}
         >
           <p>“最重要的是，首先我们要善良，<br />其次要诚实，最后要永不相忘。”</p>
-          <cite>《卡拉马佐夫兄弟》</cite>
+          <cite>——《卡拉马佐夫兄弟》</cite>
         </motion.blockquote>
       </section>
 
