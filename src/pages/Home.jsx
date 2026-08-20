@@ -35,30 +35,40 @@ const encounters = [
     work: '《地下室手记》',
     voice: '“我既渴望被看见，又憎恨每一道落在我身上的目光。”',
     position: 'underground',
+    route: '/underground',
+    action: '走进地下室',
   },
   {
     name: '拉斯柯尔尼科夫',
     work: '《罪与罚》',
     voice: '“你以为自己越过的是一条界线，其实是把自己留在了界线那边。”',
     position: 'raskolnikov',
+    route: '/crime-and-punishment',
+    action: '跟随他的脚步',
   },
   {
     name: '伊万·卡拉马佐夫',
     work: '《卡拉马佐夫兄弟》',
     voice: '“若世界的和谐以一个孩子的眼泪为代价，我拒绝接受这张入场券。”',
     position: 'ivan',
+    route: '/grand-inquisitor',
+    action: '旁听他的审判',
   },
   {
     name: '涅莉',
     work: '《被侮辱与被损害的人》',
     voice: '“不要因为我可怜，就以为我会低下头。”',
     position: 'nelly',
+    route: '/nelly',
+    action: '听见她的沉默',
   },
   {
     name: '梅诗金公爵',
     work: '《白痴》',
     voice: '“有时，一个人需要的不是答案，只是有人不躲开他的痛苦。”',
     position: 'myshkin',
+    route: '/idiot',
+    action: '走近这颗心',
   },
 ];
 
@@ -266,22 +276,29 @@ function Home() {
             <p>他看着自己的“孩子们”，却没有替任何人结束苦难。</p>
           </aside>
           {encounters.map((character) => (
-            <motion.article
+            <motion.div
               key={character.name}
-              className={`character-voice character-${character.position}`}
-              tabIndex={0}
-              aria-label={`${character.name}，来自${character.work}`}
+              className={`character-anchor character-${character.position}`}
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-10%' }}
               transition={{ duration: 0.65 }}
             >
-              <span className="character-dot" aria-hidden="true" />
-              <div className="character-label">
-                <strong>{character.name}</strong>
-              </div>
-              <blockquote>{character.voice}</blockquote>
-            </motion.article>
+              <Link
+                to={character.route}
+                className="character-voice"
+                aria-label={`${character.name}，来自${character.work}；${character.action}`}
+              >
+                <span className="character-dot" aria-hidden="true" />
+                <div className="character-label">
+                  <strong>{character.name}</strong>
+                </div>
+                <span className="character-whisper">
+                  <q>{character.voice.replace(/[“”]/g, '')}</q>
+                  <small>{character.action}<ArrowUpRight size={13} /></small>
+                </span>
+              </Link>
+            </motion.div>
           ))}
         </div>
 
@@ -325,7 +342,9 @@ function Home() {
 
         <div className="work-buildings">
           {works.map((work, index) => {
-            const route = work.title === '地下室手记'
+            const route = work.title === '罪与罚'
+              ? '/crime-and-punishment'
+              : work.title === '地下室手记'
               ? '/underground'
               : work.title === '白痴'
                 ? '/idiot'

@@ -6,6 +6,7 @@ import IdiotDetail from './pages/IdiotDetail';
 import VisualReferences from './pages/VisualReferences';
 import GrandInquisitor from './pages/GrandInquisitor';
 import SnowFootsteps from './components/SnowFootsteps';
+import CharacterRoom from './pages/CharacterRoom';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         <Route path="/underground" element={<UndergroundDetail />} />
         <Route path="/idiot" element={<IdiotDetail />} />
         <Route path="/grand-inquisitor" element={<GrandInquisitor />} />
+        <Route path="/crime-and-punishment" element={<CharacterRoom room="raskolnikov" />} />
+        <Route path="/nelly" element={<CharacterRoom room="nelly" />} />
         <Route path="/visuals" element={<VisualReferences />} />
       </Routes>
     </Router>

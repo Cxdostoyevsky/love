@@ -1045,16 +1045,22 @@ a.work-window:focus-visible {
     radial-gradient(circle at 63% 67%, transparent 12%, rgba(3, 5, 7, .18) 58%, rgba(3, 5, 7, .55) 100%);
 }
 
-.character-voice {
+.character-anchor {
   --voice-x: 50%;
   --voice-y: 50%;
   position: absolute;
   z-index: 3;
   left: var(--voice-x);
   top: var(--voice-y);
+  transform: translate(-50%, -50%);
+}
+
+.character-voice {
+  position: relative;
+  display: block;
   color: var(--snow);
   outline: none;
-  transform: translate(-50%, -50%);
+  text-decoration: none;
 }
 
 .character-underground {
@@ -1209,7 +1215,7 @@ a.work-window:focus-visible {
   transform: translateY(0);
 }
 
-.character-voice blockquote {
+.character-whisper {
   position: absolute;
   left: 22px;
   top: 34px;
@@ -1230,14 +1236,28 @@ a.work-window:focus-visible {
   transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
 }
 
-.character-nelly blockquote,
-.character-myshkin blockquote {
+.character-whisper q {
+  display: block;
+}
+
+.character-whisper small {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  color: var(--gaslight-bright);
+  font: 9px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .16em;
+}
+
+.character-nelly .character-whisper,
+.character-myshkin .character-whisper {
   left: auto;
   right: 20px;
 }
 
-.character-voice:hover,
-.character-voice:focus-visible {
+.character-anchor:hover,
+.character-anchor:focus-within {
   z-index: 10;
 }
 
@@ -1247,11 +1267,43 @@ a.work-window:focus-visible {
   transform: scale(1.15);
 }
 
-.character-voice:hover blockquote,
-.character-voice:focus-visible blockquote {
+.character-voice:hover .character-whisper,
+.character-voice:focus-visible .character-whisper {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+}
+
+.character-voice:focus-visible .character-dot {
+  outline: 2px solid rgba(239, 214, 157, .92);
+  outline-offset: 7px;
+}
+
+.encounter-scene:has(.character-voice:hover) > img,
+.encounter-scene:has(.character-voice:focus-visible) > img {
+  filter: brightness(.68) saturate(.68);
+}
+
+.character-anchor::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: min(34vw, 480px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(205, 177, 117, .18), rgba(205, 177, 117, .03) 38%, transparent 68%);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.72);
+  transition: opacity .5s ease, transform .7s ease;
+}
+
+.character-anchor:hover::before,
+.character-anchor:focus-within::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .encounter-afterword {
@@ -1499,10 +1551,14 @@ a.work-window:focus-visible {
     display: none;
   }
 
-  .character-voice {
+  .character-anchor {
     position: relative;
     left: auto;
     top: auto;
+    transform: none !important;
+  }
+
+  .character-voice {
     display: grid;
     grid-template-columns: 18px 1fr;
     gap: 18px;
@@ -1510,7 +1566,6 @@ a.work-window:focus-visible {
     padding: 22px;
     border: 1px solid rgba(185, 154, 98, .16);
     background: rgba(9, 11, 13, .82);
-    transform: none !important;
   }
 
   .character-dot {
@@ -1518,9 +1573,9 @@ a.work-window:focus-visible {
   }
 
   .character-label,
-  .character-voice blockquote,
-  .character-nelly blockquote,
-  .character-myshkin blockquote {
+  .character-whisper,
+  .character-nelly .character-whisper,
+  .character-myshkin .character-whisper {
     position: static;
     width: auto;
     opacity: 1;
@@ -1536,7 +1591,7 @@ a.work-window:focus-visible {
     background: transparent;
   }
 
-  .character-voice blockquote {
+  .character-whisper {
     grid-column: 2;
     margin: 0;
     padding: 0;
@@ -1547,6 +1602,95 @@ a.work-window:focus-visible {
   .author-presence {
     display: none;
   }
+}
+
+/* 人物房间：从街上的一个名字，走入一颗无法安静的心 */
+.character-room {
+  --room-accent: #b28a55;
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  color: #dedbd2;
+  background: #07090b;
+  isolation: isolate;
+}
+
+.character-room-violet { --room-accent: #9a809b; }
+
+.character-room-night {
+  position: fixed;
+  z-index: -2;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(4, 6, 8, .94), rgba(4, 6, 8, .72) 55%, rgba(4, 6, 8, .88)),
+    radial-gradient(circle at 72% 38%, color-mix(in srgb, var(--room-accent) 22%, transparent), transparent 34%),
+    var(--room-night-image) center/cover;
+}
+
+.character-room-nav {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 28px clamp(22px, 5vw, 76px);
+  color: rgba(222, 219, 210, .64);
+  font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .16em;
+}
+
+.character-room-nav a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.character-room-hero,
+.character-room-confession,
+.character-room-question {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 15vh clamp(24px, 9vw, 150px);
+}
+
+.character-room-hero > div { width: min(840px, 82vw); }
+.character-room-kicker,
+.character-room-confession > p,
+.character-room-question > div > p {
+  color: var(--room-accent);
+  font: 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .24em;
+}
+
+.character-room h1 {
+  margin: 24px 0 8px;
+  color: #e5e1d7;
+  font: 500 clamp(58px, 9.5vw, 148px)/.92 "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
+  letter-spacing: -.06em;
+}
+
+.character-room-original { color: rgba(222, 219, 210, .35); letter-spacing: .14em; }
+.character-room-thesis { max-width: 670px; margin-top: 52px; font-size: clamp(18px, 2vw, 28px); line-height: 1.9; }
+.character-room-confession { justify-content: flex-end; flex-direction: column; text-align: right; }
+.character-room-confession blockquote { max-width: 970px; margin: 26px 0 0; font: italic 500 clamp(34px, 5vw, 76px)/1.5 "Cormorant Garamond", "Noto Serif SC", Georgia, serif; }
+.character-room-question > div { width: min(930px, 100%); }
+.character-room-question h2 { margin: 25px 0 36px; font: 500 clamp(38px, 5.6vw, 84px)/1.35 "Cormorant Garamond", "Noto Serif SC", Georgia, serif; }
+.character-room-question span { color: rgba(222, 219, 210, .55); font-size: 16px; line-height: 2; }
+
+.character-room-footer { position: relative; z-index: 3; padding: 80px clamp(24px, 9vw, 150px) 110px; }
+.character-room-footer a { display: inline-flex; align-items: center; gap: 12px; color: var(--room-accent); text-decoration: none; font-size: 13px; letter-spacing: .1em; }
+
+@media (max-width: 720px) {
+  .character-room-nav span { display: none; }
+  .character-room-hero > div { width: 100%; }
+  .character-room-confession { text-align: left; }
 }
 
 @media (prefers-reduced-motion: reduce) {
