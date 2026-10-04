@@ -197,7 +197,7 @@ function Home() {
         />
         <div className="street-ink" />
         <div className="street-watchful-windows" />
-        <Snowfall />
+        <Snowfall dramatic />
       </div>
 
       <nav className="street-nav" aria-label="主导航">
@@ -220,16 +220,24 @@ function Home() {
       </button>
 
       <section id="top" className="street-hero">
+        <div className="street-hero-haze" aria-hidden="true" />
+        <span className="street-hero-vertical" aria-hidden="true">ПЕТЕРБУРГ · СУМЕРКИ</span>
         <motion.div className="street-hero-copy" style={{ opacity: heroOpacity }}>
-          <p className="street-kicker">Санкт-Петербург · 1866 · 雪夜</p>
+          <p className="street-kicker">Санкт-Петербург · 1866 · 傍晚六点</p>
           <h1>
-            今夜，<br />
-            <span>你走进彼得堡。</span>
+            天快黑了。<br />
+            <span>你还没有地方可去。</span>
           </h1>
           <p className="street-opening">
-            你只是出来走一走。<br />
-            至少，你是这样告诉自己的。
+            公文夹里是一封退回的请愿书。<br />
+            袖口已经磨白，房租还欠着。<br />
+            你把领子竖起来，走进彼得堡的雪。
           </p>
+          <div className="street-hero-document" aria-label="一张未获批准的请愿书">
+            <span>第九品文官 · 私人档案</span>
+            <strong>请愿书已退回</strong>
+            <small>Причина отказа не указана</small>
+          </div>
         </motion.div>
         <button type="button" className="street-scroll-cue" onClick={() => scrollToSection('inner-voice')}>
           <span>继续走</span>

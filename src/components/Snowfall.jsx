@@ -12,18 +12,18 @@ const SNOWFLAKES = Array.from({ length: 120 }, (_, i) => ({
   opacity: 0.38 + ((i * 23) % 50) / 100,
 }));
 
-export default function Snowfall({ reducedMotion = false }) {
+export default function Snowfall({ reducedMotion = false, dramatic = false }) {
   const layers = useMemo(() => {
-    const farCount = reducedMotion ? 18 : 42;
-    const midCount = reducedMotion ? 14 : 32;
-    const nearCount = reducedMotion ? 0 : 14;
+    const farCount = reducedMotion ? 18 : dramatic ? 48 : 42;
+    const midCount = reducedMotion ? 14 : dramatic ? 42 : 32;
+    const nearCount = reducedMotion ? 0 : dramatic ? 22 : 14;
 
     return {
       far: SNOWFLAKES.slice(0, farCount),
       mid: SNOWFLAKES.slice(farCount, farCount + midCount),
       near: SNOWFLAKES.slice(farCount + midCount, farCount + midCount + nearCount),
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, dramatic]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -104,7 +104,7 @@ export default function Snowfall({ reducedMotion = false }) {
 
   return (
     <div
-      className="snowfield absolute inset-0 overflow-hidden pointer-events-none z-[5]"
+      className={`snowfield absolute inset-0 overflow-hidden pointer-events-none z-[5]${dramatic ? ' snowfield-dramatic' : ''}`}
       data-reduced-motion={reducedMotion}
       aria-hidden="true"
     >
@@ -114,7 +114,7 @@ export default function Snowfall({ reducedMotion = false }) {
           className="snowflake snowflake-far"
           style={{
             left: `${s.left}%`,
-            '--flake-size': `${Math.max(s.size * 0.48, 0.7)}px`,
+            '--flake-size': `${Math.max(s.size * (dramatic ? 0.7 : 0.48), 0.7)}px`,
             '--flake-duration': `${s.duration + 5}s`,
             '--flake-delay': `${s.delay}s`,
             '--flake-sway': `${s.sway * 0.55}px`,
@@ -130,7 +130,7 @@ export default function Snowfall({ reducedMotion = false }) {
           className="snowflake snowflake-mid"
           style={{
             left: `${s.left}%`,
-            '--flake-size': `${s.size}px`,
+            '--flake-size': `${s.size * (dramatic ? 1.55 : 1)}px`,
             '--flake-duration': `${s.duration}s`,
             '--flake-delay': `${s.delay}s`,
             '--flake-sway': `${s.sway}px`,
@@ -146,7 +146,7 @@ export default function Snowfall({ reducedMotion = false }) {
           className="snowflake snowflake-near"
           style={{
             left: `${(s.left + 10) % 100}%`,
-            '--flake-size': `${s.size + 1.8}px`,
+            '--flake-size': `${(s.size + 1.8) * (dramatic ? 1.7 : 1)}px`,
             '--flake-duration': `${Math.max(s.duration - 3.2, 5.2)}s`,
             '--flake-delay': `${s.delay}s`,
             '--flake-sway': `${s.sway * 1.45}px`,

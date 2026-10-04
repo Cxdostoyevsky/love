@@ -349,7 +349,7 @@ html, body, #root {
   inset: -5%;
   background-position: center;
   background-size: cover;
-  filter: brightness(.7) saturate(.68) contrast(1.08);
+  filter: brightness(.82) saturate(.72) contrast(1.18);
   transform-origin: 58% 63%;
   will-change: transform;
 }
@@ -358,8 +358,9 @@ html, body, #root {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(4, 5, 7, .58), transparent 40%, rgba(4, 5, 7, .14) 72%, rgba(4, 5, 7, .48)),
-    linear-gradient(180deg, rgba(3, 5, 7, .18), rgba(4, 6, 8, .05) 48%, rgba(4, 5, 7, .78)),
+    linear-gradient(90deg, rgba(4, 5, 7, .84), rgba(4, 5, 7, .16) 58%, rgba(4, 5, 7, .3)),
+    linear-gradient(180deg, rgba(30, 21, 30, .36), rgba(4, 6, 8, .03) 48%, rgba(4, 5, 7, .82)),
+    radial-gradient(ellipse at 54% 45%, rgba(144, 83, 70, .18), transparent 44%),
     radial-gradient(circle at 58% 58%, transparent 0 20%, rgba(4, 6, 8, .16) 55%, rgba(4, 5, 7, .74) 100%);
   box-shadow: inset 0 0 15vw 5vw #050607;
 }
@@ -478,10 +479,33 @@ html, body, #root {
   display: flex;
   align-items: center;
   padding: 8vh clamp(24px, 8vw, 140px) 20vh;
+  isolation: isolate;
+}
+
+.street-hero-haze {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 44% 55% at 72% 35%, rgba(178, 107, 78, .18), transparent 72%),
+    linear-gradient(90deg, rgba(4, 5, 7, .36), transparent 70%);
+}
+
+.street-hero-vertical {
+  position: absolute;
+  right: clamp(26px, 4vw, 70px);
+  top: 21vh;
+  color: rgba(230, 212, 183, .46);
+  font: 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .38em;
+  writing-mode: vertical-rl;
 }
 
 .street-hero-copy {
-  max-width: 820px;
+  position: relative;
+  width: min(920px, 88vw);
+  padding-top: 10vh;
 }
 
 .street-kicker,
@@ -497,26 +521,70 @@ html, body, #root {
   margin: 0;
   color: #e1dfd8;
   font-family: "Cormorant Garamond", "Noto Serif SC", Georgia, serif;
-  font-size: clamp(64px, 9.2vw, 148px);
+  font-size: clamp(72px, 10vw, 156px);
   font-weight: 500;
-  line-height: .88;
+  line-height: 1.05;
   letter-spacing: -.055em;
   text-shadow: 0 5px 40px rgba(0, 0, 0, .55);
 }
 
 .street-hero h1 span {
-  color: rgba(216, 214, 206, .78);
+  color: #d4b995;
   font-size: .58em;
   font-style: italic;
   letter-spacing: -.035em;
 }
 
 .street-opening {
-  margin: 46px 0 0 8px;
-  color: rgba(216, 214, 206, .74);
+  margin: 42px 0 0 8px;
+  color: rgba(233, 228, 216, .9);
   font-size: clamp(16px, 1.45vw, 21px);
-  line-height: 2;
+  line-height: 1.95;
   letter-spacing: .08em;
+  text-shadow: 0 2px 16px #000;
+}
+
+.street-hero-document {
+  position: absolute;
+  right: -9vw;
+  bottom: -16vh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: clamp(220px, 20vw, 300px);
+  padding: 25px 28px 30px;
+  color: #3e342f;
+  background: linear-gradient(145deg, #b8a78d, #8a7d6c);
+  border: 1px solid rgba(229, 213, 183, .55);
+  box-shadow: 3px 22px 45px rgba(0, 0, 0, .55);
+  transform: rotate(7deg);
+}
+
+.street-hero-document::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(58, 44, 36, .3);
+  pointer-events: none;
+}
+
+.street-hero-document span,
+.street-hero-document small {
+  font: 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .1em;
+}
+
+.street-hero-document strong {
+  padding: 14px 0;
+  border-block: 1px solid rgba(58, 44, 36, .32);
+  color: #552e2c;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: .14em;
+}
+
+.street-hero-document small {
+  opacity: .7;
 }
 
 .street-scroll-cue {
@@ -1542,10 +1610,42 @@ a.work-window:focus-visible {
 
   .street-hero {
     min-height: 110vh;
+    align-items: flex-start;
+    padding-top: 25vh;
   }
 
   .street-hero h1 {
-    font-size: clamp(52px, 18vw, 86px);
+    font-size: clamp(56px, 16vw, 86px);
+  }
+
+  .street-hero-copy {
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .street-hero h1 span {
+    font-size: .66em;
+  }
+
+  .street-opening {
+    margin-top: 28px;
+    font-size: 14px;
+  }
+
+  .street-hero-document {
+    right: -4vw;
+    bottom: -24vh;
+    width: 185px;
+    padding: 17px 20px 22px;
+    transform: rotate(5deg);
+  }
+
+  .street-hero-document strong {
+    font-size: 16px;
+  }
+
+  .street-hero-vertical {
+    display: none;
   }
 
   .passage-copy {
