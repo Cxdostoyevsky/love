@@ -5,13 +5,11 @@ import UndergroundDetail from './pages/UndergroundDetail';
 import IdiotDetail from './pages/IdiotDetail';
 import VisualReferences from './pages/VisualReferences';
 import GrandInquisitor from './pages/GrandInquisitor';
-import SnowFootsteps from './components/SnowFootsteps';
 import CharacterRoom from './pages/CharacterRoom';
 
 function App() {
   return (
     <Router>
-      <SnowFootsteps />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/underground" element={<UndergroundDetail />} />
