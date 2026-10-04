@@ -52,7 +52,7 @@ export default function OpeningSequence({ onFinish }) {
                   '--orbit-y': `${Math.sin(angle) * 42}vh`,
                   '--orbit-rotation': `${index % 2 ? 630 : -630}deg`,
                 }}
-              >{character}</span>
+              ><span className="opening-letter-float">{character}</span></span>
             );
           })}
         </h2>

@@ -400,13 +400,19 @@ html, body, #root {
   text-shadow: 0 3px 8px rgba(32, 23, 18, .85), 0 9px 45px rgba(32, 23, 18, .7);
 }
 
-.opening-content h2 span {
+.opening-content h2 > span {
   display: inline-block;
   opacity: 0;
   filter: blur(12px);
   transform: translate(var(--orbit-x), var(--orbit-y)) rotate(var(--orbit-rotation)) scale(.18);
   animation: opening-letter-orbit 1.85s cubic-bezier(.16, 1, .3, 1) forwards;
   animation-delay: calc(.15s + var(--letter-index) * .18s);
+}
+
+.opening-letter-float {
+  display: inline-block;
+  animation: opening-letter-float 3.8s ease-in-out infinite;
+  animation-delay: calc(2.1s + var(--letter-index) * .18s);
 }
 
 .opening-subtitle {
@@ -459,6 +465,12 @@ html, body, #root {
   70% { opacity: 1; filter: blur(0); transform: translate(0, -8px) rotate(-12deg) scale(1.16); }
   100% { opacity: 1; filter: blur(0); transform: translate(0, 0) rotate(0) scale(1); }
 }
+@keyframes opening-letter-float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  25% { transform: translateY(-8px) rotate(-2deg); }
+  55% { transform: translateY(4px) rotate(1.5deg); }
+  78% { transform: translateY(-3px) rotate(-.7deg); }
+}
 @keyframes opening-copy-in { to { opacity: 1; } }
 @keyframes opening-rule-in { to { transform: translateX(-50%) scaleX(1); } }
 
@@ -473,7 +485,7 @@ html, body, #root {
 @media (prefers-reduced-motion: reduce) {
   .opening-sequence,
   .opening-sequence * { animation: none !important; }
-  .opening-content h2 span { opacity: 1; filter: none; transform: none; }
+  .opening-content h2 > span { opacity: 1; filter: none; transform: none; }
   .opening-overline,
   .opening-subtitle { opacity: 1; }
   .opening-rule { transform: translateX(-50%) scaleX(1); }
