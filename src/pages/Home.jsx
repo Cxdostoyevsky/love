@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowDown,
@@ -15,6 +15,7 @@ import {
 import { Link } from 'react-router-dom';
 import works from '../data/works.json';
 import Snowfall from '../components/Snowfall';
+import OpeningSequence from '../components/OpeningSequence';
 
 const timeline = [
   ['1821', '莫斯科', '你还不知道，一个在医院庭院里长大的孩子，将会替无数人说出痛苦。'],
@@ -107,6 +108,8 @@ function Home() {
   const [soundOn, setSoundOn] = useState(false);
   const [activeWindowItem, setActiveWindowItem] = useState(0);
   const [podcastPlaying, setPodcastPlaying] = useState(false);
+  const [showOpening, setShowOpening] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const finishOpening = useCallback(() => setShowOpening(false), []);
   const nightAudioRef = useRef(null);
   const podcastAudioRef = useRef(null);
   const scrollToSection = (id) => {
@@ -186,6 +189,7 @@ function Home() {
 
   return (
     <main className="dosto-street-page selection:bg-[#9a7a45] selection:text-[#090b0d]">
+      {showOpening && <OpeningSequence onFinish={finishOpening} />}
       <div className="street-fixed-scene" aria-hidden="true">
         <motion.div
           className="street-image"
