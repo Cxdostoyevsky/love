@@ -33,6 +33,7 @@ export default function OpeningSequence({ onFinish }) {
         src={`${import.meta.env.BASE_URL}gallery/petersburg-garden-opening.png`}
         alt=""
         aria-hidden="true"
+        fetchPriority="high"
       />
       <div className="opening-light" aria-hidden="true" />
       <div className="opening-grain" aria-hidden="true" />
