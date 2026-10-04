@@ -27,9 +27,13 @@ export default function OpeningSequence({ onFinish }) {
       role="dialog"
       aria-modal="true"
       aria-label="陀思妥耶夫斯基开场"
-      style={{ '--opening-scene-image': `url('${import.meta.env.BASE_URL}gallery/petersburg-garden-opening.png')` }}
     >
-      <div className="opening-scene" aria-hidden="true" />
+      <img
+        className="opening-scene"
+        src={`${import.meta.env.BASE_URL}gallery/petersburg-garden-opening.png`}
+        alt=""
+        aria-hidden="true"
+      />
       <div className="opening-light" aria-hidden="true" />
       <div className="opening-grain" aria-hidden="true" />
       <div className="opening-content">
