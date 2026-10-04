@@ -320,7 +320,7 @@ html, body, #root {
   }
 }
 
-/* The name emerges from a single gaslit Petersburg street. */
+/* A brief summer memory before the Petersburg winter. */
 .opening-sequence {
   position: fixed;
   z-index: 200;
@@ -328,14 +328,14 @@ html, body, #root {
   display: grid;
   place-items: center;
   overflow: hidden;
-  color: #e7ded0;
-  background: #050608;
+  color: #fff8e9;
+  background: #7c5839;
   isolation: isolate;
   animation: opening-arrive .7s ease-out both;
 }
 
 .opening-sequence.is-leaving {
-  animation: opening-depart .8s cubic-bezier(.76, 0, .24, 1) both;
+  animation: opening-depart .85s cubic-bezier(.76, 0, .24, 1) both;
 }
 
 .opening-scene {
@@ -343,9 +343,9 @@ html, body, #root {
   z-index: -3;
   inset: -5%;
   background: var(--opening-scene-image) center 55% / cover no-repeat;
-  filter: grayscale(.55) brightness(.42) contrast(1.35);
-  transform: scale(1.16);
-  animation: opening-scene-in 4.8s ease-out both;
+  filter: saturate(1.05) contrast(1.04);
+  transform: scale(1.1);
+  animation: opening-scene-in 5s ease-out both;
 }
 
 .opening-light {
@@ -353,20 +353,19 @@ html, body, #root {
   z-index: -2;
   inset: 0;
   background:
-    radial-gradient(ellipse 24% 36% at 72% 57%, rgba(211, 149, 91, .5), transparent 76%),
-    linear-gradient(90deg, rgba(2, 3, 5, .92), rgba(7, 8, 12, .38) 53%, rgba(2, 3, 5, .7)),
-    linear-gradient(0deg, #050608, transparent 46%, rgba(4, 5, 8, .78));
-  animation: opening-light-in 3.5s ease-out both;
+    radial-gradient(ellipse 55% 36% at 50% 47%, rgba(54, 37, 27, .58), transparent 84%),
+    linear-gradient(0deg, rgba(38, 26, 20, .52), transparent 28%, transparent 75%, rgba(93, 55, 29, .22));
+  animation: opening-light-in 2s ease-out both;
 }
 
 .opening-grain {
   position: absolute;
   z-index: -1;
   inset: 0;
-  opacity: .38;
+  opacity: .22;
   pointer-events: none;
-  background-image: repeating-linear-gradient(96deg, transparent 0 3px, rgba(229, 213, 190, .018) 4px 5px);
-  box-shadow: inset 0 0 18vw 8vw #030405;
+  background-image: repeating-linear-gradient(96deg, transparent 0 3px, rgba(75, 43, 24, .03) 4px 5px);
+  box-shadow: inset 0 0 10vw 2vw rgba(40, 25, 15, .32);
 }
 
 .opening-content {
@@ -377,7 +376,7 @@ html, body, #root {
 
 .opening-overline {
   margin: 0 0 clamp(26px, 5vh, 50px);
-  color: #c3a173;
+  color: #fff6de;
   font: 11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
   letter-spacing: .5em;
   opacity: 0;
@@ -394,25 +393,26 @@ html, body, #root {
   font-weight: 400;
   line-height: 1.35;
   letter-spacing: -.055em;
-  text-shadow: 0 4px 32px #000, 0 0 60px rgba(229, 189, 126, .22);
+  text-shadow: 0 3px 8px rgba(32, 23, 18, .85), 0 9px 45px rgba(32, 23, 18, .7);
 }
 
 .opening-content h2 span {
   display: inline-block;
   opacity: 0;
-  filter: blur(20px);
-  transform: translateY(24px) scale(1.15);
-  animation: opening-letter-in .85s cubic-bezier(.16, 1, .3, 1) forwards;
-  animation-delay: calc(.55s + var(--letter-index) * .24s);
+  filter: blur(12px);
+  transform: translate(var(--orbit-x), var(--orbit-y)) rotate(var(--orbit-rotation)) scale(.18);
+  animation: opening-letter-orbit 1.85s cubic-bezier(.16, 1, .3, 1) forwards;
+  animation-delay: calc(.15s + var(--letter-index) * .18s);
 }
 
 .opening-subtitle {
   margin: clamp(30px, 6vh, 60px) 0 0;
-  color: rgba(230, 221, 207, .78);
+  color: #fff8e9;
   font-size: clamp(13px, 1.2vw, 17px);
   letter-spacing: .2em;
   opacity: 0;
-  animation: opening-copy-in 1s 2.8s ease-out forwards;
+  text-shadow: 0 2px 12px rgba(35, 23, 17, .9);
+  animation: opening-copy-in 1s 3s ease-out forwards;
 }
 
 .opening-rule {
@@ -421,7 +421,7 @@ html, body, #root {
   left: 50%;
   width: min(270px, 45vw);
   height: 1px;
-  background: linear-gradient(90deg, transparent, #b79566, transparent);
+  background: linear-gradient(90deg, transparent, #fff6df, transparent);
   transform: translateX(-50%) scaleX(0);
   animation: opening-rule-in 1.7s 2.4s ease-out forwards;
 }
@@ -431,29 +431,34 @@ html, body, #root {
   right: clamp(24px, 4vw, 72px);
   bottom: clamp(24px, 5vh, 52px);
   padding: 10px 0;
-  color: rgba(232, 220, 200, .85);
+  color: #fff8e9;
   border: 0;
-  border-bottom: 1px solid rgba(232, 220, 200, .45);
-  background: transparent;
+  border-bottom: 1px solid rgba(255, 248, 233, .85);
+  background: rgba(62, 42, 28, .38);
   font: 12px/1.4 "Noto Serif SC", serif;
   letter-spacing: .16em;
   cursor: pointer;
+  text-shadow: 0 1px 8px rgba(30, 22, 18, .8);
 }
 
 .opening-skip span { margin-left: 12px; }
-.opening-skip:hover { color: #e5be83; border-color: #e5be83; }
-.opening-skip:focus-visible { outline: 2px solid #e5be83; outline-offset: 6px; }
+.opening-skip:hover { color: #fff; border-color: #fff; background: rgba(62, 42, 28, .65); }
+.opening-skip:focus-visible { outline: 2px solid #fff8e9; outline-offset: 6px; }
 
 @keyframes opening-arrive { from { opacity: 0; } to { opacity: 1; } }
 @keyframes opening-depart { to { opacity: 0; transform: scale(1.08); visibility: hidden; } }
 @keyframes opening-scene-in { to { transform: scale(1); } }
 @keyframes opening-light-in { from { opacity: .2; } to { opacity: 1; } }
-@keyframes opening-letter-in { to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); } }
+@keyframes opening-letter-orbit {
+  0% { opacity: 0; filter: blur(12px); transform: translate(var(--orbit-x), var(--orbit-y)) rotate(var(--orbit-rotation)) scale(.18); }
+  70% { opacity: 1; filter: blur(0); transform: translate(0, -8px) rotate(-12deg) scale(1.16); }
+  100% { opacity: 1; filter: blur(0); transform: translate(0, 0) rotate(0) scale(1); }
+}
 @keyframes opening-copy-in { to { opacity: 1; } }
 @keyframes opening-rule-in { to { transform: translateX(-50%) scaleX(1); } }
 
 @media (max-width: 640px) {
-  .opening-scene { background-position: 62% center; }
+  .opening-scene { background-position: 20% center; }
   .opening-content { width: 96vw; }
   .opening-content h2 { font-size: clamp(35px, 10.5vw, 52px); letter-spacing: -.08em; }
   .opening-overline { font-size: 9px; letter-spacing: .24em; }
@@ -463,6 +468,10 @@ html, body, #root {
 @media (prefers-reduced-motion: reduce) {
   .opening-sequence,
   .opening-sequence * { animation: none !important; }
+  .opening-content h2 span { opacity: 1; filter: none; transform: none; }
+  .opening-overline,
+  .opening-subtitle { opacity: 1; }
+  .opening-rule { transform: translateX(-50%) scaleX(1); }
 }
 
 /* Petersburg snow-night homepage */

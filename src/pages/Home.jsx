@@ -108,7 +108,7 @@ function Home() {
   const [soundOn, setSoundOn] = useState(false);
   const [activeWindowItem, setActiveWindowItem] = useState(0);
   const [podcastPlaying, setPodcastPlaying] = useState(false);
-  const [showOpening, setShowOpening] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const [showOpening, setShowOpening] = useState(true);
   const finishOpening = useCallback(() => setShowOpening(false), []);
   const nightAudioRef = useRef(null);
   const podcastAudioRef = useRef(null);
