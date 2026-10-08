@@ -3496,3 +3496,66 @@ a.work-window:focus-visible {
   color: rgba(120, 118, 112, .45);
   text-decoration: line-through rgba(245, 245, 220, .75);
 }
+
+.street-source-link {
+  color: rgba(226, 201, 144, .92);
+  text-decoration: underline;
+  text-decoration-color: rgba(185, 154, 98, .45);
+  text-underline-offset: 3px;
+  transition: color .2s ease, text-decoration-color .2s ease;
+}
+
+.street-source-link:hover,
+.street-source-link:focus-visible {
+  color: #e2c990;
+  text-decoration-color: rgba(226, 201, 144, .75);
+}
+
+.street-source-link-muted {
+  color: rgba(216, 214, 206, .58);
+}
+
+.street-source-link-muted:hover,
+.street-source-link-muted:focus-visible {
+  color: rgba(226, 201, 144, .85);
+}
+
+.street-source-aside {
+  margin: 18px 0 0;
+  color: rgba(216, 214, 206, .58);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.life-window .street-source-aside:last-child {
+  margin-bottom: 0;
+}
+
+.underground-manuscript-rival {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(74, 111, 165, .22);
+}
+
+.underground-manuscript-polish.is-struck,
+.underground-manuscript-polish {
+  margin: 0 0 16px;
+  color: rgba(120, 118, 112, .5);
+  font-size: 17px;
+  font-style: italic;
+  text-decoration: line-through rgba(245, 245, 220, .55);
+}
+
+.underground-manuscript-tang {
+  margin: 0 0 14px;
+  color: rgba(216, 214, 206, .72);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.underground-manuscript-douban {
+  margin: 0;
+  color: rgba(160, 158, 150, .62);
+  font-size: 13px;
+  line-height: 1.85;
+}

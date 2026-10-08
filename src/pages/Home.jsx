@@ -19,13 +19,62 @@ import OpeningSequence from '../components/OpeningSequence';
 import CharacterChorusOverlay from '../components/CharacterChorusOverlay';
 import SemenovskyMoment from '../components/SemenovskyMoment';
 import { createSnowNightListening } from '../lib/ambientSnowNight';
+import { externalLinkProps } from '../lib/externalLink';
+
+const MEMORIAL_APARTMENT_URL = 'https://www.md.spb.ru/muzej/memorialnaya_kvartira/';
+const DOSTOEVSKY_MUSEUM_URL = 'https://www.md.spb.ru/';
+const SEMENOVSKY_EXHIBIT_URL = 'https://www.spbmuseum.ru/exhibits_and_exhibitions/temporary_exhibitions/53486/?lang_ui=en';
+const SIBERIAN_LETTERS_URL = 'https://www.rsl.ru/fondy-i-katalogi/fondy-spetsializirovannyh-otdelov/fond-rukopisey/otdel-rukopisey/sibirskie-pisjma-dostoevskogo';
+const PETERSBURG_MAP_URL = 'https://www.mappingpetersburg.org/site/?page_id=494';
 
 const timeline = [
-  ['1821', '莫斯科', '你还不知道，一个在医院庭院里长大的孩子，将会替无数人说出痛苦。'],
-  ['1849', '谢苗诺夫校场', '枪口已经举起，赦免却在最后一刻抵达。从此，每一分钟都带着死而复生的重量。'],
-  ['1864', '地下室', '一个无名者开始说话。他越想证明自由，越暴露出自己的囚笼。'],
-  ['1880', '最后的长夜', '《卡拉马佐夫兄弟》把信仰、罪与宽恕留在桌上，等待后来的人继续争辩。'],
+  { year: '1821', place: '莫斯科', detail: '你还不知道，一个在医院庭院里长大的孩子，将会替无数人说出痛苦。' },
+  { year: '1849', place: '谢苗诺夫校场', detail: 'semenovsky' },
+  { year: '1864', place: '地下室', detail: '一个无名者开始说话。他越想证明自由，越暴露出自己的囚笼。' },
+  { year: '1880', place: '最后的长夜', detail: 'last-night' },
 ];
+
+function LifeWindowSemenovskyDetail() {
+  return (
+    <>
+      <p>
+        枪口已经举起——那是一场假处决（инсценировка казни），主要罪名里带着宣读别林斯基致果戈理的信。
+        赦免在最后一刻抵达。从此，每一分钟都带着死而复生的重量。
+      </p>
+      <p className="street-source-aside">
+        秘密之家已经不在了；后来人们描摹的，是
+        <a href={SEMENOVSKY_EXHIBIT_URL} className="street-source-link" {...externalLinkProps}>
+          一幢已经消失的房子
+        </a>
+        ，而不是仍立在原处的监狱。
+      </p>
+      <p className="street-source-aside">
+        流放西伯利亚后，写给亲人的私信与交给当局的呈文，往往不是同一张纸——例如 1854 年 2 月 20 日致冯维辛娜的信，就躺在
+        <a href={SIBERIAN_LETTERS_URL} className="street-source-link" {...externalLinkProps}>
+          俄国国立图书馆的西伯利亚书信稿本
+        </a>
+        里，与官方口径并排陈列。
+      </p>
+    </>
+  );
+}
+
+function LifeWindowLastNightDetail() {
+  return (
+    <p>
+      《卡拉马佐夫兄弟》把信仰、罪与宽恕留在桌上，等待后来的人继续争辩。
+      库兹涅奇内巷最后那间
+      <a href={MEMORIAL_APARTMENT_URL} className="street-source-link" {...externalLinkProps}>
+        纪念公寓
+      </a>
+      里，挂钟仍停在他离去的那一刻——
+      <a href={DOSTOEVSKY_MUSEUM_URL} className="street-source-link street-source-link-muted" {...externalLinkProps}>
+        陀思妥耶夫斯基博物馆
+      </a>
+      把那一分钟留在原处。
+    </p>
+  );
+}
 
 const visualWall = [
   { src: `${import.meta.env.BASE_URL}gallery/dosto-3.png`, title: '凝视' },
@@ -277,7 +326,14 @@ function Home() {
         >
           <p className="passage-marker">第一盏灯 · 城市</p>
           <h2>你告诉自己，<br />没有人在看。</h2>
-          <p>可为什么每一扇窗，都像知道你做过什么？雪落下来，抹去脚印，却没有替你抹去念头。</p>
+          <p>
+            可为什么每一扇窗，都像知道你做过什么？雪落下来，抹去脚印，却没有替你抹去念头。
+            彼得堡在地图上也分层叠印——三层街景不必硬拼成一条对不上的路，见
+            <a href={PETERSBURG_MAP_URL} className="street-source-link" {...externalLinkProps}>
+              Mapping Petersburg 的分层底图
+            </a>
+            。
+          </p>
         </motion.div>
       </section>
 
@@ -345,13 +401,18 @@ function Home() {
           <h2>在你之前，<br />有人走过更深的黑夜。</h2>
         </header>
         <div className="life-windows">
-          {timeline.map(([year, place, detail], index) => {
+          {timeline.map(({ year, place, detail }, index) => {
+            const body = detail === 'semenovsky'
+              ? <LifeWindowSemenovskyDetail />
+              : detail === 'last-night'
+                ? <LifeWindowLastNightDetail />
+                : <p>{detail}</p>;
             const article = (
               <>
                 <span className="window-year">{year}</span>
                 <div>
                   <h3>{place}</h3>
-                  <p>{detail}</p>
+                  {body}
                 </div>
               </>
             );
@@ -521,7 +582,14 @@ function Home() {
         <div className="archive-copy">
           <p className="passage-marker">街道尽头 · 档案室</p>
           <h2>天还没有亮。<br />但你已不再无人知晓。</h2>
-          <p>进入肖像、书封与改编影像留下的房间，看看后来的人如何继续凝视他。</p>
+          <p>
+            进入肖像、书封与改编影像留下的房间，看看后来的人如何继续凝视他。
+            若你记得库兹涅奇内巷那间公寓，那里的
+            <a href={MEMORIAL_APARTMENT_URL} className="street-source-link" {...externalLinkProps}>
+              挂钟仍停在他死去的那一刻
+            </a>
+            。
+          </p>
           <Link to="/visuals" className="archive-link">
             <Images size={17} />
             进入影像档案
