@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { externalLinkProps } from '../lib/externalLink';
+
+const DOUBAN_TRANSLATION_TOPIC_URL = 'https://www.douban.com/group/topic/193707969/';
 
 const PASSAGES = [
   {
@@ -62,6 +65,22 @@ export default function UndergroundManuscriptFight() {
           {passage.footnote}
         </p>
       </motion.div>
+
+      <aside className="underground-manuscript-rival" aria-label="译句被另一只手划掉">
+        <p className="underground-manuscript-polish is-struck">
+          是那种精雕细琢、优雅美丽的独白——
+        </p>
+        <p className="underground-manuscript-tang">
+          汤武森读陀氏原文：「并非是那种精雕细琢、优雅美丽的，倒是混乱、杂糅，恍如呓语」
+        </p>
+        <p className="underground-manuscript-douban">
+          同一句在中文里并不相同：
+          <a href={DOUBAN_TRANSLATION_TOPIC_URL} className="street-source-link" {...externalLinkProps}>
+            豆瓣帖对照汝龙、韦丛芜、朱海观与王汶
+          </a>
+          。
+        </p>
+      </aside>
     </section>
   );
 }
