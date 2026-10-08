@@ -16,6 +16,9 @@ import { Link } from 'react-router-dom';
 import works from '../data/works.json';
 import Snowfall from '../components/Snowfall';
 import OpeningSequence from '../components/OpeningSequence';
+import CharacterChorusOverlay from '../components/CharacterChorusOverlay';
+import SemenovskyMoment from '../components/SemenovskyMoment';
+import { createSnowNightListening } from '../lib/ambientSnowNight';
 
 const timeline = [
   ['1821', '莫斯科', '你还不知道，一个在医院庭院里长大的孩子，将会替无数人说出痛苦。'],
@@ -109,6 +112,9 @@ function Home() {
   const [activeWindowItem, setActiveWindowItem] = useState(0);
   const [podcastPlaying, setPodcastPlaying] = useState(false);
   const [showOpening, setShowOpening] = useState(true);
+  const [chorusBurst, setChorusBurst] = useState(null);
+  const [snowFrozen, setSnowFrozen] = useState(false);
+  const [streetLouder, setStreetLouder] = useState(false);
   const finishOpening = useCallback(() => setShowOpening(false), []);
   const nightAudioRef = useRef(null);
   const podcastAudioRef = useRef(null);
@@ -117,7 +123,9 @@ function Home() {
   };
 
   useEffect(() => () => {
-    nightAudioRef.current?.close();
+    nightAudioRef.current?.stop?.();
+    nightAudioRef.current?.context?.close?.();
+    nightAudioRef.current = null;
   }, []);
 
   useEffect(() => () => {
@@ -153,9 +161,10 @@ function Home() {
 
   const toggleNightSound = async () => {
     if (soundOn) {
-      await nightAudioRef.current?.close();
+      nightAudioRef.current?.stop();
       nightAudioRef.current = null;
       setSoundOn(false);
+      setStreetLouder(false);
       return;
     }
 
@@ -163,34 +172,43 @@ function Home() {
     if (!AudioContext) return;
 
     const context = new AudioContext();
-    const seconds = 3;
-    const buffer = context.createBuffer(1, context.sampleRate * seconds, context.sampleRate);
-    const data = buffer.getChannelData(0);
-    let last = 0;
-    for (let index = 0; index < data.length; index += 1) {
-      const white = Math.random() * 2 - 1;
-      last = (last + 0.018 * white) / 1.018;
-      data[index] = last * 2.8;
-    }
-
-    const wind = context.createBufferSource();
-    const filter = context.createBiquadFilter();
-    const gain = context.createGain();
-    wind.buffer = buffer;
-    wind.loop = true;
-    filter.type = 'lowpass';
-    filter.frequency.value = 520;
-    gain.gain.value = 0.026;
-    wind.connect(filter).connect(gain).connect(context.destination);
-    wind.start();
-    nightAudioRef.current = context;
+    await context.resume();
+    nightAudioRef.current = createSnowNightListening(context);
     setSoundOn(true);
   };
+
+  const handleSemenovskyFreeze = useCallback(() => {
+    setSnowFrozen(true);
+    nightAudioRef.current?.cutImmediate?.();
+  }, []);
+
+  const handleSemenovskyRelease = useCallback(() => {
+    setSnowFrozen(false);
+    setStreetLouder(true);
+    nightAudioRef.current?.surge?.(1.45);
+    window.setTimeout(() => setStreetLouder(false), 2400);
+  }, []);
+
+  const interruptCharacter = (event, character) => {
+    event.preventDefault();
+    const raw = character.voice.replace(/[“”]/g, '');
+    const cutAt = Math.max(12, Math.floor(raw.length * 0.55));
+    const fragment = `${raw.slice(0, cutAt).trim()}——`;
+    setChorusBurst({
+      name: character.name,
+      position: character.position,
+      route: character.route,
+      fragment,
+    });
+  };
+
+  const clearChorus = useCallback(() => setChorusBurst(null), []);
 
   return (
     <main className="dosto-street-page selection:bg-[#9a7a45] selection:text-[#090b0d]">
       {showOpening && <OpeningSequence onFinish={finishOpening} />}
-      <div className="street-fixed-scene" aria-hidden="true">
+      <CharacterChorusOverlay burst={chorusBurst} onDone={clearChorus} />
+      <div className={`street-fixed-scene${streetLouder ? ' is-louder' : ''}`} aria-hidden="true">
         <motion.div
           className="street-image"
           style={{
@@ -201,10 +219,10 @@ function Home() {
         />
         <div className="street-ink" />
         <div className="street-watchful-windows" />
-        <Snowfall dramatic />
+        <Snowfall dramatic frozen={snowFrozen} />
       </div>
 
-      <nav className="street-nav" aria-label="主导航">
+      <nav className={`street-nav${chorusBurst ? ' is-covered' : ''}`} aria-label="主导航">
         <button type="button" className="street-monogram" aria-label="返回页首" onClick={() => scrollToSection('top')}>Д</button>
         <div className="street-nav-links">
           <button type="button" onClick={() => scrollToSection('life')}>生平</button>
@@ -300,6 +318,7 @@ function Home() {
                 to={character.route}
                 className="character-voice"
                 aria-label={`${character.name}，来自${character.work}；${character.action}`}
+                onClick={(event) => interruptCharacter(event, character)}
               >
                 <span className="character-dot" aria-hidden="true" />
                 <div className="character-label">
@@ -326,22 +345,41 @@ function Home() {
           <h2>在你之前，<br />有人走过更深的黑夜。</h2>
         </header>
         <div className="life-windows">
-          {timeline.map(([year, place, detail], index) => (
-            <motion.article
-              key={year}
-              className="life-window"
-              initial={{ opacity: 0, x: index % 2 ? 30 : -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-10%' }}
-              transition={{ duration: 0.75 }}
-            >
-              <span className="window-year">{year}</span>
-              <div>
-                <h3>{place}</h3>
-                <p>{detail}</p>
-              </div>
-            </motion.article>
-          ))}
+          {timeline.map(([year, place, detail], index) => {
+            const article = (
+              <>
+                <span className="window-year">{year}</span>
+                <div>
+                  <h3>{place}</h3>
+                  <p>{detail}</p>
+                </div>
+              </>
+            );
+            if (year === '1849') {
+              return (
+                <SemenovskyMoment
+                  key={year}
+                  yearLabel={year}
+                  onFreeze={handleSemenovskyFreeze}
+                  onRelease={handleSemenovskyRelease}
+                >
+                  {article}
+                </SemenovskyMoment>
+              );
+            }
+            return (
+              <motion.article
+                key={year}
+                className="life-window"
+                initial={{ opacity: 0, x: index % 2 ? 30 : -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-10%' }}
+                transition={{ duration: 0.75 }}
+              >
+                {article}
+              </motion.article>
+            );
+          })}
         </div>
       </section>
 

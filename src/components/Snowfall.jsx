@@ -12,7 +12,7 @@ const SNOWFLAKES = Array.from({ length: 120 }, (_, i) => ({
   opacity: 0.38 + ((i * 23) % 50) / 100,
 }));
 
-export default function Snowfall({ reducedMotion = false, dramatic = false }) {
+export default function Snowfall({ reducedMotion = false, dramatic = false, frozen = false }) {
   const layers = useMemo(() => {
     const farCount = reducedMotion ? 18 : dramatic ? 48 : 42;
     const midCount = reducedMotion ? 14 : dramatic ? 42 : 32;
@@ -104,7 +104,7 @@ export default function Snowfall({ reducedMotion = false, dramatic = false }) {
 
   return (
     <div
-      className={`snowfield absolute inset-0 overflow-hidden pointer-events-none z-[5]${dramatic ? ' snowfield-dramatic' : ''}`}
+      className={`snowfield absolute inset-0 overflow-hidden pointer-events-none z-[5]${dramatic ? ' snowfield-dramatic' : ''}${frozen ? ' snowfield-frozen' : ''}`}
       data-reduced-motion={reducedMotion}
       aria-hidden="true"
     >
