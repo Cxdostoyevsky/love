@@ -9,6 +9,7 @@ import ManifestTOC from '../components/ManifestTOC';
 import BookMarkdown from '../components/BookMarkdown';
 import Snowfall from '../components/Snowfall';
 import { createAmbientWind } from '../lib/ambientWind';
+import UndergroundManuscriptFight from '../components/UndergroundManuscriptFight';
 
 const UNDERGROUND_NIGHT_SRC = `${import.meta.env.BASE_URL}gallery/petersburg-snow-night.png`;
 
@@ -162,7 +163,9 @@ function UndergroundDetail() {
 
       {/* Content */}
       <main className="max-w-4xl mx-auto px-4 py-24">
-        <div className="flex items-center gap-4 mb-16">
+        <UndergroundManuscriptFight />
+
+        <div className="flex items-center gap-4 mb-16 mt-24">
           <Lightbulb className="text-red-900" size={28} />
           <h2 className="text-2xl font-bold tracking-tight text-stone-200">深度读书笔记 & 随感</h2>
         </div>

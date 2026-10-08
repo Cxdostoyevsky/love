@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 const name = '陀思妥耶夫斯基';
 
 export default function OpeningSequence({ onFinish }) {
-  const [leaving, setLeaving] = useState(false);
+  const [phase, setPhase] = useState('garden');
   const skipRef = useRef(null);
+  const laughterAudioRef = useRef(null);
 
   useEffect(() => {
     skipRef.current?.focus();
@@ -16,14 +17,59 @@ export default function OpeningSequence({ onFinish }) {
   }, []);
 
   useEffect(() => {
-    if (!leaving) return undefined;
-    const finishTimer = window.setTimeout(onFinish, 850);
-    return () => window.clearTimeout(finishTimer);
-  }, [leaving, onFinish]);
+    const dropTimer = window.setTimeout(() => setPhase('petition'), 2200);
+    return () => window.clearTimeout(dropTimer);
+  }, []);
+
+  useEffect(() => {
+    if (phase !== 'petition') return undefined;
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext) {
+      const ctx = new AudioContext();
+      const gain = ctx.createGain();
+      gain.gain.value = 0.08;
+      gain.connect(ctx.destination);
+      const bursts = [0, 0.18, 0.42, 0.7, 1.05];
+      bursts.forEach((start, i) => {
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(520 + i * 40, ctx.currentTime + start);
+        osc.frequency.exponentialRampToValueAtTime(280, ctx.currentTime + start + 0.14);
+        g.gain.setValueAtTime(0.0001, ctx.currentTime + start);
+        g.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + start + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + start + 0.16);
+        osc.connect(g).connect(gain);
+        osc.start(ctx.currentTime + start);
+        osc.stop(ctx.currentTime + start + 0.18);
+      });
+      laughterAudioRef.current = ctx;
+    }
+    const snowTimer = window.setTimeout(() => setPhase('snow'), 400);
+    return () => window.clearTimeout(snowTimer);
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase !== 'snow') return undefined;
+    laughterAudioRef.current?.close?.();
+    laughterAudioRef.current = null;
+    const endTimer = window.setTimeout(onFinish, 1400);
+    return () => window.clearTimeout(endTimer);
+  }, [phase, onFinish]);
+
+  useEffect(() => () => {
+    laughterAudioRef.current?.close?.();
+  }, []);
+
+  const enterStreet = () => {
+    if (phase === 'snow') return;
+    setPhase('petition');
+    window.setTimeout(() => setPhase('snow'), 120);
+  };
 
   return (
     <div
-      className={`opening-sequence${leaving ? ' is-leaving' : ''}`}
+      className={`opening-sequence opening-phase-${phase}`}
       role="dialog"
       aria-modal="true"
       aria-label="陀思妥耶夫斯基开场"
@@ -37,6 +83,10 @@ export default function OpeningSequence({ onFinish }) {
       />
       <div className="opening-light" aria-hidden="true" />
       <div className="opening-grain" aria-hidden="true" />
+      <div className="opening-snow-veil" aria-hidden="true" />
+
+      <motionlessPetition phase={phase} />
+
       <div className="opening-content">
         <p className="opening-overline">Санкт-Петербург · 在故事开始以前</p>
         <h2 aria-label={name}>
@@ -59,7 +109,26 @@ export default function OpeningSequence({ onFinish }) {
         <p className="opening-subtitle">在鲜花和孩子的笑声里，故事暂时还是明亮的。</p>
       </div>
       <span className="opening-rule" aria-hidden="true" />
-      <button ref={skipRef} type="button" className="opening-skip" onClick={() => setLeaving(true)} disabled={leaving}>进入街道 <span aria-hidden="true">↗</span></button>
+      <button
+        ref={skipRef}
+        type="button"
+        className="opening-skip"
+        onClick={enterStreet}
+        disabled={phase === 'snow'}
+      >
+        进入街道 <span aria-hidden="true">↗</span>
+      </button>
+    </div>
+  );
+}
+
+function motionlessPetition({ phase }) {
+  if (phase === 'garden') return null;
+  return (
+    <div className={`opening-petition${phase === 'snow' ? ' is-buried' : ' is-dropping'}`} aria-hidden="true">
+      <span>第九品文官 · 私人档案</span>
+      <strong>请愿书已退回</strong>
+      <small>Причина отказа не указана</small>
     </div>
   );
 }
